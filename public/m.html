@@ -1,0 +1,463 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Plan de Mémoire – Plateforme Étudiante Dakar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-appear {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    
+    .section-appear.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .nav-link {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .floating-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .icon-bounce {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+      40%, 43% { transform: translate3d(0, -30px, 0); }
+      70% { transform: translate3d(0, -15px, 0); }
+      90% { transform: translate3d(0, -4px, 0); }
+    }
+    
+    .text-gradient {
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .progress-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 text-gray-900">
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+  
+  <!-- Floating Background Elements -->
+  <div class="fixed top-20 left-10 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating-animation"></div>
+  <div class="fixed top-40 right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating-animation" style="animation-delay: 2s;"></div>
+  <div class="fixed bottom-20 left-1/4 w-36 h-36 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 floating-animation" style="animation-delay: 4s;"></div>
+  
+  <div class="max-w-6xl mx-auto p-8 relative z-10">
+    <!-- Header -->
+    <header class="mb-16 text-center">
+      <div class="gradient-bg rounded-3xl p-12 mb-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="relative z-10">
+          <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 icon-bounce">
+            🎓 Plateforme Étudiante – Dakar
+          </h1>
+          <p class="text-xl text-white opacity-90 max-w-2xl mx-auto">
+            Projet de mémoire – Une solution innovante pour centraliser la vie étudiante à Dakar
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="mb-12 sticky top-4 z-50">
+      <div class="glass-effect rounded-2xl p-6 backdrop-blur-sm">
+        <ul class="flex flex-wrap justify-center gap-6 text-gray-700 text-sm font-medium">
+          <li><a href="#introduction" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Introduction</a></li>
+          <li><a href="#objectifs" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Objectifs</a></li>
+          <li><a href="#modules" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Modules</a></li>
+          <li><a href="#architecture" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Architecture</a></li>
+          <li><a href="#modelisation" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Modélisation</a></li>
+          <li><a href="#roadmap" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Roadmap</a></li>
+          <li><a href="#perspectives" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Perspectives</a></li>
+          <li><a href="#conclusion" class="nav-link px-4 py-2 rounded-lg hover:bg-white hover:shadow-md transition-all">Conclusion</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Introduction -->
+    <section id="introduction" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-blue-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">🚀</span>
+          <h2 class="text-3xl font-bold text-gradient">1. Introduction</h2>
+        </div>
+        <p class="text-lg leading-relaxed text-gray-700">
+          Le projet « Plateforme Étudiante – Dakar » vise à centraliser toutes les informations utiles pour les étudiants vivant à Dakar, au Sénégal. Il s'agit d'une solution numérique moderne permettant de faciliter la vie étudiante : recherche de logement, informations sur les écoles, entraide, revente d'objets, etc.
+        </p>
+      </div>
+    </section>
+
+    <!-- Objectifs -->
+    <section id="objectifs" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-green-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">🎯</span>
+          <h2 class="text-3xl font-bold text-gradient">2. Objectifs du projet</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-blue-800 mb-2">🏠 Point d'accès unique</h4>
+            <p class="text-sm text-gray-600">Centraliser toutes les ressources nécessaires à la vie étudiante à Dakar</p>
+          </div>
+          <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-green-800 mb-2">🤝 Entraide communautaire</h4>
+            <p class="text-sm text-gray-600">Favoriser l'entraide et la solidarité entre étudiants</p>
+          </div>
+          <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-purple-800 mb-2">🔍 Recherche simplifiée</h4>
+            <p class="text-sm text-gray-600">Faciliter la recherche de logement et d'établissements</p>
+          </div>
+          <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-orange-800 mb-2">💱 Marketplace étudiant</h4>
+            <p class="text-sm text-gray-600">Permettre la revente et l'achat de matériel étudiant</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modules fonctionnels -->
+    <section id="modules" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-purple-500">
+        <div class="flex items-center mb-8">
+          <span class="text-4xl mr-4">⚙️</span>
+          <h2 class="text-3xl font-bold text-gradient">3. Modules fonctionnels</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">🔐</div>
+            <h3 class="text-lg font-bold text-blue-800 mb-2">Authentification</h3>
+            <p class="text-sm text-gray-600">Système sécurisé de gestion des utilisateurs et des rôles</p>
+          </div>
+          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">🏫</div>
+            <h3 class="text-lg font-bold text-green-800 mb-2">Écoles & Formations</h3>
+            <p class="text-sm text-gray-600">Référencement complet des établissements d'enseignement</p>
+          </div>
+          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">🏠</div>
+            <h3 class="text-lg font-bold text-purple-800 mb-2">Logements</h3>
+            <p class="text-sm text-gray-600">Annonces de logements étudiants avec recherche avancée</p>
+          </div>
+          <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">💬</div>
+            <h3 class="text-lg font-bold text-orange-800 mb-2">Forum</h3>
+            <p class="text-sm text-gray-600">Espace communautaire d'échange et d'entraide</p>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">🗺️</div>
+            <h3 class="text-lg font-bold text-indigo-800 mb-2">Quartiers</h3>
+            <p class="text-sm text-gray-600">Guides détaillés des zones de vie à Dakar</p>
+          </div>
+          <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-6 card-hover">
+            <div class="text-2xl mb-3">🛍️</div>
+            <h3 class="text-lg font-bold text-pink-800 mb-2">Marketplace</h3>
+            <p class="text-sm text-gray-600">Revente et achat de matériel étudiant</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture technique -->
+    <section id="architecture" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-red-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">🏗️</span>
+          <h2 class="text-3xl font-bold text-gradient">4. Architecture technique</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="bg-gradient-to-r from-red-50 to-red-100 rounded-xl p-4">
+              <h4 class="font-semibold text-red-800 mb-2">🔧 Backend</h4>
+              <p class="text-sm text-gray-600">Laravel 10+, PostgreSQL, API REST sécurisée</p>
+            </div>
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4">
+              <h4 class="font-semibold text-blue-800 mb-2">💻 Frontend Web</h4>
+              <p class="text-sm text-gray-600">React + Vite, Tailwind CSS, design responsive</p>
+            </div>
+            <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-4">
+              <h4 class="font-semibold text-green-800 mb-2">📱 Mobile</h4>
+              <p class="text-sm text-gray-600">Flutter multiplateforme, même API</p>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-4">
+              <h4 class="font-semibold text-purple-800 mb-2">⚡ Admin</h4>
+              <p class="text-sm text-gray-600">Filament Admin pour la gestion</p>
+            </div>
+            <div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-4">
+              <h4 class="font-semibold text-indigo-800 mb-2">🗺️ Cartographie</h4>
+              <p class="text-sm text-gray-600">Leaflet.js (web), Google Maps (mobile)</p>
+            </div>
+            <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-4">
+              <h4 class="font-semibold text-orange-800 mb-2">📁 Fichiers</h4>
+              <p class="text-sm text-gray-600">Spatie Media Library</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modélisation des données -->
+    <section id="modelisation" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-yellow-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">📊</span>
+          <h2 class="text-3xl font-bold text-gradient">5. Modélisation des données</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-blue-800 mb-2">👤 User</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• ID, nom, email</li>
+              <li>• Mot de passe, rôle</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-green-800 mb-2">🏫 School</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Nom, type, quartier</li>
+              <li>• Frais, site, description</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-purple-800 mb-2">🏠 House</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Titre, prix, quartier</li>
+              <li>• Description, propriétaire</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-orange-800 mb-2">🗺️ Neighborhood</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Nom, sécurité</li>
+              <li>• Description détaillée</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-indigo-800 mb-2">💬 ForumPost</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Titre, contenu</li>
+              <li>• Catégorie, auteur</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-4 card-hover">
+            <h4 class="font-bold text-pink-800 mb-2">🔗 ExternalLink</h4>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• URL, titre, type</li>
+              <li>• Auteur, quartier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-indigo-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">🛣️</span>
+          <h2 class="text-3xl font-bold text-gradient">6. Roadmap de développement</h2>
+        </div>
+        <div class="space-y-6">
+          <div class="flex items-start space-x-4">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-blue-800 mb-1">Phase 1 : Développement du MVP</h4>
+              <p class="text-sm text-gray-600">Authentification, gestion des écoles, logements, forum, quartiers</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-green-800 mb-1">Phase 2 : Insertion des données</h4>
+              <p class="text-sm text-gray-600">Écoles, logements, quartiers, posts forum, témoignages</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-purple-800 mb-1">Phase 3 : Lancement bêta</h4>
+              <p class="text-sm text-gray-600">Test par un panel d'étudiants, collecte de feedback</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-orange-800 mb-1">Phase 4 : Modules avancés</h4>
+              <p class="text-sm text-gray-600">Liens externes, revente, notifications, monétisation</p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="bg-gradient-to-r from-red-500 to-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">5</div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-red-800 mb-1">Phase 5 : Extension</h4>
+              <p class="text-sm text-gray-600">Application mobile, extension à d'autres villes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perspectives -->
+    <section id="perspectives" class="mb-16 section-appear">
+      <div class="bg-white rounded-3xl shadow-xl p-8 card-hover border-l-4 border-teal-500">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">🔮</span>
+          <h2 class="text-3xl font-bold text-gradient">7. Perspectives d'évolution</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-teal-800 mb-2">🔐 Authentification avancée</h4>
+            <p class="text-sm text-gray-600">Intégration Google, Facebook, et autres providers</p>
+          </div>
+          <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-cyan-800 mb-2">⭐ Système de réputation</h4>
+            <p class="text-sm text-gray-600">Modération automatique et notation des utilisateurs</p>
+          </div>
+          <div class="bg-gradient-to-br from-sky-50 to-sky-100 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-sky-800 mb-2">🤖 Intelligence artificielle</h4>
+            <p class="text-sm text-gray-600">Suggestions automatiques personnalisées</p>
+          </div>
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 card-hover">
+            <h4 class="font-semibold text-blue-800 mb-2">🌍 Expansion géographique</h4>
+            <p class="text-sm text-gray-600">Extension à d'autres villes et pays africains</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section id="conclusion" class="mb-16 section-appear">
+      <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl shadow-xl p-8 card-hover text-white">
+        <div class="flex items-center mb-6">
+          <span class="text-4xl mr-4">✨</span>
+          <h2 class="text-3xl font-bold">8. Conclusion</h2>
+        </div>
+        <p class="text-lg leading-relaxed opacity-90">
+          Ce projet propose une solution innovante et adaptée aux besoins des étudiants à Dakar, avec une architecture technique moderne, une organisation modulaire et une vision évolutive. Il constitue une base solide pour un mémoire, tant sur le plan technique que fonctionnel.
+        </p>
+        <div class="mt-8 text-center">
+          <div class="inline-block bg-white bg-opacity-20 rounded-full px-8 py-3 backdrop-blur-sm">
+            <span class="text-sm font-medium">🎯 Projet prêt pour soutenance</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.section-appear').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+  </script>
+</body>
+</html>

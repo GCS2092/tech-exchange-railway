@@ -1,0 +1,95 @@
+# Documentation complète du projet "Mon Site Cosmétique"
+
+---
+LANCER DOCKER AVEC  docker-compose up -d --build
+
+## 1. Introduction
+Ce projet est une plateforme e-commerce moderne dédiée à la vente de produits cosmétiques, avec gestion multi-rôles (admin, vendeur, livreur, client), reporting avancé, et interface responsive.
+
+---
+
+## 2. Technologies utilisées
+- **Backend** : Laravel (PHP 8+), Spatie Permission, Eloquent ORM, Mail, Notifications
+- **Frontend** : React (Vite), Tailwind CSS, Chart.js (statistiques), Blade (admin)
+- **Base de données** : MySQL/MariaDB
+- **Outils** : Docker, artisan, seeders, migrations, tests PHPUnit
+
+---
+
+## 3. Structure des rôles et permissions
+- **Admin** : gestion totale (utilisateurs, produits, commandes, transactions, stocks, rôles, permissions, reporting)
+- **Vendeur** : dashboard dédié, CRUD produits, suivi commandes, stats, notifications, alertes stock bas
+- **Livreur** : accès à ses livraisons, marquage livré, planning, notifications
+- **Client** : navigation, panier, commandes, suivi, avis
+
+### Permissions principales par rôle
+- **Admin** : toutes les permissions
+- **Vendeur** : gérer ses produits, voir ses commandes, stats, notifications
+- **Livreur** : voir/mettre à jour ses livraisons
+- **Client** : accès catalogue, commandes, avis
+
+---
+
+## 4. Fonctionnalités principales
+- Gestion des commandes (création, suivi, statuts, historique)
+- Gestion des produits (CRUD, stock, alertes)
+- Transactions et paiements (statuts synchronisés, exports CSV/PDF)
+- Dashboards avancés (admin, vendeur)
+- Notifications (mail, in-app, alertes)
+- Reporting quotidien/automatique
+- Sécurité (middleware, permissions, validation)
+- Responsive design (mobile, desktop)
+
+---
+
+## 5. Diagrammes et relations
+
+### Diagramme des rôles et relations (texte)
+- Admin
+  - Gère vendeurs, livreurs, clients, produits, commandes, transactions
+- Vendeur
+  - Gère ses produits, voit ses commandes, reçoit notifications
+- Livreur
+  - Voit ses livraisons, marque comme livré
+- Client
+  - Passe commande, reçoit notifications
+
+### Flux de commande (texte)
+1. Client passe commande
+2. Admin/vendeur valide et prépare
+3. Livreur prend en charge, livre
+4. Statut commande/transaction mis à jour
+5. Notifications envoyées
+
+---
+
+## 6. Sécurité et bonnes pratiques
+- Authentification Laravel, middleware par rôle
+- Permissions granulaires (Spatie)
+- Validation forte des données
+- Audit des rôles/permissions (`php artisan roles:report`)
+- Tests automatisés (PHPUnit)
+
+---
+
+## 7. Reporting et notifications
+- Rapports quotidiens par mail (transactions, commandes)
+- Notifications en temps réel (commandes, statuts, stock)
+- Alertes stock bas pour vendeurs
+
+---
+
+## 8. Responsive & accessibilité
+- Interfaces admin et vendeur responsives (Tailwind, Blade)
+- Tableaux adaptatifs, affichage en cartes sur mobile
+
+---
+
+## 9. Maintenance & évolutivité
+- Seeders et migrations pour initialisation rapide
+- Code commenté, logique métier claire
+- Documentation à jour (voir aussi ONBOARDING_GUIDE.md)
+
+---
+
+Pour toute question, contacter l’équipe technique ou consulter la documentation technique jointe. 

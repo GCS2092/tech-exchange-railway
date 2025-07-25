@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - Mon Site Cosmétique</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'dark'});</script>
+  <style>
+    :root {
+      --primary: #ff007a;
+      --secondary: #00ffea;
+      --bg-dark: #0a0a0a;
+      --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      --text-color: #f5f5f5;
+      --card-bg: rgba(30, 30, 30, 0.95);
+    }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    body.light-mode {
+      --bg-gradient: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+      --text-color: #1a1a1a;
+      --card-bg: rgba(255, 255, 255, 0.95);
+    }
+    .section { margin-bottom: 5rem; padding: 0 1rem; }
+    .anchor { scroll-margin-top: 140px; }
+    .header-bg {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.7)), url('https://images.unsplash.com/photo-1616750814461-6cb8f2e4d6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      animation: parallax 20s linear infinite;
+    }
+    @keyframes parallax {
+      0% { background-position: center 0; }
+      100% { background-position: center -200px; }
+    }
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .nav-link.active { color: var(--primary); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -4px;
+      left: 0;
+      background: var(--primary);
+      transition: width 0.4s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.75rem;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 0, 122, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .card:hover::before { left: 100%; }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    .accordion-button {
+      background: rgba(50, 50, 50, 0.8);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      color: #fff;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .light-mode .accordion-button { background: rgba(200, 200, 200, 0.8); color: #1a1a1a; }
+    .accordion-button::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+    .accordion-button.active::after { transform: rotate(180deg); }
+    .accordion-button:hover {
+      background: var(--primary);
+      transform: scale(1.02);
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+    .accordion-content.active { max-height: 1500px; }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .light-mode .btn-primary { color: #1a1a1a; }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: scale(1.1);
+    }
+    .login-section, .home-section {
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      0% { border-color: var(--primary); }
+      100% { border-color: var(--secondary); }
+    }
+    .chart-container {
+      background: var(--card-bg);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 20px rgba(255, 0, 122, 0.2);
+    }
+    pre code {
+      background: rgba(20, 20, 20, 0.8);
+      color: #e0e0e0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .light-mode pre code { background: rgba(240, 240, 240, 0.9); color: #1a1a1a; }
+    table {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    table thead tr { background: rgba(255, 0, 122, 0.2); }
+    table tbody tr:hover { background: rgba(255, 0, 122, 0.1); }
+    .tooltip {
+      position: relative;
+    }
+    .tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.3rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      z-index: 10;
+    }
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #back-to-top:hover {
+      background: var(--secondary);
+      transform: scale(1.2);
+    }
+    #theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #theme-toggle:hover { background: var(--secondary); }
+    @media (max-width: 768px) {
+      .nav-link { font-size: 0.8rem; letter-spacing: 0.5px; }
+      .section { margin-bottom: 3rem; }
+      .header-bg { background-position: center; }
+      h2 { font-size: 2rem; }
+      .card { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" title="Changer de thème">☀️ Mode Clair</button>
+  <button id="back-to-top" title="Retour en haut">↑</button>
+  <header class="header-bg text-white py-16 shadow-lg">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Mon Site Cosmétique</h1>
+      <p class="text-xl font-light mb-6 max-w-2xl mx-auto">Une expérience e-commerce révolutionnaire, inspirée par l'élégance et l'innovation</p>
+      <a href="#home" class="btn-primary mx-2 tooltip" data-tooltip="Explorer l'accueil">Accueil</a>
+      <a href="#login" class="btn-primary mx-2 tooltip" data-tooltip="Se connecter">Connexion</a>
+    </div>
+  </header>
+  <nav class="bg-black bg-opacity-90 shadow sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex flex-wrap gap-6 text-sm">
+      <a href="#home" class="nav-link text-white tooltip" data-tooltip="Vue d'ensemble">Accueil</a>
+      <a href="#login" class="nav-link text-white tooltip" data-tooltip="Connexion utilisateur">Connexion</a>
+      <a href="#overview" class="nav-link text-white tooltip" data-tooltip="Résumé du projet">Aperçu</a>
+      <a href="#intro" class="nav-link text-white tooltip" data-tooltip="Présentation détaillée">Présentation</a>
+      <a href="#roles" class="nav-link text-white tooltip" data-tooltip="Rôles et permissions">Rôles</a>
+      <a href="#fonctionnalites" class="nav-link text-white tooltip" data-tooltip="Fonctionnalités clés">Fonctionnalités</a>
+      <a href="#tech" class="nav-link text-white tooltip" data-tooltip="Technologies utilisées">Technologies</a>
+      <a href="#diagrammes" class="nav-link text-white tooltip" data-tooltip="Diagrammes explicatifs">Diagrammes</a>
+      <a href="#securite" class="nav-link text-white tooltip" data-tooltip="Sécurité du projet">Sécurité</a>
+      <a href="#contact" class="nav-link text-white tooltip" data-tooltip="Contacter l'équipe">Contact</a>
+      <a href="#multi-vendeur" class="nav-link text-white tooltip" data-tooltip="Système multi-vendeur">Multi-Vendeur</a>
+    </div>
+  </nav>
+  <main class="container mx-auto px-4 py-12">
+    <section id="overview" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Aperçu rapide du projet</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="#roles" class="card p-6 text-center hover:bg-opacity-80">
+          <h3 class="text-lg font-semibold mb-2">Rôles</h3>
+          <p class="text-sm">Admin, Vendeur, Livreur, Client avec permissions spécifiques</p>
+        </a>
+        <a href="#fonctionnalites" class="card p-6 text-center hover:bg-opacity-80">
+          <h3 class="text-lg font-semibold mb-2">Fonctionnalités</h3>
+          <p class="text-sm">Gestion des commandes, produits, paiements, et statistiques</p>
+        </a>
+        <a href="#tech" class="card p-6 text-center hover:bg-opacity-80">
+          <h3 class="text-lg font-semibold mb-2">Technologies</h3>
+          <p class="text-sm">Laravel, React, Tailwind, Chart.js, et plus</p>
+        </a>
+      </div>
+    </section>
+    <section id="home" class="section anchor home-section">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Accueil</h2>
+      <div class="card p-8 text-center">
+        <p class="text-lg mb-4 max-w-2xl mx-auto">Bienvenue sur <b>Mon Site Cosmétique</b>, une plateforme e-commerce qui redéfinit l'élégance et la performance. Découvrez nos produits, explorez nos fonctionnalités et plongez dans une expérience utilisateur unique.</p>
+        <a href="#fonctionnalites" class="btn-primary tooltip" data-tooltip="Voir les fonctionnalités">Découvrir les fonctionnalités</a>
+      </div>
+    </section>
+    <section id="login" class="section anchor login-section">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Connexion</h2>
+      <div class="card p-8 max-w-md mx-auto">
+        <p class="mb-4">Accédez à votre espace personnel pour gérer vos commandes, produits ou livraisons.</p>
+        <div class="space-y-4">
+          <input type="text" placeholder="Email" class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-pink-500 transition light-mode:bg-gray-200 light-mode:text-black light-mode:border-gray-300">
+          <input type="password" placeholder="Mot de passe" class="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-pink-500 transition light-mode:bg-gray-200 light-mode:text-black light-mode:border-gray-300">
+          <button class="btn-primary w-full tooltip" data-tooltip="Connexion sécurisée">Se connecter</button>
+        </div>
+        <p class="mt-4 text-sm text-gray-400 light-mode:text-gray-600">Pas de compte ? <a href="#" class="text-pink-500 hover:underline">Inscrivez-vous</a></p>
+      </div>
+    </section>
+    <section id="intro" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Présentation du projet</h2>
+      <div class="card p-8">
+        <p class="mb-4 text-base leading-relaxed">Mon Site Cosmétique est une plateforme e-commerce complète permettant la gestion de produits, commandes, utilisateurs et livraisons, avec des dashboards dédiés pour chaque rôle (admin, vendeur, livreur, client).</p>
+        <ul class="list-disc ml-6 text-base">
+          <li>Gestion multi-rôles (admin, vendeur, livreur, client)</li>
+          <li>Statistiques avancées, reporting, notifications</li>
+          <li>Interface responsive et moderne</li>
+        </ul>
+      </div>
+      <div class="card p-8 mt-8 bg-gradient-to-r from-cyan-900/60 to-pink-900/60 border border-pink-400/30">
+        <h3 class="text-2xl font-bold mb-4 text-pink-300">Pourquoi ce projet est-il pertinent&nbsp;?</h3>
+        <ul class="list-disc ml-6 text-base text-pink-100">
+          <li><b>Pertinence technique&nbsp;:</b> Utilisation de technologies modernes (Laravel, React, Spatie, Tailwind), gestion avancée des rôles, sécurité, tests, notifications, etc.</li>
+          <li><b>Pertinence professionnelle&nbsp;:</b> Reflète les besoins réels d'une plateforme e-commerce multi-profils, idéal pour le portfolio ou la préparation au monde du travail.</li>
+          <li><b>Pertinence pédagogique&nbsp;:</b> Permet d'apprendre le cycle complet d'un projet web (backend, frontend, base de données, sécurité, UX/UI, débogage, migration de données, etc.).</li>
+          <li><b>Pertinence métier&nbsp;:</b> Le secteur de la cosmétique et de l'e-commerce est en pleine croissance, avec des besoins concrets en gestion de rôles, reporting, alertes, etc.</li>
+          <li><b>Pertinence pour la veille et l'innovation&nbsp;:</b> Découverte de packages avancés, bonnes pratiques, ouverture à l'intégration de services externes, évolutivité du projet.</li>
+        </ul>
+        <p class="mt-4 text-base text-pink-100">Ce projet constitue une base solide pour un mémoire, un portfolio ou une évolution vers des fonctionnalités encore plus avancées (API, mobile, CI/CD, etc.).</p>
+      </div>
+    </section>
+    <section id="roles" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Rôles & Permissions (Spatie)</h2>
+      
+      <!-- Introduction Spatie -->
+      <div class="card p-6 mb-6 bg-gradient-to-r from-blue-900/60 to-indigo-900/60 border border-blue-400/30">
+        <h3 class="text-xl font-bold mb-3 text-blue-300">🔐 Système de Rôles Spatie Permission</h3>
+        <p class="text-blue-100 mb-3">Le projet utilise le package <code>Spatie Laravel Permission</code> pour une gestion robuste et flexible des rôles et permissions. Ce système permet une granularité fine des accès et une maintenance simplifiée.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-blue-800/50 p-3 rounded">
+            <h4 class="font-bold text-blue-200 text-sm">🎯 Rôles</h4>
+            <p class="text-xs text-blue-100">admin, vendeur, livreur, client</p>
+          </div>
+          <div class="bg-indigo-800/50 p-3 rounded">
+            <h4 class="font-bold text-indigo-200 text-sm">🔑 Permissions</h4>
+            <p class="text-xs text-indigo-100">Granulaires et réutilisables</p>
+          </div>
+          <div class="bg-purple-800/50 p-3 rounded">
+            <h4 class="font-bold text-purple-200 text-sm">⚡ Performance</h4>
+            <p class="text-xs text-purple-100">Cache et optimisation</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-button" onclick="toggleAccordion('roles-content')">
+        <h3 class="text-lg font-semibold">Détails des rôles et permissions</h3>
+      </div>
+      <div id="roles-content" class="accordion-content">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <div class="card p-6 bg-gradient-to-br from-red-900/30 to-pink-900/30 border border-red-400/30">
+            <h3 class="text-lg font-semibold mb-2 text-red-300">👑 Admin</h3>
+            <ul class="list-disc ml-6 text-base text-red-100">
+              <li>Gestion totale du site et de tous les utilisateurs</li>
+              <li>Gestion de tous les produits, commandes, transactions</li>
+              <li>Reporting global, exports, notifications système</li>
+              <li>Attribution et gestion des rôles et permissions</li>
+              <li>Accès à toutes les données de tous les vendeurs</li>
+              <li>Configuration système et maintenance</li>
+            </ul>
+          </div>
+          <div class="card p-6 bg-gradient-to-br from-blue-900/30 to-cyan-900/30 border border-blue-400/30">
+            <h3 class="text-lg font-semibold mb-2 text-blue-300">🏪 Vendeur</h3>
+            <ul class="list-disc ml-6 text-base text-blue-100">
+              <li>Dashboard dédié avec ses statistiques</li>
+              <li>CRUD de ses propres produits uniquement</li>
+              <li>Gestion de ses catégories de produits</li>
+              <li>Suivi de ses commandes et calculs de revenus</li>
+              <li>Gestion de ses livreurs assignés</li>
+              <li>Notifications spécifiques à ses produits</li>
+              <li>Interface de gestion rapide</li>
+            </ul>
+          </div>
+          <div class="card p-6 bg-gradient-to-br from-green-900/30 to-emerald-900/30 border border-green-400/30">
+            <h3 class="text-lg font-semibold mb-2 text-green-300">🚚 Livreur</h3>
+            <ul class="list-disc ml-6 text-base text-green-100">
+              <li>Accès à ses livraisons assignées</li>
+              <li>Marquage des commandes comme livrées</li>
+              <li>Planning et gestion de son planning</li>
+              <li>Notifications de nouvelles livraisons</li>
+              <li>Profil et paramètres personnels</li>
+            </ul>
+          </div>
+          <div class="card p-6 bg-gradient-to-br from-yellow-900/30 to-orange-900/30 border border-yellow-400/30">
+            <h3 class="text-lg font-semibold mb-2 text-yellow-300">👤 Client</h3>
+            <ul class="list-disc ml-6 text-base text-yellow-100">
+              <li>Navigation dans le catalogue complet</li>
+              <li>Gestion du panier et passage de commandes</li>
+              <li>Suivi de ses commandes personnelles</li>
+              <li>Gestion de son profil et adresses</li>
+              <li>Laisse d'avis sur les produits achetés</li>
+              <li>Notifications de suivi de commande</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-6">
+        <h4 class="font-semibold text-pink-400 mb-2 text-lg">Résumé des permissions par rôle</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h5 class="font-bold text-red-400 mb-2">👑 Admin</h5>
+            <ul class="list-disc ml-6 text-base text-sm">
+              <li><b>Toutes les permissions</b> : accès complet au système</li>
+              <li><b>Gestion des utilisateurs</b> : créer, modifier, supprimer, assigner des rôles</li>
+              <li><b>Gestion des produits</b> : voir et gérer tous les produits de tous les vendeurs</li>
+              <li><b>Gestion des commandes</b> : accès à toutes les commandes et transactions</li>
+              <li><b>Reporting</b> : statistiques globales et exports</li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-bold text-blue-400 mb-2">🏪 Vendeur</h5>
+            <ul class="list-disc ml-6 text-base text-sm">
+              <li><b>Ses produits uniquement</b> : CRUD limité à ses propres produits</li>
+              <li><b>Ses catégories</b> : gestion des catégories de ses produits</li>
+              <li><b>Ses commandes</b> : vue des commandes contenant ses produits</li>
+              <li><b>Ses statistiques</b> : revenus et performances personnelles</li>
+              <li><b>Ses notifications</b> : alertes spécifiques à ses produits</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commandes Spatie -->
+      <div class="card p-6 mt-6 bg-gradient-to-r from-purple-900/60 to-pink-900/60 border border-purple-400/30">
+        <h4 class="font-bold text-purple-300 mb-3">🛠️ Commandes Spatie Utiles</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h5 class="font-semibold text-purple-200 mb-2">Gestion des rôles</h5>
+            <pre class="bg-gray-900 text-green-400 rounded p-2 text-xs overflow-x-auto">
+# Assigner un rôle
+$user->assignRole('vendeur');
+
+# Vérifier un rôle
+if ($user->hasRole('admin')) { ... }
+
+# Retirer un rôle
+$user->removeRole('vendeur');</pre>
+          </div>
+          <div>
+            <h5 class="font-semibold text-pink-200 mb-2">Gestion des permissions</h5>
+            <pre class="bg-gray-900 text-green-400 rounded p-2 text-xs overflow-x-auto">
+# Assigner une permission
+$user->givePermissionTo('edit products');
+
+# Vérifier une permission
+if ($user->can('delete products')) { ... }
+
+# Permissions par rôle
+$role = Role::findByName('vendeur');
+$role->givePermissionTo('view own products');</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="fonctionnalites" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Fonctionnalités principales</h2>
+      <div class="accordion-button" onclick="toggleAccordion('fonctionnalites-content')">
+        <h3 class="text-lg font-semibold">Détails des fonctionnalités</h3>
+      </div>
+      <div id="fonctionnalites-content" class="accordion-content">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <div class="card p-6">
+            <h3 class="text-lg font-semibold mb-2">Commandes & Produits</h3>
+            <ul class="list-disc ml-6 text-base">
+              <li>Création, suivi, statuts, historique</li>
+              <li>CRUD produits, gestion du stock, alertes</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="text-lg font-semibold mb-2">Transactions & Paiements</h3>
+            <ul class="list-disc ml-6 text-base">
+              <li>Statuts synchronisés commande/transaction</li>
+              <li>Exports CSV/PDF, reporting quotidien</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="text-lg font-semibold mb-2">Dashboards & Statistiques</h3>
+            <ul class="list-disc ml-6 text-base">
+              <li>Dashboards admin et vendeur avancés</li>
+              <li>Graphiques, histogrammes, top produits</li>
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="text-lg font-semibold mb-2">Notifications & Sécurité</h3>
+            <ul class="list-disc ml-6 text-base">
+              <li>Notifications mail et in-app</li>
+              <li>Alertes stock bas, reporting automatique</li>
+              <li>Sécurité par middleware, permissions, validation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="multi-vendeur" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Système Multi-Vendeur Avancé</h2>
+      
+      <!-- Vue d'ensemble -->
+      <div class="card p-8 mb-8 bg-gradient-to-r from-purple-900/60 to-pink-900/60 border border-purple-400/30">
+        <h3 class="text-2xl font-bold mb-4 text-purple-300">🎯 Vue d'ensemble du système multi-vendeur</h3>
+        <p class="text-lg mb-4 text-purple-100">Le système multi-vendeur permet à plusieurs vendeurs de gérer leurs produits indépendamment, avec une séparation complète des données et des notifications. Chaque vendeur ne voit et ne gère que ses propres produits, commandes et catégories.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <div class="bg-purple-800/50 p-4 rounded-lg">
+            <h4 class="font-bold text-purple-200 mb-2">🔒 Sécurité Totale</h4>
+            <p class="text-sm text-purple-100">Isolation complète des données par vendeur</p>
+          </div>
+          <div class="bg-pink-800/50 p-4 rounded-lg">
+            <h4 class="font-bold text-pink-200 mb-2">📊 Notifications Intelligentes</h4>
+            <p class="text-sm text-pink-100">Chaque vendeur reçoit ses notifications spécifiques</p>
+          </div>
+          <div class="bg-cyan-800/50 p-4 rounded-lg">
+            <h4 class="font-bold text-cyan-200 mb-2">⚡ Gestion Rapide</h4>
+            <p class="text-sm text-cyan-100">Interface optimisée pour les opérations courantes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture technique -->
+      <div class="card p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">🏗️ Architecture Technique</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-pink-400">Base de données</h4>
+            <ul class="list-disc ml-6 text-base space-y-2">
+              <li><b>Colonne <code>seller_id</code></b> dans la table <code>products</code></li>
+              <li><b>Colonne <code>seller_id</code></b> dans la table <code>users</code> (pour les livreurs)</li>
+              <li><b>Rôles Spatie</b> : <code>admin</code>, <code>vendeur</code>, <code>livreur</code>, <code>client</code></li>
+              <li><b>Permissions granulaires</b> pour chaque action</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-cyan-400">Contrôleurs dédiés</h4>
+            <ul class="list-disc ml-6 text-base space-y-2">
+              <li><code>VendorProductController</code> - Gestion des produits</li>
+              <li><code>VendorCategoryController</code> - Gestion des catégories</li>
+              <li><code>VendorOrderController</code> - Suivi des commandes</li>
+              <li><code>VendorQuickManageController</code> - Gestion rapide</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mermaid mb-6">
+          graph TD
+            A[Vendeur] -->|crée| B[Produit]
+            A -->|gère| C[Catégorie]
+            A -->|assigne| D[Livreur]
+            B -->|appartient à| C
+            D -->|livre| E[Commande]
+            E -->|contient| B
+            F[Admin] -->|voit tout| G[Système]
+            A -->|voit seulement| H[Ses données]
+        </div>
+      </div>
+
+      <!-- Fonctionnalités détaillées -->
+      <div class="card p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">🚀 Fonctionnalités Détaillées</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-pink-900/30 to-purple-900/30 p-6 rounded-lg border border-pink-400/30">
+            <h4 class="text-lg font-semibold mb-3 text-pink-300">📦 Gestion des Produits</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-pink-100">
+              <li>CRUD complet des produits (créer, lire, modifier, supprimer)</li>
+              <li>Filtrage automatique par <code>seller_id</code></li>
+              <li>Gestion du stock avec alertes automatiques</li>
+              <li>Activation/désactivation des produits</li>
+              <li>Upload d'images et gestion des médias</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gradient-to-br from-cyan-900/30 to-blue-900/30 p-6 rounded-lg border border-cyan-400/30">
+            <h4 class="text-lg font-semibold mb-3 text-cyan-300">🏷️ Gestion des Catégories</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-cyan-100">
+              <li>Accès uniquement aux catégories de ses produits</li>
+              <li>CRUD des catégories avec validation</li>
+              <li>Association/dissociation produits-catégories</li>
+              <li>Interface intuitive pour la gestion</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gradient-to-br from-green-900/30 to-emerald-900/30 p-6 rounded-lg border border-green-400/30">
+            <h4 class="text-lg font-semibold mb-3 text-green-300">📋 Suivi des Commandes</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-green-100">
+              <li>Vue des commandes contenant ses produits</li>
+              <li>Calcul automatique des totaux par vendeur</li>
+              <li>Mise à jour des statuts de préparation</li>
+              <li>Historique complet des commandes</li>
+              <li>Statistiques de vente personnalisées</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gradient-to-br from-yellow-900/30 to-orange-900/30 p-6 rounded-lg border border-yellow-400/30">
+            <h4 class="text-lg font-semibold mb-3 text-yellow-300">⚡ Gestion Rapide</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-yellow-100">
+              <li>Interface unifiée pour les opérations courantes</li>
+              <li>Ajout rapide de produits et catégories</li>
+              <li>Association en un clic</li>
+              <li>Accès direct depuis la navigation</li>
+              <li>Optimisation de l'expérience utilisateur</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sécurité et isolation -->
+      <div class="card p-8 mb-8 bg-gradient-to-r from-red-900/60 to-orange-900/60 border border-red-400/30">
+        <h3 class="text-2xl font-bold mb-4 text-red-300">🔒 Sécurité et Isolation des Données</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-red-200">Middleware de Sécurité</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-red-100">
+              <li><code>IsVendeur</code> - Vérification du rôle vendeur</li>
+              <li><code>IsAdmin</code> - Vérification du rôle admin</li>
+              <li>Filtrage automatique par <code>seller_id</code></li>
+              <li>Protection contre l'accès croisé</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-orange-200">Isolation des Données</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-orange-100">
+              <li>Chaque vendeur ne voit que ses produits</li>
+              <li>Chaque vendeur ne voit que ses commandes</li>
+              <li>Chaque vendeur ne voit que ses catégories</li>
+              <li>Impossible d'accéder aux données d'autres vendeurs</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 p-4 bg-red-800/50 rounded-lg">
+          <h4 class="font-bold text-red-200 mb-2">🛡️ Exemple de Code Sécurisé</h4>
+          <pre class="bg-gray-900 text-green-400 rounded p-3 text-sm overflow-x-auto">
+// Dans VendorProductController
+public function index()
+{
+    $user = auth()->user();
+    
+    if ($user->hasRole('vendeur')) {
+        // Les vendeurs ne voient que leurs produits
+        $products = Product::where('seller_id', $user->id)->paginate(10);
+    } elseif ($user->hasRole('admin')) {
+        // Les admins voient tous les produits
+        $products = Product::with('seller')->paginate(10);
+    } else {
+        abort(403, 'Accès non autorisé.');
+    }
+    
+    return view('vendor.products.index', compact('products'));
+}</pre>
+        </div>
+      </div>
+
+      <!-- Notifications intelligentes -->
+      <div class="card p-8 mb-8 bg-gradient-to-r from-blue-900/60 to-indigo-900/60 border border-blue-400/30">
+        <h3 class="text-2xl font-bold mb-4 text-blue-300">🔔 Système de Notifications Intelligentes</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-blue-200">Notifications par Vendeur</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-blue-100">
+              <li><b>Nouvelles commandes</b> : notification uniquement pour les vendeurs concernés</li>
+              <li><b>Stock bas</b> : alerte automatique quand le stock est faible</li>
+              <li><b>Changements de statut</b> : mise à jour en temps réel</li>
+              <li><b>Notifications mail</b> : envoi automatique aux vendeurs</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-indigo-200">Types de Notifications</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-indigo-100">
+              <li><code>VendorOrderNotification</code> - Commandes spécifiques au vendeur</li>
+              <li><code>LowStockAlert</code> - Alertes de stock bas</li>
+              <li><code>OrderStatusUpdated</code> - Mise à jour des statuts</li>
+              <li><code>NewOrderNotification</code> - Nouvelles commandes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mermaid mb-6">
+          sequenceDiagram
+            participant C as Client
+            participant S as Système
+            participant V1 as Vendeur 1
+            participant V2 as Vendeur 2
+            participant A as Admin
+            
+            C->>S: Passe commande (produits V1 + V2)
+            S->>V1: Notifie nouvelle commande (ses produits)
+            S->>V2: Notifie nouvelle commande (ses produits)
+            S->>A: Notifie nouvelle commande (tous les produits)
+        </div>
+      </div>
+
+      <!-- Interface utilisateur -->
+      <div class="card p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">🎨 Interface Utilisateur Optimisée</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">📱</span>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">Responsive Design</h4>
+            <p class="text-sm text-gray-300">Interface adaptée à tous les écrans</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="bg-gradient-to-br from-cyan-500 to-blue-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">⚡</span>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">Navigation Intuitive</h4>
+            <p class="text-sm text-gray-300">Accès rapide aux fonctionnalités</p>
+          </div>
+          
+          <div class="text-center">
+            <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🎯</span>
+            </div>
+            <h4 class="text-lg font-semibold mb-2">UX Optimisée</h4>
+            <p class="text-sm text-gray-300">Expérience utilisateur fluide</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tests et validation -->
+      <div class="card p-8 mb-8 bg-gradient-to-r from-green-900/60 to-emerald-900/60 border border-green-400/30">
+        <h3 class="text-2xl font-bold mb-4 text-green-300">🧪 Tests et Validation</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-green-200">Tests Automatisés</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-green-100">
+              <li>Tests unitaires pour les contrôleurs vendeur</li>
+              <li>Tests d'intégration pour les middlewares</li>
+              <li>Tests de sécurité pour l'isolation des données</li>
+              <li>Tests des notifications par vendeur</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-emerald-200">Validation des Données</h4>
+            <ul class="list-disc ml-6 text-base space-y-2 text-emerald-100">
+              <li>Validation côté serveur avec Laravel</li>
+              <li>Validation côté client avec JavaScript</li>
+              <li>Sanitisation des données d'entrée</li>
+              <li>Protection contre les injections SQL</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commandes utiles -->
+      <div class="card p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">🛠️ Commandes Utiles</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-pink-400">Gestion des Rôles</h4>
+            <pre class="bg-gray-900 text-green-400 rounded p-3 text-sm overflow-x-auto">
+# Voir les rôles et utilisateurs
+php artisan tinker --execute="
+echo '=== RÔLES SPATIE ===' . PHP_EOL;
+\Spatie\Permission\Models\Role::all()->each(function(\$role) {
+    echo 'Rôle: ' . \$role->name . ' (ID: ' . \$role->id . ')' . PHP_EOL;
+});
+echo PHP_EOL . '=== UTILISATEURS ET LEURS RÔLES ===' . PHP_EOL;
+\App\Models\User::with('roles')->get()->each(function(\$user) {
+    echo 'Utilisateur: ' . \$user->name . ' (ID: ' . \$user->id . ')' . PHP_EOL;
+    echo 'Rôles: ' . \$user->roles->pluck('name')->implode(', ') . PHP_EOL;
+    echo '---' . PHP_EOL;
+});
+"</pre>
+          </div>
+          
+          <div>
+            <h4 class="text-lg font-semibold mb-3 text-cyan-400">Tests de Sécurité</h4>
+            <pre class="bg-gray-900 text-green-400 rounded p-3 text-sm overflow-x-auto">
+# Vérifier la séparation des données
+php artisan tinker --execute="
+\$vendors = \App\Models\User::role('vendeur')->get();
+foreach (\$vendors as \$vendor) {
+    \$productCount = \App\Models\Product::where('seller_id', \$vendor->id)->count();
+    echo \$vendor->name . ': ' . \$productCount . ' produits' . PHP_EOL;
+}
+"</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="changelog" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Changelog & Mises à jour récentes</h2>
+      <div class="card p-8">
+        <ul class="list-disc ml-6 text-base">
+          <li><b>Refonte complète de l'espace vendeur</b> : CRUD produits, catégories, livreurs, gestion rapide, navigation dédiée, sécurité renforcée par <code>seller_id</code>.</li>
+          <li><b>Notifications vendeurs</b> : alertes stock bas, nouvelles commandes, notifications mail et in-app pour chaque vendeur concerné.</li>
+          <li><b>Architecture sécurisée</b> : toutes les opérations vendeur sont isolées, filtrées et protégées (aucun accès croisé possible).</li>
+          <li><b>Gestion rapide</b> : nouvelle page pour ajouter/associer produits et catégories en un clic.</li>
+          <li><b>Documentation et diagrammes mis à jour</b> : relations, flux, sécurité, UX vendeur.</li>
+          <li><b>Migration vers Spatie Roles</b> : remplacement du système de rôles personnalisé par Spatie Permission pour une gestion plus robuste.</li>
+          <li><b>Correction des conflits de middleware</b> : résolution du problème "Target class [vendeur] does not exist" en supprimant les doublons de middleware.</li>
+          <li><b>Amélioration de la sécurité</b> : chaque vendeur ne voit que ses propres produits, catégories et commandes.</li>
+        </ul>
+        <p class="mt-4 text-base text-pink-100">Toutes ces évolutions sont effectives dans le code et la documentation ci-dessous.</p>
+      </div>
+    </section>
+    <section id="maj-vendeur" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Mises à jour : Espace vendeur</h2>
+      <div class="card p-8">
+        <ul class="list-disc ml-6 text-base">
+          <li>Ajout d'un dashboard vendeur simplifié, accès uniquement aux fonctionnalités essentielles.</li>
+          <li>CRUD complet sur les livreurs (ajout, édition, suppression) par le vendeur, <b>avec filtrage strict par <code>seller_id</code></b>.</li>
+          <li>CRUD complet sur les produits du vendeur (ajout, édition, suppression, filtrage par vendeur connecté, <b>aucun accès croisé possible</b>).</li>
+          <li>CRUD complet sur les catégories de produits accessibles au vendeur.</li>
+          <li>Navigation adaptée : suppression des liens/fonctionnalités non pertinentes pour le vendeur, <b>ajout du menu "Gestion rapide"</b>.</li>
+          <li>Préparation des vues pour une personnalisation future (dossier vendor/).</li>
+        </ul>
+        <p class="mt-4 text-base text-pink-100">Ces évolutions renforcent l'autonomie du vendeur, la sécurité et la clarté de l'interface, tout en gardant la possibilité d'adapter les vues à l'avenir.</p>
+      </div>
+    </section>
+    <section id="maj-vendeur-details" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Détails des améliorations récentes de l'espace vendeur</h2>
+      <div class="card p-8">
+        <h3 class="text-xl font-semibold mb-4">1. Architecture et sécurité</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li>Ajout de la colonne <b>seller_id</b> à la table <b>users</b> pour lier chaque livreur à son vendeur.</li>
+          <li>Toutes les requêtes CRUD côté vendeur filtrent par <b>seller_id</b> pour garantir la sécurité et l'isolation des données. <b>Impossible pour un vendeur d'accéder aux données d'un autre vendeur.</b></li>
+        </ul>
+        <h3 class="text-xl font-semibold mb-4">2. Contrôleurs et vues dédiés</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li>Contrôleurs <b>VendorProductController</b>, <b>VendorCategoryController</b>, <b>VendorLivreurController</b>, <b>VendorQuickManageController</b> créés pour gérer les entités du vendeur.</li>
+          <li>Vues dédiées dans <code>resources/views/vendor/</code> pour chaque entité (produits, catégories, livreurs, gestion rapide).</li>
+          <li>Navigation adaptée : le menu "Coup de Coeur" est remplacé par <b>"Gestion rapide"</b> (accès direct à l'ajout produit/catégorie/association).</li>
+        </ul>
+        <h3 class="text-xl font-semibold mb-4">3. Fonctionnalités de gestion rapide</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li>Nouvelle page <b>Gestion rapide</b> permettant d'ajouter un produit, une catégorie, d'associer/dissocier un produit à une catégorie, <b>en un clic</b>.</li>
+          <li>Accès direct via la navigation vendeur.</li>
+        </ul>
+        <h3 class="text-xl font-semibold mb-4">4. Diagramme de relations</h3>
+        <div class="mermaid mb-4">
+          graph TD;
+            Vendeur-->|possède|Livreur;
+            Vendeur-->|crée|Produit;
+            Produit-->|appartient à|Catégorie;
+            Livreur-->|lié à|Vendeur;
+        </div>
+        <h3 class="text-xl font-semibold mb-4">5. Expérience utilisateur</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li>Interface épurée, accès rapide aux opérations courantes.</li>
+          <li>Messages de succès/erreur après chaque action (UX renforcée).</li>
+          <li>Préparation à la personnalisation future des vues vendeur.</li>
+        </ul>
+        <h3 class="text-xl font-semibold mb-4">6. Sécurité et bonnes pratiques</h3>
+        <ul class="list-disc ml-6 text-base">
+          <li>Filtrage strict par <b>seller_id</b> dans tous les contrôleurs vendeur.</li>
+          <li>Respect des bonnes pratiques Laravel (policies, validation, routes nommées, <b>aucune faille d'accès croisé</b>).</li>
+        </ul>
+        <p class="mt-4 text-base text-pink-100">Ces évolutions garantissent une expérience vendeur professionnelle, sécurisée et évolutive, tout en facilitant la maintenance et l'extension du projet.</p>
+      </div>
+    </section>
+    <section id="statistiques" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Statistiques : Histogramme des commandes</h2>
+      <div class="chart-container card p-6 max-w-lg mx-auto">
+        <h3 class="text-lg font-semibold mb-4">Répartition des commandes par statut</h3>
+        <canvas id="ordersStatusBarChart" height="220" class="mb-4"></canvas>
+        <p class="text-sm text-gray-400 light-mode:text-gray-600">Exemple de données : modifiez le code pour refléter vos statistiques réelles.</p>
+      </div>
+    </section>
+    <section id="tech" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Technologies utilisées</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card p-6">
+          <h3 class="text-lg font-semibold mb-2">Backend</h3>
+          <ul class="list-disc ml-6 text-base">
+            <li>Laravel (PHP 8+), Eloquent ORM</li>
+            <li>Spatie Permission, Notifications, Mail</li>
+            <li>Tests PHPUnit, seeders, migrations</li>
+          </ul>
+        </div>
+        <div class="card p-6">
+          <h3 class="text-lg font-semibold mb-2">Frontend</h3>
+          <ul class="list-disc ml-6 text-base">
+            <li>React (Vite), Tailwind CSS</li>
+            <li>Chart.js (statistiques), Blade (admin)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="uml-types" class="section anchor">
+      <h2 class="text-2xl font-bold mb-4 text-fuchsia-700">Types de diagrammes UML utilisés</h2>
+      <div class="card p-6 bg-cyan-50/80 shadow border-2 border-fuchsia-200">
+        <ul class="list-disc ml-6 text-base space-y-4">
+          <li>
+            <b>Diagramme de classes</b><br>
+            <span class="text-sm">Définition :</span> Représente la structure des entités (objets), leurs attributs, méthodes et relations.<br>
+            <span class="text-sm">Utilité :</span> Comprendre la structure de la base de données ou du code, les liens entre objets.<br>
+            <span class="text-sm">Quand l'utiliser :</span> Pour modéliser la structure métier, la base de données, ou l’architecture objet.
+          </li>
+          <li>
+            <b>Diagramme de séquence</b><br>
+            <span class="text-sm">Définition :</span> Montre l’enchaînement des messages/interactions entre acteurs et objets dans le temps.<br>
+            <span class="text-sm">Utilité :</span> Visualiser le déroulement d’un scénario (ex : passage de commande, authentification).<br>
+            <span class="text-sm">Quand l'utiliser :</span> Pour décrire un processus métier ou une interaction complexe.
+          </li>
+          <li>
+            <b>Diagramme d’activité</b><br>
+            <span class="text-sm">Définition :</span> Décrit le déroulement d’un workflow ou d’un processus, étape par étape.<br>
+            <span class="text-sm">Utilité :</span> Comprendre les étapes d’un traitement (ex : reset mot de passe, gestion commande).<br>
+            <span class="text-sm">Quand l'utiliser :</span> Pour modéliser un algorithme, un processus métier, ou un flux de validation.
+          </li>
+          <li>
+            <b>Diagramme de cas d’utilisation</b><br>
+            <span class="text-sm">Définition :</span> Représente les interactions possibles entre les utilisateurs (rôles) et le système.<br>
+            <span class="text-sm">Utilité :</span> Visualiser qui fait quoi, les fonctionnalités accessibles à chaque acteur.<br>
+            <span class="text-sm">Quand l'utiliser :</span> Pour lister les besoins fonctionnels, les droits d’accès, ou préparer des tests.
+          </li>
+          <li>
+            <b>Diagramme de composants (optionnel)</b><br>
+            <span class="text-sm">Définition :</span> Montre l’architecture logicielle, les modules et leurs dépendances.<br>
+            <span class="text-sm">Utilité :</span> Comprendre l’organisation technique du projet.<br>
+            <span class="text-sm">Quand l'utiliser :</span> Pour la documentation technique ou l’architecture logicielle.
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section id="diagrammes" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-yellow-400">Diagrammes & relations</h2>
+      <div class="card p-6 mb-6 bg-white/90 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-2">Diagramme de classes principales</h3>
+        <p class="mb-4 text-sm text-gray-700">Structure des entités principales, leurs attributs et relations.</p>
+        <div class="mermaid">
+          classDiagram
+            class User {
+              +int id
+              +string name
+              +string email
+              +string password
+              +string role
+              +int? seller_id
+              +timestamp created_at
+              +timestamp updated_at
+            }
+            class Product {
+              +int id
+              +string name
+              +float price
+              +int quantity
+              +int category_id
+              +int seller_id
+              +bool is_active
+              +timestamp created_at
+            }
+            class Order {
+              +int id
+              +int user_id
+              +string status
+              +float total
+              +timestamp created_at
+            }
+            class Category {
+              +int id
+              +string name
+            }
+            class Notification {
+              +int id
+              +string type
+              +int notifiable_id
+              +string data
+              +timestamp created_at
+            }
+            User "1" --o "many" Order : passe
+            User "1" --o "many" Product : possède
+            Product "many" --o "1" Category : appartient à
+            Order "many" --o "1" Product : contient
+            Notification "many" --o "1" User : notifie
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-fuchsia-100/80 shadow-xl border-2 border-cyan-400">
+        <h3 class="text-lg font-semibold mb-2">Cas d'utilisation par rôle</h3>
+        <p class="mb-4 text-sm text-gray-700">Qui fait quoi sur la plateforme ? (avec verbes d'action)</p>
+        <div class="mermaid">
+          graph TD
+            Admin -->|Gère| Utilisateurs
+            Admin -->|Gère| Produits
+            Admin -->|Gère| Commandes
+            Admin -->|Attribue| Roles
+            Admin -->|Consulte| Statistiques
+            Vendeur -->|Crée| Produit
+            Vendeur -->|Modifie| Produit
+            Vendeur -->|Supprime| Produit
+            Vendeur -->|Consulte| Commandes
+            Vendeur -->|Gère| Livreurs
+            Vendeur -->|Reçoit| Notifications
+            Livreur -->|Consulte| Livraisons
+            Livreur -->|MetAJour| StatutLivraison
+            Client -->|Parcourt| Catalogue
+            Client -->|Passe| Commande
+            Client -->|Suit| Commande
+            Client -->|Laisse| Avis
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-cyan-100/80 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-2">Séquence : passage de commande</h3>
+        <p class="mb-4 text-sm text-gray-700">Flux d'une commande du client à la livraison (avec verbes explicites).</p>
+        <div class="mermaid">
+          sequenceDiagram
+            Client->>Vendeur: Passe commande
+            Vendeur->>Admin: Notifie nouvelle commande
+            Admin->>Livreur: Assigne livraison
+            Livreur->>Client: Livre la commande
+            Livreur->>Admin: Met à jour statut livré
+            Admin->>Vendeur: Met à jour statut commande
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-yellow-100/80 shadow-xl border-2 border-cyan-400">
+        <h3 class="text-lg font-semibold mb-2">Séquence : notification stock bas</h3>
+        <p class="mb-4 text-sm text-gray-700">Comment l'alerte de stock bas est envoyée (avec verbes explicites).</p>
+        <div class="mermaid">
+          sequenceDiagram
+            Système->>Vendeur: Détecte stock bas
+            Système->>Admin: Détecte stock bas
+            Système->>Vendeur: Envoie notification mail/in-app
+            Système->>Admin: Envoie notification mail/in-app
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-white/90 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-2">Diagramme d'activité : gestion d'une commande</h3>
+        <p class="mb-4 text-sm text-gray-700">Étapes du workflow d'une commande, de la création à la livraison (avec verbes explicites).</p>
+        <div class="mermaid">
+          graph TD
+            A[Création commande] --> B[Valide paiement]
+            B -->|Succès| C[Prépare commande]
+            C --> D[Assigne livreur]
+            D --> E[Effectue livraison]
+            E --> F[Commande livrée]
+            B -->|Échec| G[Commande annulée]
+        </div>
+      </div>
+    </section>
+    <section id="securite" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Sécurité & bonnes pratiques</h2>
+      
+      <!-- Vue d'ensemble sécurité -->
+      <div class="card p-6 mb-6 bg-gradient-to-r from-red-900/60 to-orange-900/60 border border-red-400/30">
+        <h3 class="text-xl font-bold mb-3 text-red-300">🛡️ Architecture de Sécurité Multi-Niveaux</h3>
+        <p class="text-red-100 mb-4">Le système implémente plusieurs couches de sécurité pour garantir l'isolation des données et la protection contre les accès non autorisés.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-red-800/50 p-3 rounded text-center">
+            <h4 class="font-bold text-red-200 text-sm">🔐 Authentification</h4>
+            <p class="text-xs text-red-100">Laravel Auth</p>
+          </div>
+          <div class="bg-orange-800/50 p-3 rounded text-center">
+            <h4 class="font-bold text-orange-200 text-sm">🎭 Rôles Spatie</h4>
+            <p class="text-xs text-orange-100">Permissions granulaires</p>
+          </div>
+          <div class="bg-yellow-800/50 p-3 rounded text-center">
+            <h4 class="font-bold text-yellow-200 text-sm">🚪 Middleware</h4>
+            <p class="text-xs text-yellow-100">Filtrage par rôle</p>
+          </div>
+          <div class="bg-green-800/50 p-3 rounded text-center">
+            <h4 class="font-bold text-green-200 text-sm">🔒 Isolation</h4>
+            <p class="text-xs text-green-100">Données par vendeur</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6 mb-6 bg-white/90 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-3 text-fuchsia-700">Sécurité Implémentée</h3>
+        <ul class="list-disc ml-6 text-base">
+          <li><b>Authentification Laravel</b> : système de connexion sécurisé avec hachage des mots de passe</li>
+          <li><b>Rôles et permissions Spatie</b> : gestion granulaire des accès avec cache optimisé</li>
+          <li><b>Middleware de sécurité</b> : <code>IsVendeur</code>, <code>IsAdmin</code>, <code>IsLivreur</code></li>
+          <li><b>Validation forte des données</b> : validation côté serveur et client</li>
+          <li><b>Isolation des données</b> : filtrage automatique par <code>seller_id</code></li>
+          <li><b>Protection CSRF</b> : tokens de sécurité pour les formulaires</li>
+          <li><b>Audit des rôles/permissions</b> : commande <code>artisan roles:report</code></li>
+          <li><b>Tests automatisés</b> : PHPUnit pour la validation de la sécurité</li>
+        </ul>
+      </div>
+      <div class="card p-6 mb-6 bg-fuchsia-100/80 shadow-xl border-2 border-cyan-400">
+        <h3 class="text-lg font-semibold mb-2">Séquence : authentification & redirection</h3>
+        <p class="mb-4 text-sm text-gray-700">Connexion, vérification du rôle, redirection sécurisée, gestion de session.</p>
+        <div class="mermaid">
+          sequenceDiagram
+            participant Utilisateur
+            participant Serveur
+            participant Système Auth
+            Utilisateur->>Serveur: Soumet login (email, mot de passe)
+            Serveur->>Système Auth: Vérifie credentials
+            Système Auth-->>Serveur: OK/KO
+            alt Credentials valides
+              Serveur->>Système Auth: Récupère rôle
+              Système Auth-->>Serveur: Rôle (admin/vendeur/livreur/client)
+              Serveur->>Utilisateur: Crée session/token
+              Serveur->>Utilisateur: Redirige selon rôle
+            else Credentials invalides
+              Serveur->>Utilisateur: Message erreur
+            end
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-cyan-100/80 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-2">Diagramme d'activité : reset de mot de passe</h3>
+        <p class="mb-4 text-sm text-gray-700">Étapes de la réinitialisation sécurisée du mot de passe.</p>
+        <div class="mermaid">
+          graph TD
+            A[Demande reset] --> B[Envoi email avec token]
+            B --> C[Utilisateur clique lien]
+            C --> D[Formulaire nouveau mot de passe]
+            D --> E[Validation token]
+            E -->|Valide| F[Enregistre nouveau mot de passe]
+            E -->|Invalide| G[Erreur sécurité]
+        </div>
+      </div>
+      <div class="card p-6 mb-6 bg-yellow-100/80 shadow-xl border-2 border-cyan-400">
+        <h3 class="text-lg font-semibold mb-2">Schéma de middleware & protection des routes</h3>
+        <p class="mb-4 text-sm text-gray-700">Qui protège quoi ? Accès sécurisé selon le rôle.</p>
+        <div class="mermaid">
+          graph TD
+            A[Utilisateur] -->|Accède| B[Route]
+            B -->|Passe par| C[Middleware Auth]
+            C -->|Vérifie| D{Rôle}
+            D -- Admin --> E[Routes admin]
+            D -- Vendeur --> F[Routes vendeur]
+            D -- Livreur --> G[Routes livreur]
+            D -- Client --> H[Routes client]
+            E & F & G & H --> I[Accès autorisé]
+            D -- Autre/Non autorisé --> J[403 Forbidden]
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Contact & support</h2>
+      <div class="card p-6">
+        <p class="text-base">Pour toute question ou contribution, contactez l’équipe technique via <a href="mailto:support@monsitecosmetique.com" class="text-pink-400 hover:underline tooltip" data-tooltip="Envoyer un email">support@monsitecosmetique.com</a>.</p>
+        <a href="mailto:support@monsitecosmetique.com" class="btn-primary mt-4 inline-block tooltip" data-tooltip="Contacter l'équipe">Envoyer un email</a>
+      </div>
+    </section>
+    <section id="structure" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Structure technique</h2>
+      <div class="card p-6">
+        <h3 class="text-lg font-semibold mb-2">Arborescence principale</h3>
+        <pre><code>mon-site-cosmetique/
+├── app/ (backend Laravel)
+│   ├── Models/ (User, Product, Order, Transaction, ...)
+│   ├── Http/Controllers/ (Admin, Vendor, Livreur, ...)
+│   ├── Mail/, Notifications/, Services/, ...
+├── resources/views/ (Blade, admin, vendor, emails)
+├── frontend/ (React, Vite, Tailwind, composants)
+├── public/ (assets, documentation.html)
+├── routes/ (web.php, api.php)
+├── database/ (migrations, seeders, factories)
+├── config/, tests/, ...
+</code></pre>
+        <h3 class="text-lg font-semibold mb-2 mt-4">Modèles principaux</h3>
+        <ul class="list-disc ml-6 text-base">
+          <li><b>User</b> : gestion des rôles, permissions, notifications</li>
+          <li><b>Product</b> : gestion des produits, stock, vendeur associé</li>
+          <li><b>Order</b> : commandes, statuts, client, produits, vendeur</li>
+          <li><b>Transaction</b> : paiement, statut, commande liée</li>
+          <li><b>Notification</b> : alertes, reporting, changements de statut</li>
+        </ul>
+      </div>
+    </section>
+    <section id="statuts" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Tableaux des statuts</h2>
+      <div class="accordion-button" onclick="toggleAccordion('statuts-content')">
+        <h3 class="text-lg font-semibold">Détails des statuts</h3>
+      </div>
+      <div id="statuts-content" class="accordion-content">
+        <div class="card p-6 mt-4 overflow-x-auto">
+          <h3 class="text-lg font-semibold mb-2">Commandes</h3>
+          <table class="min-w-full text-sm mb-4">
+            <thead><tr><th class="px-3 py-2">Statut</th><th class="px-3 py-2">Description</th></tr></thead>
+            <tbody>
+              <tr><td class="px-3 py-2">en attente</td><td class="px-3 py-2">Commande créée, en attente de paiement</td></tr>
+              <tr><td class="px-3 py-2">payé</td><td class="px-3 py-2">Commande payée</td></tr>
+              <tr><td class="px-3 py-2">en préparation</td><td class="px-3 py-2">Préparation en cours</td></tr>
+              <tr><td class="px-3 py-2">expédié</td><td class="px-3 py-2">Commande expédiée</td></tr>
+              <tr><td class="px-3 py-2">en livraison</td><td class="px-3 py-2">En cours de livraison</td></tr>
+              <tr><td class="px-3 py-2">livré</td><td class="px-3 py-2">Livraison effectuée</td></tr>
+              <tr><td class="px-3 py-2">annulé</td><td class="px-3 py-2">Commande annulée</td></tr>
+              <tr><td class="px-3 py-2">retourné</td><td class="px-3 py-2">Produit retourné</td></tr>
+              <tr><td class="px-3 py-2">remboursé</td><td class="px-3 py-2">Commande remboursée</td></tr>
+            </tbody>
+          </table>
+          <h3 class="text-lg font-semibold mb-2">Transactions</h3>
+          <table class="min-w-full text-sm mb-4">
+            <thead><tr><th class="px-3 py-2">Statut</th><th class="px-3 py-2">Description</th></tr></thead>
+            <tbody>
+              <tr><td class="px-3 py-2">pending</td><td class="px-3 py-2">En attente de paiement</td></tr>
+              <tr><td class="px-3 py-2">completed</td><td class="px-3 py-2">Payée</td></tr>
+              <tr><td class="px-3 py-2">failed</td><td class="px-3 py-2">Échouée</td></tr>
+              <tr><td class="px-3 py-2">refunded</td><td class="px-3 py-2">Remboursée</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section id="notifications" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Notifications & logique</h2>
+      <div class="card p-6">
+        <ul class="list-disc ml-6 text-base">
+          <li><b>Mail</b> : confirmation commande, bienvenue vendeur, blocage/déblocage, <b>alerte stock bas envoyée à l'admin ET au vendeur concerné</b>, notification nouvelle commande à chaque vendeur impliqué.</li>
+          <li><b>In-app</b> : nouvelle commande, changement de statut, stock bas, notification admin, <b>notifications contextuelles pour chaque vendeur</b>.</li>
+          <li><b>Push (optionnel)</b> : à activer si besoin</li>
+        </ul>
+        <p class="mt-2 text-sm text-gray-400 light-mode:text-gray-600">Chaque notification est envoyée selon le rôle, l’action et le contexte métier. <b>Les vendeurs reçoivent toutes les notifications opérationnelles liées à leurs produits et commandes, mais jamais les notifications sensibles réservées à l'admin.</b></p>
+      </div>
+    </section>
+    <section id="installation" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Installation & déploiement</h2>
+      <div class="card p-6">
+        <ol class="list-decimal ml-6 text-base">
+          <li>Cloner le repo, installer les dépendances (composer, npm)</li>
+          <li>Configurer .env, lancer migrations et seeders</li>
+          <li>Lancer Docker (ou serveur local), accéder à /admin</li>
+          <li>Procédures de backup/restauration documentées</li>
+        </ol>
+        <p class="mt-2 text-sm text-gray-400 light-mode:text-gray-600">Voir README.md pour les commandes détaillées.</p>
+      </div>
+    </section>
+    <section id="annexes" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Annexes</h2>
+      <div class="accordion-button" onclick="toggleAccordion('annexes-content')">
+        <h3 class="text-lg font-semibold">Glossaire & FAQ</h3>
+      </div>
+      <div id="annexes-content" class="accordion-content">
+        <div class="card p-6 mt-4">
+          <h3 class="text-lg font-semibold mb-2">Glossaire</h3>
+          <ul class="list-disc ml-6 text-base">
+            <li><b>CRUD</b> : Create, Read, Update, Delete</li>
+            <li><b>Spatie</b> : package Laravel pour la gestion des rôles/permissions</li>
+            <li><b>Seeder</b> : script d’initialisation de données</li>
+            <li><b>Middleware</b> : filtre d’accès aux routes</li>
+          </ul>
+          <h3 class="text-lg font-semibold mb-2 mt-4">FAQ</h3>
+          <ul class="list-disc ml-6 text-base">
+            <li><b>Comment ajouter un nouveau vendeur ?</b> Via l’admin, bouton “Ajouter utilisateur”, rôle “vendeur”</li>
+            <li><b>Comment exporter les transactions ?</b> Bouton “Exporter CSV” sur la page transactions</li>
+            <li><b>Comment restaurer une sauvegarde ?</b> Voir section installation/maintenance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="uml-notations" class="section anchor">
+      <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-yellow-400">Notations UML & sigles</h2>
+      <div class="card p-6 bg-white/90 shadow-xl border-2 border-fuchsia-400">
+        <h3 class="text-lg font-semibold mb-4">Visibilité des membres</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>+ (public)</b> : accessible partout.<br>
+            <span class="text-sm">Exemple (User.php) :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">public $name; // +name : string</pre>
+            <span class="text-sm">Le nom d’un utilisateur est accessible dans toute l’application (affichage, notifications, etc.).</span>
+          </li>
+          <li><b>- (private)</b> : accessible uniquement dans la classe.<br>
+            <span class="text-sm">Exemple (User.php) :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">private $password; // -password : string</pre>
+            <span class="text-sm">Le mot de passe ne doit être accessible que dans la classe User, jamais à l’extérieur (sécurité).</span>
+          </li>
+          <li><b># (protected)</b> : accessible dans la classe et ses sous-classes.<br>
+            <span class="text-sm">Exemple (User.php ou classe héritée) :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">protected function hashPassword($password) { ... } // #hashPassword(string): string</pre>
+            <span class="text-sm">Cette méthode peut être utilisée dans User et dans ses sous-classes (ex : AdminUser), mais pas ailleurs.</span>
+          </li>
+          <li><b>~ (package)</b> : accessible dans le même package/module (rare en PHP, courant en Java).<br>
+            <span class="text-sm">Exemple (Java) :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">String sessionToken; // ~sessionToken : String</pre>
+            <span class="text-sm">Attribut accessible uniquement dans le même package/module.</span>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Cardinalités (multiplicités)</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>1</b> : exactement un.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">User "1" --o "many" Order : passe</pre>
+            <span class="text-sm">Un utilisateur passe plusieurs commandes, mais chaque commande appartient à un seul utilisateur.</span>
+          </li>
+          <li><b>0..1</b> : zéro ou un.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Product {
+  +int? seller_id // 0 ou 1 vendeur associé
+}</pre>
+            <span class="text-sm">Un produit peut être associé à un vendeur (marketplace) ou non (produit admin).</span>
+          </li>
+          <li><b>*</b> : plusieurs.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Vendeur "1" --o "*" Product : possède</pre>
+            <span class="text-sm">Un vendeur possède plusieurs produits.</span>
+          </li>
+          <li><b>1..*</b> : au moins un.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Order "1" --* "1..*" Product : contient</pre>
+            <span class="text-sm">Une commande contient au moins un produit.</span>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Relations entre classes</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>--</b> : association simple.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">User -- Order</pre>
+            <span class="text-sm">Un utilisateur est lié à ses commandes.</span>
+          </li>
+          <li><b>--|></b> : héritage/généralisation.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">User --|> Admin</pre>
+            <span class="text-sm">Admin hérite de User (héritage de rôle ou de méthodes communes).</span>
+          </li>
+          <li><b>--o</b> : agrégation.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Vendeur --o Product</pre>
+            <span class="text-sm">Un vendeur agrège des produits, mais un produit peut exister sans vendeur (produit admin).</span>
+          </li>
+          <li><b>--*</b> : composition.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Order --* OrderLine</pre>
+            <span class="text-sm">Une ligne de commande n’existe que dans une commande (composition forte).</span>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Stéréotypes UML</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>&lt;&lt;interface&gt;&gt;</b> : interface (contrat, pas d’implémentation).<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">&lt;&lt;interface&gt;&gt; NotificationChannel</pre>
+            <span class="text-sm">Interface pour les canaux de notification (mail, in-app, SMS, etc.).</span>
+          </li>
+          <li><b>&lt;&lt;abstract&gt;&gt;</b> : classe abstraite (ne peut pas être instanciée).<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">&lt;&lt;abstract&gt;&gt; BaseController</pre>
+            <span class="text-sm">Classe de base pour tous les contrôleurs Laravel, non instanciable directement.</span>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Types d'attributs</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>int</b> : entier.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Product {
+  +int quantity
+}</pre>
+            <span class="text-sm">La quantité d’un produit en stock.</span>
+          </li>
+          <li><b>string</b> : texte.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">User {
+  +string email
+}</pre>
+            <span class="text-sm">L’email d’un utilisateur.</span>
+          </li>
+          <li><b>float</b> : nombre décimal.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Product {
+  +float price
+}</pre>
+            <span class="text-sm">Le prix d’un produit.</span>
+          </li>
+          <li><b>bool</b> : booléen (vrai/faux).<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Product {
+  +bool is_active
+}</pre>
+            <span class="text-sm">Indique si le produit est visible à la vente.</span>
+          </li>
+          <li><b>timestamp</b> : date/heure.<br>
+            <span class="text-sm">Exemple :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">Order {
+  +timestamp created_at
+}</pre>
+            <span class="text-sm">Date de création de la commande.</span>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Valeurs typiques d'attributs (exemples projet)</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>status (Order)</b> : <code>en attente</code>, <code>payé</code>, <code>expédié</code>, <code>livré</code>, <code>annulé</code>…<br>
+            <span class="text-sm">Décrit l’état d’une commande à chaque étape.<br>Exemple d’utilisation dans Order.php :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">$order->status = 'expédié';</pre>
+          </li>
+          <li><b>role (User)</b> : <code>admin</code>, <code>vendeur</code>, <code>livreur</code>, <code>client</code>…<br>
+            <span class="text-sm">Définit les droits et accès de l’utilisateur.<br>Exemple d’utilisation dans User.php :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">if ($user->role === 'vendeur') { ... }</pre>
+          </li>
+          <li><b>is_active (Product)</b> : <code>true</code> ou <code>false</code><br>
+            <span class="text-sm">Indique si le produit est visible à la vente.<br>Exemple d’utilisation dans Product.php :</span>
+            <pre class="bg-gray-100 text-gray-800 rounded p-2 text-xs overflow-x-auto">if ($product->is_active) { ... }</pre>
+          </li>
+        </ul>
+        <h3 class="text-lg font-semibold mb-4">Quand utiliser chaque sigle ?</h3>
+        <ul class="list-disc ml-6 text-base mb-4">
+          <li><b>Visibilité</b> : toujours préciser pour chaque attribut/méthode dans un diagramme de classe.</li>
+          <li><b>Cardinalité</b> : à chaque relation entre classes (ex : 1 User --* Order)</li>
+          <li><b>Relations</b> : pour montrer la nature du lien (héritage, composition, etc.)</li>
+          <li><b>Stéréotype</b> : si la classe est abstraite ou une interface</li>
+          <li><b>Type</b> : pour chaque attribut, pour la clarté</li>
+          <li><b>Valeurs</b> : utile dans la doc pour expliquer le métier, pas forcément dans le diagramme</li>
+        </ul>
+        <p class="mt-4 text-base text-fuchsia-700">Pour aller plus loin, voir la <a href="https://fr.wikipedia.org/wiki/Unified_Modeling_Language" class="text-fuchsia-600 underline" target="_blank">documentation UML officielle</a>.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-black bg-opacity-90 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <span class="font-bold text-lg">Mon Site Cosmétique</span> © 2025 — Documentation générée avec style.
+    </div>
+  </footer>
+  <script>
+    function toggleAccordion(id) {
+      const content = document.getElementById(id);
+      const button = content.previousElementSibling;
+      content.classList.toggle('active');
+      button.classList.toggle('active');
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+      // Chart.js
+      var ctx = document.getElementById('ordersStatusBarChart').getContext('2d');
+      var data = {
+        labels: ["En attente", "Payé", "Échoué", "Remboursé"],
+        datasets: [{
+          label: 'Nombre de commandes',
+          data: [12, 34, 5, 2],
+          backgroundColor: ['#ff007a', '#00ffea', '#ff5555', '#00cc99'],
+          borderRadius: 6,
+          borderWidth: 1
+        }]
+      };
+      var options = {
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { enabled: true } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#fff' } },
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } }
+        }
+      };
+      new Chart(ctx, { type: 'bar', data: data, options: options });
+
+      // Back to top button
+      const backToTop = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+      });
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        themeToggle.textContent = document.body.classList.contains('light-mode') ? '🌙 Mode Sombre' : '☀️ Mode Clair';
+      });
+
+      // Active nav link on scroll
+      const sections = document.querySelectorAll('.section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 140) {
+            current = section.getAttribute('id');
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === current) {
+            link.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

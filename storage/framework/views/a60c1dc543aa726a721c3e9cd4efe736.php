@@ -1,0 +1,1 @@
+ <?php /**PATH C:\Projets\mon-site-cosmetique\mon-site-cosmetique\resources\views/components/onboarding-tour.blade.php ENDPATH**/ ?>

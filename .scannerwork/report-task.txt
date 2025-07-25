@@ -1,0 +1,6 @@
+projectKey=mon-site-cosmetique
+serverUrl=http://localhost:9000
+serverVersion=25.4.0.105899
+dashboardUrl=http://localhost:9000/dashboard?id=mon-site-cosmetique
+ceTaskId=9ad87e18-97db-4e58-8f2a-a91a0f89ed51
+ceTaskUrl=http://localhost:9000/api/ce/task?id=9ad87e18-97db-4e58-8f2a-a91a0f89ed51

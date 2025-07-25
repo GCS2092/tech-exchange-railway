@@ -1,0 +1,79 @@
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\dashboard.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\welcome.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\createUser.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\dashboard.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\editUser.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\latest-orders.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\users\dashboard.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\users\details.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\admin\users\orders.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\confirm-password.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\forgot-password.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\goodbye.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\login.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\register-code.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\register-multi-step.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\register.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\reset-password.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\set-password.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\verify-code.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\verify-email.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\auth\passwords\request-code.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\cart\checkout.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\cart\index.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\categories\create.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\categories\index.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\application-logo.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\auth-session-status.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\danger-button.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\dropdown-link.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\dropdown.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\input-error.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\input-label.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\modal.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\nav-link.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\primary-button.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\responsive-nav-link.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\secondary-button.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\text-input.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\components\toast.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\emails\register-code.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\layouts\app.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\layouts\guest.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\layouts\navigation.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\layouts\partials\notification-dropdown.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\notifications\index.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\orders\index.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\orders\show.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\payment\cancel.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\payment\success.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\pdf\orders_daily.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\products\create.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\products\edit.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\products\index.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\products\show.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\products\partials\list.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\profile\edit.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\profile\partials\delete-user-form.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\profile\partials\update-password-form.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\profile\partials\update-profile-information-form.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\user\dashboard.blade.php
+C:\Users\DELL\OneDrive\Bureau\PROJET-PERSONNEL\E_commerce\mon-site-cosmetique\mon-site-cosmetique\resources\views\user\profile.blade.php
+ 
+========================================== 
+? COMMANDES IMPORTANTES POUR TON PROJET  
+========================================== 
+ 
+php artisan serve                              
+npm run dev                                    
+php artisan migrate                            
+php artisan db:seed                            
+php artisan event:generate                     
+php artisan test                               
+laravel-echo-server start                      
+composer install                               
+npm install                                    
+php artisan make:controller NomController      
+php artisan make:model Nom --migration         
+php artisan make:event NomEvent                
+php artisan make:notification NomNotification  

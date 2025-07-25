@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dashboard-container {
+    @apply bg-gradient-to-br from-indigo-50 to-white min-h-screen text-gray-800;
+}
+
+.dashboard-wrapper {
+    @apply container mx-auto px-4 py-8 max-w-6xl;
+}
+
+.dashboard-header {
+    @apply flex flex-col md:flex-row justify-between items-center mb-10 space-y-4 md:space-y-0;
+}
+
+.dashboard-title {
+    @apply text-4xl font-extrabold text-indigo-900 tracking-tight;
+}
+
+.dashboard-subtitle {
+    @apply text-gray-600 mt-2;
+}
+
+.dashboard-role-wrapper {
+    @apply flex items-center space-x-4;
+}
+
+.dashboard-role-box {
+    @apply bg-white shadow-md rounded-lg px-4 py-2 flex items-center space-x-2;
+}
+
+.role-label {
+    @apply text-sm font-medium text-gray-600;
+}
+
+.role-badge {
+    @apply bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.profile-edit-icon {
+    @apply bg-white shadow-md rounded-full p-3 hover:bg-indigo-50 transition-all group;
+}
+
+.icon-user {
+    @apply h-5 w-5 text-indigo-600 group-hover:text-indigo-800 transition-colors;
+}
+
+.dashboard-grid {
+    @apply grid md:grid-cols-3 gap-6;
+}
+
+.dashboard-notifications, .dashboard-profile {
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden;
+}
+
+.dashboard-box-header {
+    @apply p-6 bg-indigo-50 border-b border-gray-200;
+}
+
+.dashboard-box-title {
+    @apply flex justify-between items-center;
+}
+
+.dashboard-box-title h2 {
+    @apply text-2xl font-bold text-indigo-900;
+}
+
+.btn-view-all {
+    @apply bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium text-sm;
+}
+
+.dashboard-box-content {
+    @apply p-6;
+}
+
+.notifications-list {
+    @apply space-y-4;
+}
+
+.notification-item {
+    @apply bg-white border border-indigo-100 rounded-lg p-4 hover:shadow-sm transition-shadow;
+}
+
+.notification-content {
+    @apply flex items-start space-x-3;
+}
+
+.notification-line {
+    @apply w-2 bg-indigo-500 rounded-full h-full mt-1;
+}
+
+.notification-message {
+    @apply text-sm text-gray-800 font-medium;
+}
+
+.notification-time {
+    @apply text-xs text-gray-500 mt-1;
+}
+
+.notification-empty {
+    @apply text-center py-8 bg-gray-50 rounded-lg;
+}
+
+.notification-icon {
+    @apply h-12 w-12 mx-auto text-gray-400 mb-4;
+}
+
+.notification-empty-text {
+    @apply text-gray-600 font-medium;
+}
+
+.profile-content {
+    @apply space-y-4 p-6;
+}
+
+.profile-user {
+    @apply flex items-center space-x-4;
+}
+
+.icon-user-large {
+    @apply h-10 w-10 text-indigo-600;
+}
+
+.profile-name {
+    @apply font-semibold text-gray-800;
+}
+
+.profile-email {
+    @apply text-sm text-gray-500;
+}
+
+.profile-details {
+    @apply border-t border-gray-200 pt-4;
+}
+
+.profile-last-login {
+    @apply text-sm text-gray-600 mb-2;
+}
+
+.btn-edit-profile {
+    @apply w-full bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium text-center block mt-4;
+}

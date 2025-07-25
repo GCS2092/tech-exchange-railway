@@ -1,0 +1,316 @@
+/* ===== CUSTOM STYLES FOR COSMETIC SITE ===== */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* Base styles */
+:root {
+    --primary-pink: #ec4899;
+    --primary-purple: #8b5cf6;
+    --primary-indigo: #6366f1;
+    --secondary-pink: #f472b6;
+    --secondary-purple: #a78bfa;
+    --accent-orange: #f97316;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --bg-light: #fafafa;
+    --bg-white: #ffffff;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Enhanced buttons */
+.btn-modern {
+    @apply relative overflow-hidden rounded-xl font-semibold transition-all duration-300 transform hover:scale-105;
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+    box-shadow: var(--shadow-md);
+}
+
+.btn-modern:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-modern:hover::before {
+    left: 100%;
+}
+
+/* Card enhancements */
+.card-modern {
+    @apply bg-white rounded-2xl shadow-lg transition-all duration-300;
+    border: 1px solid rgba(236, 72, 153, 0.1);
+}
+
+.card-modern:hover {
+    @apply shadow-xl transform -translate-y-2;
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+/* Navigation enhancements */
+.nav-link-modern {
+    @apply relative overflow-hidden rounded-xl px-4 py-2 text-sm font-medium transition-all duration-300;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(139, 92, 246, 0.05));
+}
+
+.nav-link-modern:hover {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
+    transform: translateY(-1px);
+}
+
+/* Hero section enhancements */
+.hero-gradient {
+    background: linear-gradient(135deg, 
+        rgba(236, 72, 153, 0.1) 0%, 
+        rgba(139, 92, 246, 0.1) 50%, 
+        rgba(99, 102, 241, 0.1) 100%);
+}
+
+.hero-text-gradient {
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple), var(--primary-indigo));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Product card enhancements */
+.product-card {
+    @apply bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.product-card:hover {
+    @apply shadow-2xl transform -translate-y-3;
+    border-color: rgba(236, 72, 153, 0.2);
+}
+
+.product-image {
+    @apply relative overflow-hidden;
+    aspect-ratio: 1;
+}
+
+.product-image img {
+    @apply w-full h-full object-cover transition-transform duration-500;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+}
+
+/* Badge enhancements */
+.badge-modern {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Form enhancements */
+.form-input-modern {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(249, 250, 251, 0.8));
+}
+
+.form-input-modern:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Loading states */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Notification enhancements */
+.notification-modern {
+    @apply fixed top-4 right-4 z-50 p-4 rounded-xl shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.95));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(236, 72, 153, 0.1);
+}
+
+/* Footer enhancements */
+.footer-modern {
+    background: linear-gradient(135deg, var(--text-dark), #374151);
+    color: white;
+}
+
+.footer-modern a {
+    @apply text-gray-300 hover:text-white transition-colors duration-300;
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .hero-text-gradient {
+        font-size: 2.5rem;
+    }
+    
+    .card-modern {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-light: #1f2937;
+        --bg-white: #111827;
+        --text-dark: #f9fafb;
+        --text-light: #d1d5db;
+    }
+    
+    .card-modern {
+        background: #1f2937;
+        border-color: rgba(236, 72, 153, 0.2);
+    }
+    
+    .form-input-modern {
+        background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.8));
+        border-color: #374151;
+        color: white;
+    }
+}
+
+/* Animation utilities */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Hover effects */
+.hover-glow:hover {
+    box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);
+}
+
+.hover-bounce:hover {
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+    40%, 43% { transform: translate3d(0,-8px,0); }
+    70% { transform: translate3d(0,-4px,0); }
+    90% { transform: translate3d(0,-2px,0); }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--primary-pink), var(--primary-purple));
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #db2777, #7c3aed);
+}
+
+/* Glass morphism */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Gradient borders */
+.gradient-border {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
+
+/* Success/Error states */
+.success-state {
+    @apply text-green-600 bg-green-50 border-green-200;
+}
+
+.error-state {
+    @apply text-red-600 bg-red-50 border-red-200;
+}
+
+.warning-state {
+    @apply text-yellow-600 bg-yellow-50 border-yellow-200;
+}
+
+/* Focus states */
+.focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-break {
+        page-break-before: always;
+    }
+} 

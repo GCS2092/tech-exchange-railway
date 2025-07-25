@@ -1,0 +1,109 @@
+ /* Custom CSS for glossy dark form */
+.dark-form {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border: 1px solid #333;
+}
+
+.dark-form input, .dark-form textarea, .dark-form select {
+    background-color: #262626;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    padding: 12px 16px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.dark-form input:focus, .dark-form textarea:focus, .dark-form select:focus {
+    border-color: #666;
+    box-shadow: 0 0 0 2px rgba(125, 125, 125, 0.3);
+    outline: none;
+}
+
+.form-label {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #aaa;
+}
+
+.submit-btn {
+    background-color: #222;
+    color: white;
+    border: 1px solid #444;
+    padding: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+.submit-btn:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-row {
+    margin-bottom: 28px;
+}
+
+.heading {
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.form-highlight {
+    position: relative;
+}
+
+.form-highlight:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #888;
+    transition: width 0.3s ease;
+}
+
+.form-highlight:focus-within:after {
+    width: 100%;
+}
+
+/* Glossy effect */
+.glossy {
+    position: relative;
+    overflow: hidden;
+}
+
+.glossy::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 20%,
+        rgba(255, 255, 255, 0) 80%
+    );
+    transform: rotate(30deg);
+    pointer-events: none;
+}
