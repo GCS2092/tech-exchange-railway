@@ -279,7 +279,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('admin.orders.manage', $order) }}" 
+                                        <a href="{{ route('orders.manage', $order) }}" 
                                            class="text-blue-600 hover:text-blue-900">Voir</a>
                                         <a href="{{ route('admin.orders.export-pdf', ['order_ids' => [$order->id]]) }}" 
                                            class="text-red-600 hover:text-red-900">PDF</a>
