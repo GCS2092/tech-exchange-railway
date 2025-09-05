@@ -353,9 +353,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Gestion des commandes admin
     Route::get('/orders', [OrderController::class, 'adminIndex'])->name('orders.index');
     
+    // Routes d'export PDF (AVANT les routes avec paramètres)
+    Route::get('/orders/export/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
+    Route::get('/orders/export-pdf', [\App\Http\Controllers\Admin\OrdersController::class, 'exportPdf'])->name('orders.export-pdf');
+    Route::get('/orders/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
+    
     // Gestion complète des commandes (AVANT la route générique)
     Route::get('/orders/{order}/manage', [\App\Http\Controllers\Admin\OrderManagementController::class, 'show'])->name('orders.manage');
-    Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrderManagementController::class, 'updateStatus'])->name('orders.updateStatus');
+    // Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrderManagementController::class, 'updateStatus'])->name('orders.updateStatus');
     Route::put('/orders/{order}/assign-livreur', [\App\Http\Controllers\Admin\OrderManagementController::class, 'assignLivreur'])->name('orders.assign-livreur');
     Route::get('/orders/{order}/invoice', [\App\Http\Controllers\Admin\OrderManagementController::class, 'downloadInvoice'])->name('orders.invoice');
     
@@ -368,8 +373,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Factures admin
     Route::get('/orders/{order}/facture', [OrderController::class, 'invoice'])->name('orders.invoice');
-    Route::get('/orders/export/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
-    Route::get('/orders/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
     
     // Gestion des stocks (routes principales dans le groupe admin)
     Route::get('/products/inventory', [ProductController::class, 'inventory'])->name('products.inventory');
@@ -623,7 +626,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     
     // Gestion des commandes
     Route::get('/orders', [\App\Http\Controllers\Admin\OrdersController::class, 'index'])->name('admin.orders.index');
-    Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrdersController::class, 'updateStatus'])->name('admin.orders.update-status');
+    Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrdersController::class, 'updateStatus'])->name('admin.orders.updateStatus');
     Route::post('/orders/bulk-update-status', [\App\Http\Controllers\Admin\OrdersController::class, 'bulkUpdateStatus'])->name('admin.orders.bulk-update-status');
-    Route::get('/orders/export-pdf', [\App\Http\Controllers\Admin\OrdersController::class, 'exportPdf'])->name('admin.orders.export-pdf');
+    // Route::get('/orders/export-pdf', [\App\Http\Controllers\Admin\OrdersController::class, 'exportPdf'])->name('admin.orders.export-pdf');
 });

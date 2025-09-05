@@ -112,7 +112,7 @@
             </div>
             <div class="stats-row">
                 <div class="stats-cell">Revenus totaux</div>
-                <div class="stats-cell highlight">{{ number_format($stats['total_revenue'], 0, ',', ' ') }} FCFA</div>
+                <div class="stats-cell highlight">{{ number_format($stats['revenue']['total_revenue'] ?? 0, 0, ',', ' ') }} FCFA</div>
                 <div class="stats-cell">-</div>
                 <div class="stats-cell">-</div>
             </div>

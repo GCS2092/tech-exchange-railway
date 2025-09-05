@@ -17,57 +17,57 @@
                     <div class="p-3 rounded-full bg-blue-100 text-blue-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
+                            </svg>
+                        </div>
+                        <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Total Commandes</p>
                         <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['total_orders']) }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex items-center">
+                    <div class="flex items-center">
                     <div class="p-3 rounded-full bg-green-100 text-green-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
+                            </svg>
+                        </div>
+                        <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Chiffre d'Affaires</p>
-                        <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['total_revenue'], 0, ',', ' ') }} FCFA</p>
+                        <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['revenue']['total_revenue'] ?? 0, 0, ',', ' ') }} FCFA</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex items-center">
+                    <div class="flex items-center">
                     <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
+                            </svg>
+                        </div>
+                        <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">En Attente</p>
                         <p class="text-2xl font-semibold text-gray-900">{{ $stats['by_status']['en attente']['count'] ?? 0 }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="bg-white rounded-lg shadow p-6">
-                <div class="flex items-center">
+                    <div class="flex items-center">
                     <div class="p-3 rounded-full bg-purple-100 text-purple-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
+                            </svg>
+                        </div>
+                        <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Livrées</p>
                         <p class="text-2xl font-semibold text-gray-900">{{ $stats['by_status']['livré']['count'] ?? 0 }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Filtres -->
         <div class="bg-white rounded-lg shadow mb-6">
@@ -164,21 +164,21 @@
                             </svg>
                             Exporter PDF
                         </a>
+                </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- Tableau des commandes -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <input type="checkbox" id="select-all-table" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'id', 'sort_order' => request('sort_by') == 'id' && request('sort_order') == 'asc' ? 'desc' : 'asc']) }}" 
                                    class="hover:text-gray-700">
                                     Commande
@@ -190,14 +190,14 @@
                                         @else
                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                            </svg>
+                                        </svg>
                                         @endif
                                     @endif
                                 </a>
-                            </th>
+                                </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produits</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'total_price', 'sort_order' => request('sort_by') == 'total_price' && request('sort_order') == 'asc' ? 'desc' : 'asc']) }}" 
                                    class="hover:text-gray-700">
                                     Total
@@ -209,13 +209,13 @@
                                         @else
                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                            </svg>
+                                        </svg>
                                         @endif
                                     @endif
                                 </a>
-                            </th>
+                                </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'created_at', 'sort_order' => request('sort_by') == 'created_at' && request('sort_order') == 'asc' ? 'desc' : 'asc']) }}" 
                                    class="hover:text-gray-700">
                                     Date
@@ -223,19 +223,19 @@
                                         @if(request('sort_order') == 'asc')
                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                                            </svg>
+                                        </svg>
                                         @else
                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                            </svg>
+                                        </svg>
                                         @endif
                                     @endif
                                 </a>
-                            </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
                         @forelse($orders as $order)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -291,18 +291,18 @@
                                 <td colspan="8" class="px-6 py-12 text-center text-gray-500">
                                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                    </svg>
+                                        </svg>
                                     <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune commande trouvée</h3>
                                     <p class="mt-1 text-sm text-gray-500">Essayez de modifier vos filtres de recherche.</p>
                                 </td>
                             </tr>
                         @endforelse
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- Pagination -->
+            <!-- Pagination -->
         @if($orders->hasPages())
             <div class="mt-6">
                 {{ $orders->links() }}

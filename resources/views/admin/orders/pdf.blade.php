@@ -201,7 +201,7 @@
             <div class="stat-label">Total Commandes</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">{{ number_format($stats['total_revenue'], 0, ',', ' ') }} FCFA</div>
+            <div class="stat-number">{{ number_format($stats['revenue']['total_revenue'] ?? 0, 0, ',', ' ') }} FCFA</div>
             <div class="stat-label">Chiffre d'Affaires</div>
         </div>
         <div class="stat-card">

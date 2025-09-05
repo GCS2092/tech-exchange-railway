@@ -8,7 +8,7 @@
         <div class="text-center mb-16">
             <h1 class="nike-title mb-4">DASHBOARD ADMINISTRATEUR</h1>
             <div class="text-2xl font-bold text-black mb-4">
-                {{ number_format($stats['total_revenue'] ?? 0, 0, ',', ' ') }} FCFA
+                {{ number_format($stats['revenue']['total_revenue'] ?? 0, 0, ',', ' ') }} FCFA
             </div>
             <p class="nike-text text-gray-600">Vue d'ensemble de votre plateforme</p>
         </div>
@@ -182,15 +182,15 @@
                     </div>
                     <div class="space-y-3">
                         <div class="flex items-center space-x-3">
-                            <div class="w-4 h-4 bg-blue-400 rounded"></div>
+                            <div class="w-4 h-4 bg-gray-400 rounded"></div>
                             <span class="text-sm text-gray-700">Apple</span>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <div class="w-4 h-4 bg-teal-400 rounded"></div>
+                            <div class="w-4 h-4 bg-gray-500 rounded"></div>
                             <span class="text-sm text-gray-700">Samsung</span>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <div class="w-4 h-4 bg-orange-400 rounded"></div>
+                            <div class="w-4 h-4 bg-gray-600 rounded"></div>
                             <span class="text-sm text-gray-700">Huawei</span>
                         </div>
                         <div class="flex items-center space-x-3">
@@ -418,7 +418,7 @@
         <div class="card-nike">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold text-gray-900">Commandes récentes</h3>
-                <a href="{{ route('admin.orders.index') }}" class="text-gray-600 hover:text-blue-800 text-sm font-medium">Voir tout →</a>
+                <a href="{{ route('admin.orders.index') }}" class="text-gray-600 hover:text-black text-sm font-medium">Voir tout →</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">

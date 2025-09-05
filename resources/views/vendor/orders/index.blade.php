@@ -60,7 +60,7 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-600">Revenus</p>
-                        <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['total_revenue'], 2) }} XOF</p>
+                        <p class="text-2xl font-semibold text-gray-900">{{ number_format($stats['revenue']['total_revenue'] ?? 0, 2) }} XOF</p>
                     </div>
                 </div>
             </div>
