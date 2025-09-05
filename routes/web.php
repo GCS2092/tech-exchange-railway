@@ -620,4 +620,10 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard-advanced', [AdminDashboardController::class, 'index'])->name('admin.dashboard.advanced');
     Route::get('/dashboard/export/pdf', [AdminDashboardController::class, 'exportPDF'])->name('admin.dashboard.export.pdf');
     Route::get('/dashboard/export/excel', [AdminDashboardController::class, 'exportExcel'])->name('admin.dashboard.export.excel');
+    
+    // Gestion des commandes
+    Route::get('/orders', [\App\Http\Controllers\Admin\OrdersController::class, 'index'])->name('admin.orders.index');
+    Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrdersController::class, 'updateStatus'])->name('admin.orders.update-status');
+    Route::post('/orders/bulk-update-status', [\App\Http\Controllers\Admin\OrdersController::class, 'bulkUpdateStatus'])->name('admin.orders.bulk-update-status');
+    Route::get('/orders/export-pdf', [\App\Http\Controllers\Admin\OrdersController::class, 'exportPdf'])->name('admin.orders.export-pdf');
 });
