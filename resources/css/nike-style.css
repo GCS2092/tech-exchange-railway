@@ -1,0 +1,331 @@
+/* ========================================
+   STYLE NIKE - DESIGN ÉLÉGANT ET MODERNE
+   ======================================== */
+
+/* Variables CSS pour la cohérence */
+:root {
+    --nike-black: #000000;
+    --nike-white: #ffffff;
+    --nike-gray-50: #f9fafb;
+    --nike-gray-100: #f3f4f6;
+    --nike-gray-200: #e5e7eb;
+    --nike-gray-300: #d1d5db;
+    --nike-gray-400: #9ca3af;
+    --nike-gray-500: #6b7280;
+    --nike-gray-600: #4b5563;
+    --nike-gray-700: #374151;
+    --nike-gray-800: #1f2937;
+    --nike-gray-900: #111827;
+}
+
+/* Container principal Nike */
+.container-nike {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    .container-nike {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-nike {
+        padding: 0 2rem;
+    }
+}
+
+/* Titres Nike */
+.nike-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--nike-black);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+    .nike-title {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nike-title {
+        font-size: 3.5rem;
+    }
+}
+
+.nike-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--nike-black);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.nike-text {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--nike-gray-600);
+    line-height: 1.6;
+}
+
+/* Cards Nike */
+.card-nike {
+    background: var(--nike-white);
+    border: 1px solid var(--nike-gray-200);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease-in-out;
+}
+
+.card-nike:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+/* Boutons Nike */
+.btn-nike {
+    background: var(--nike-black);
+    color: var(--nike-white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-nike:hover {
+    background: var(--nike-gray-800);
+    color: var(--nike-white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nike-outline {
+    background: transparent;
+    color: var(--nike-black);
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--nike-black);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-nike-outline:hover {
+    background: var(--nike-black);
+    color: var(--nike-white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Grilles Nike */
+.grid-nike {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.grid-nike-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-nike-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-nike-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+    .grid-nike-2,
+    .grid-nike-3,
+    .grid-nike-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Espacement Nike */
+.space-nike > * + * {
+    margin-top: 1.5rem;
+}
+
+.space-nike-sm > * + * {
+    margin-top: 1rem;
+}
+
+.space-nike-lg > * + * {
+    margin-top: 2rem;
+}
+
+/* Texte Nike */
+.text-nike-primary {
+    color: var(--nike-black);
+}
+
+.text-nike-secondary {
+    color: var(--nike-gray-600);
+}
+
+.text-nike-muted {
+    color: var(--nike-gray-500);
+}
+
+/* Backgrounds Nike */
+.bg-nike-primary {
+    background-color: var(--nike-black);
+}
+
+.bg-nike-secondary {
+    background-color: var(--nike-gray-100);
+}
+
+.bg-nike-muted {
+    background-color: var(--nike-gray-50);
+}
+
+/* Bordures Nike */
+.border-nike {
+    border: 1px solid var(--nike-gray-200);
+}
+
+.border-nike-thick {
+    border: 2px solid var(--nike-black);
+}
+
+/* Ombres Nike */
+.shadow-nike {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.shadow-nike-lg {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Animations Nike */
+@keyframes nike-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nike-fade-in {
+    animation: nike-fade-in 0.5s ease-out;
+}
+
+/* Responsive Nike */
+@media (max-width: 640px) {
+    .nike-title {
+        font-size: 2rem;
+    }
+    
+    .container-nike {
+        padding: 0 1rem;
+    }
+    
+    .card-nike {
+        padding: 1rem;
+    }
+    
+    .btn-nike,
+    .btn-nike-outline {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.8125rem;
+    }
+}
+
+/* Overrides pour les éléments existants */
+.nike-style-override {
+    /* Forcer le style Nike sur les éléments existants */
+    background: var(--nike-white) !important;
+    color: var(--nike-black) !important;
+    border-color: var(--nike-gray-200) !important;
+}
+
+/* Correction des gradients existants */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-bl {
+    background: var(--nike-white) !important;
+}
+
+/* Correction des couleurs vives */
+.text-blue-600,
+.text-green-600,
+.text-red-600,
+.text-purple-600,
+.text-yellow-600,
+.text-orange-600,
+.text-indigo-600 {
+    color: var(--nike-black) !important;
+}
+
+.bg-blue-100,
+.bg-green-100,
+.bg-red-100,
+.bg-purple-100,
+.bg-yellow-100,
+.bg-orange-100,
+.bg-indigo-100 {
+    background-color: var(--nike-gray-100) !important;
+}
+
+.bg-blue-600,
+.bg-green-600,
+.bg-red-600,
+.bg-purple-600,
+.bg-yellow-600,
+.bg-orange-600,
+.bg-indigo-600 {
+    background-color: var(--nike-black) !important;
+}
+
+/* Correction des bordures colorées */
+.border-blue-400,
+.border-green-400,
+.border-red-400,
+.border-purple-400,
+.border-yellow-400,
+.border-orange-400,
+.border-indigo-400 {
+    border-color: var(--nike-gray-200) !important;
+}
+
+/* Correction des focus rings */
+.focus\:ring-blue-500:focus,
+.focus\:ring-green-500:focus,
+.focus\:ring-red-500:focus,
+.focus\:ring-purple-500:focus,
+.focus\:ring-yellow-500:focus,
+.focus\:ring-orange-500:focus,
+.focus\:ring-indigo-500:focus {
+    --tw-ring-color: var(--nike-gray-500) !important;
+}

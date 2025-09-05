@@ -1,0 +1,62 @@
+/* Correction des tailles d'icônes trop grandes */
+
+/* Réduction générale des icônes */
+.fas.text-2xl, .fab.text-2xl, .far.text-2xl {
+    font-size: 1rem !important; /* text-base */
+}
+
+.fas.text-3xl, .fab.text-3xl, .far.text-3xl {
+    font-size: 1.125rem !important; /* text-lg */
+}
+
+.fas.text-4xl, .fab.text-4xl, .far.text-4xl {
+    font-size: 1.25rem !important; /* text-xl */
+}
+
+.fas.text-5xl, .fab.text-5xl, .far.text-5xl {
+    font-size: 1.5rem !important; /* text-2xl */
+}
+
+.fas.text-6xl, .fab.text-6xl, .far.text-6xl {
+    font-size: 1.75rem !important; /* text-3xl */
+}
+
+/* Icônes de boutons - taille appropriée */
+.btn-nike i, .btn i {
+    font-size: 0.875rem !important; /* text-sm */
+}
+
+/* Icônes de navigation */
+.nav i, .navbar i {
+    font-size: 1rem !important; /* text-base */
+}
+
+/* Icônes de cartes produits */
+.product-card i, .product-card-nike i {
+    font-size: 0.875rem !important; /* text-sm */
+}
+
+/* Icônes de favoris */
+.favorite-btn i {
+    font-size: 1rem !important; /* text-base */
+}
+
+/* Icônes d'état vides */
+.empty-state i {
+    font-size: 2rem !important; /* Taille réduite mais visible */
+}
+
+/* Icônes dans les images de produits */
+.product-image-nike i {
+    font-size: 1rem !important; /* text-base */
+}
+
+/* Icônes de panier */
+.cart-icon i {
+    font-size: 0.875rem !important; /* text-sm */
+}
+
+/* Icônes de navigation */
+.nav i, .navbar i, .navigation i {
+    font-size: 0.875rem !important; /* text-sm */
+}

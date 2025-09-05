@@ -1,0 +1,455 @@
+/* Nike-Inspired Minimalist Design - Custom CSS */
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', 'Figtree', sans-serif;
+}
+
+body {
+    font-family: 'Inter', 'Figtree', sans-serif;
+    background: #ffffff;
+    color: #000000;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Nike-Inspired Typography */
+.nike-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #000000;
+}
+
+.nike-subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #666666;
+}
+
+.nike-heading {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #000000;
+}
+
+.nike-text {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #333333;
+}
+
+/* Nike-Inspired Buttons */
+.btn-nike {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 0;
+}
+
+.btn-nike:hover {
+    background: #333333;
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+.btn-nike-outline {
+    background: transparent;
+    color: #000000;
+    border: 2px solid #000000;
+    padding: 14px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 0;
+}
+
+.btn-nike-outline:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+/* Nike-Inspired Cards */
+.card-nike {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.card-nike:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Nike-Inspired Navigation */
+.nav-nike {
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    backdrop-filter: blur(20px);
+}
+
+.nav-link-nike {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link-nike:hover {
+    color: #666666;
+}
+
+/* Nike-Inspired Layout */
+.container-nike {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-nike {
+    padding: 4rem 0;
+}
+
+.grid-nike {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-nike-2 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-nike-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-nike-4 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Nike-Inspired Product Cards */
+.product-card-nike {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.product-card-nike:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.product-image-nike {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background: #f8f8f8;
+}
+
+.product-info-nike {
+    padding: 1.5rem;
+}
+
+.product-title-nike {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #000000;
+}
+
+.product-price-nike {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #000000;
+}
+
+.product-price-old-nike {
+    text-decoration: line-through;
+    color: #999999;
+    margin-right: 0.5rem;
+}
+
+/* Nike-Inspired Forms */
+.form-nike {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 2rem;
+    border-radius: 0;
+}
+
+.input-nike {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 0;
+}
+
+.input-nike:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+.label-nike {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #000000;
+}
+
+/* Nike-Inspired Footer */
+.footer-nike {
+    background: #000000;
+    color: #ffffff;
+    padding: 4rem 0 2rem;
+}
+
+.footer-section-nike h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.footer-section-nike a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section-nike a:hover {
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nike-title {
+        font-size: 2.5rem;
+    }
+    
+    .nike-heading {
+        font-size: 2rem;
+    }
+    
+    .container-nike {
+        padding: 0 1rem;
+    }
+    
+    .section-nike {
+        padding: 2rem 0;
+    }
+    
+    .btn-nike,
+    .btn-nike-outline {
+        padding: 12px 24px;
+        font-size: 0.875rem;
+    }
+}
+
+/* Nike-Inspired Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInLeft 0.6s ease forwards;
+}
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideInRight 0.6s ease forwards;
+}
+
+@keyframes slideInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Nike-Inspired Spacing */
+.space-y-nike > * + * {
+    margin-top: 2rem;
+}
+
+.space-y-nike-sm > * + * {
+    margin-top: 1rem;
+}
+
+.space-y-nike-lg > * + * {
+    margin-top: 3rem;
+}
+
+.gap-nike {
+    gap: 1rem;
+}
+
+.gap-nike-lg {
+    gap: 2rem;
+}
+
+.gap-nike-xl {
+    gap: 3rem;
+}
+
+/* Nike-Inspired Utilities */
+.text-center-nike {
+    text-align: center;
+}
+
+.text-left-nike {
+    text-align: left;
+}
+
+.text-right-nike {
+    text-align: right;
+}
+
+.flex-nike {
+    display: flex;
+}
+
+.flex-col-nike {
+    flex-direction: column;
+}
+
+.items-center-nike {
+    align-items: center;
+}
+
+.justify-center-nike {
+    justify-content: center;
+}
+
+.justify-between-nike {
+    justify-content: space-between;
+}
+
+/* Enhanced hover effects */
+.hover-glow:hover {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.hover-3d:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transitions */
+* {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* Focus states */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+}
+
+/* Print styles */
+@media print {
+    .btn-nike,
+    .btn-nike-outline {
+        display: none;
+    }
+    
+    .card-nike {
+        border: 1px solid #000000;
+        box-shadow: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .btn-nike {
+        border: 2px solid #ffffff;
+    }
+    
+    .card-nike {
+        border: 2px solid #000000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+} 

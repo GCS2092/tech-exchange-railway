@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+// ✅ Création de l'application Laravel
+$app = Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\IsAdmin::class,
+            'livreur' => \App\Http\Middleware\LivreurMiddleware::class,
+            'track.pageviews' => \App\Http\Middleware\TrackPageViews::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
+
+// ✅ Enregistrement du middleware "admin"
+ 
+
+return $app;

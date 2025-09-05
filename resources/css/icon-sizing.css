@@ -1,0 +1,1780 @@
+/* Normalisation des tailles d'icônes pour toute l'application */
+
+/* Icônes de navigation et header - taille normale */
+.nav-icon, .header-icon {
+    @apply text-base;
+}
+
+/* Icônes de boutons - taille appropriée */
+.btn-icon {
+    @apply text-sm;
+}
+
+/* Icônes de cartes produits - taille réduite */
+.product-icon {
+    @apply text-sm;
+}
+
+/* Icônes de favoris - taille appropriée */
+.favorite-icon {
+    @apply text-base;
+}
+
+/* Icônes de panier - taille appropriée */
+.cart-icon {
+    @apply text-base;
+}
+
+/* Icônes de dashboard - taille modérée */
+.dashboard-icon {
+    @apply text-lg;
+}
+
+/* Icônes d'état - taille appropriée */
+.status-icon {
+    @apply text-base;
+}
+
+/* Icônes d'action - taille appropriée */
+.action-icon {
+    @apply text-sm;
+}
+
+/* Icônes d'information - taille modérée */
+.info-icon {
+    @apply text-lg;
+}
+
+/* Icônes d'alerte - taille appropriée */
+.alert-icon {
+    @apply text-base;
+}
+
+/* Icônes de formulaire - taille appropriée */
+.form-icon {
+    @apply text-sm;
+}
+
+/* Icônes de liste - taille appropriée */
+.list-icon {
+    @apply text-sm;
+}
+
+/* Icônes de tableau - taille appropriée */
+.table-icon {
+    @apply text-sm;
+}
+
+/* Icônes de modal - taille appropriée */
+.modal-icon {
+    @apply text-base;
+}
+
+/* Icônes de sidebar - taille appropriée */
+.sidebar-icon {
+    @apply text-base;
+}
+
+/* Icônes de footer - taille appropriée */
+.footer-icon {
+    @apply text-sm;
+}
+
+/* Icônes de recherche - taille appropriée */
+.search-icon {
+    @apply text-sm;
+}
+
+/* Icônes de filtres - taille appropriée */
+.filter-icon {
+    @apply text-sm;
+}
+
+/* Icônes de pagination - taille appropriée */
+.pagination-icon {
+    @apply text-sm;
+}
+
+/* Icônes de notification - taille appropriée */
+.notification-icon {
+    @apply text-base;
+}
+
+/* Icônes de profil - taille appropriée */
+.profile-icon {
+    @apply text-base;
+}
+
+/* Icônes d'administration - taille appropriée */
+.admin-icon {
+    @apply text-base;
+}
+
+/* Icônes de vendeur - taille appropriée */
+.vendor-icon {
+    @apply text-base;
+}
+
+/* Icônes de livreur - taille appropriée */
+.livreur-icon {
+    @apply text-base;
+}
+
+/* Icônes de commande - taille appropriée */
+.order-icon {
+    @apply text-base;
+}
+
+/* Icônes de produit - taille appropriée */
+.product-action-icon {
+    @apply text-sm;
+}
+
+/* Icônes de catégorie - taille appropriée */
+.category-icon {
+    @apply text-base;
+}
+
+/* Icônes de promo - taille appropriée */
+.promo-icon {
+    @apply text-base;
+}
+
+/* Icônes de fidélité - taille appropriée */
+.fidelity-icon {
+    @apply text-base;
+}
+
+/* Icônes d'échange - taille appropriée */
+.trade-icon {
+    @apply text-base;
+}
+
+/* Icônes de statistiques - taille appropriée */
+.stats-icon {
+    @apply text-base;
+}
+
+/* Icônes de rapport - taille appropriée */
+.report-icon {
+    @apply text-base;
+}
+
+/* Icônes d'export - taille appropriée */
+.export-icon {
+    @apply text-sm;
+}
+
+/* Icônes d'import - taille appropriée */
+.import-icon {
+    @apply text-sm;
+}
+
+/* Icônes de validation - taille appropriée */
+.validation-icon {
+    @apply text-base;
+}
+
+/* Icônes d'erreur - taille appropriée */
+.error-icon {
+    @apply text-base;
+}
+
+/* Icônes de succès - taille appropriée */
+.success-icon {
+    @apply text-base;
+}
+
+/* Icônes d'avertissement - taille appropriée */
+.warning-icon {
+    @apply text-base;
+}
+
+/* Icônes de chargement - taille appropriée */
+.loading-icon {
+    @apply text-base;
+}
+
+/* Icônes de fermeture - taille appropriée */
+.close-icon {
+    @apply text-sm;
+}
+
+/* Icônes de menu - taille appropriée */
+.menu-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation mobile - taille appropriée */
+.mobile-nav-icon {
+    @apply text-lg;
+}
+
+/* Icônes de breadcrumb - taille appropriée */
+.breadcrumb-icon {
+    @apply text-sm;
+}
+
+/* Icônes de tooltip - taille appropriée */
+.tooltip-icon {
+    @apply text-sm;
+}
+
+/* Icônes de badge - taille appropriée */
+.badge-icon {
+    @apply text-xs;
+}
+
+/* Icônes de tag - taille appropriée */
+.tag-icon {
+    @apply text-sm;
+}
+
+/* Icônes de lien - taille appropriée */
+.link-icon {
+    @apply text-sm;
+}
+
+/* Icônes de bouton flottant - taille appropriée */
+.fab-icon {
+    @apply text-lg;
+}
+
+/* Icônes de carte - taille appropriée */
+.card-icon {
+    @apply text-base;
+}
+
+/* Icônes de widget - taille appropriée */
+.widget-icon {
+    @apply text-base;
+}
+
+/* Icônes de sidebar mobile - taille appropriée */
+.sidebar-mobile-icon {
+    @apply text-lg;
+}
+
+/* Icônes de navigation principale - taille appropriée */
+.main-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation secondaire - taille appropriée */
+.secondary-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation tertiaire - taille appropriée */
+.tertiary-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation contextuelle - taille appropriée */
+.contextual-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de page - taille appropriée */
+.page-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de section - taille appropriée */
+.section-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de sous-section - taille appropriée */
+.subsection-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de groupe - taille appropriée */
+.group-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de sous-groupe - taille appropriée */
+.subgroup-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de niveau - taille appropriée */
+.level-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de profondeur - taille appropriée */
+.depth-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de hiérarchie - taille appropriée */
+.hierarchy-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de structure - taille appropriée */
+.structure-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de contenu - taille appropriée */
+.content-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de fonctionnalité - taille appropriée */
+.feature-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de module - taille appropriée */
+.module-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de composant - taille appropriée */
+.component-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de service - taille appropriée */
+.service-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de ressource - taille appropriée */
+.resource-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de fonction - taille appropriée */
+.function-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de méthode - taille appropriée */
+.method-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de propriété - taille appropriée */
+.property-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de paramètre - taille appropriée */
+.parameter-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de retour - taille appropriée */
+.return-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation d'exception - taille appropriée */
+.exception-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation d'événement - taille appropriée */
+.event-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de listener - taille appropriée */
+.listener-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de middleware - taille appropriée */
+.middleware-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de route - taille appropriée */
+.route-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de contrôleur - taille appropriée */
+.controller-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de modèle - taille appropriée */
+.model-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de vue - taille appropriée */
+.view-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de template - taille appropriée */
+.template-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de layout - taille appropriée */
+.layout-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de partial - taille appropriée */
+.partial-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de composant - taille appropriée */
+.component-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de service - taille appropriée */
+.service-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de repository - taille appropriée */
+.repository-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de factory - taille appropriée */
+.factory-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de seeder - taille appropriée */
+.seeder-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de migration - taille appropriée */
+.migration-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de test - taille appropriée */
+.test-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de configuration - taille appropriée */
+.config-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation d'environnement - taille appropriée */
+.environment-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de cache - taille appropriée */
+.cache-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de session - taille appropriée */
+.session-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de cookie - taille appropriée */
+.cookie-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de base de données - taille appropriée */
+.database-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de table - taille appropriée */
+.table-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de colonne - taille appropriée */
+.column-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de ligne - taille appropriée */
+.row-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de clé - taille appropriée */
+.key-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation d'index - taille appropriée */
+.index-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de contrainte - taille appropriée */
+.constraint-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de trigger - taille appropriée */
+.trigger-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de procédure - taille appropriée */
+.procedure-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de fonction - taille appropriée */
+.function-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de vue - taille appropriée */
+.view-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de schéma - taille appropriée */
+.schema-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de base - taille appropriée */
+.base-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de système - taille appropriée */
+.system-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation d'utilisateur - taille appropriée */
+.user-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de rôle - taille appropriée */
+.role-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de permission - taille appropriée */
+.permission-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de groupe - taille appropriée */
+.group-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de équipe - taille appropriée */
+.team-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de organisation - taille appropriée */
+.organization-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de projet - taille appropriée */
+.project-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de tâche - taille appropriée */
+.task-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de sous-tâche - taille appropriée */
+.subtask-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de commentaire - taille appropriée */
+.comment-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de note - taille appropriée */
+.note-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de fichier - taille appropriée */
+.file-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de dossier - taille appropriée */
+.folder-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de document - taille appropriée */
+.document-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de image - taille appropriée */
+.image-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de vidéo - taille appropriée */
+.video-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de audio - taille appropriée */
+.audio-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de archive - taille appropriée */
+.archive-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de compression - taille appropriée */
+.compression-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de chiffrement - taille appropriée */
+.encryption-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de signature - taille appropriée */
+.signature-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de certificat - taille appropriée */
+.certificate-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de clé publique - taille appropriée */
+.public-key-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de clé privée - taille appropriée */
+.private-key-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de token - taille appropriée */
+.token-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de jeton - taille appropriée */
+.jeton-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de session - taille appropriée */
+.session-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de connexion - taille appropriée */
+.connection-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de déconnexion - taille appropriée */
+.disconnection-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation d'authentification - taille appropriée */
+.authentication-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation d'autorisation - taille appropriée */
+.authorization-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de sécurité - taille appropriée */
+.security-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de audit - taille appropriée */
+.audit-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de log - taille appropriée */
+.log-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de trace - taille appropriée */
+.trace-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de débogage - taille appropriée */
+.debug-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de profil - taille appropriée */
+.profile-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de paramètres - taille appropriée */
+.settings-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de préférences - taille appropriée */
+.preferences-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de configuration - taille appropriée */
+.configuration-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation d'options - taille appropriée */
+.options-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de choix - taille appropriée */
+.choice-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de sélection - taille appropriée */
+.selection-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de filtre - taille appropriée */
+.filter-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de tri - taille appropriée */
+.sort-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de recherche - taille appropriée */
+.search-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de navigation - taille appropriée */
+.navigation-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu - taille appropriée */
+.menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de sous-menu - taille appropriée */
+.submenu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu déroulant - taille appropriée */
+.dropdown-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu contextuel - taille appropriée */
+.context-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu hamburger - taille appropriée */
+.hamburger-menu-nav-icon {
+    @apply text-lg;
+}
+
+/* Icônes de navigation de menu mobile - taille appropriée */
+.mobile-menu-nav-icon {
+    @apply text-lg;
+}
+
+/* Icônes de navigation de menu desktop - taille appropriée */
+.desktop-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu tablet - taille appropriée */
+.tablet-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu responsive - taille appropriée */
+.responsive-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu adaptatif - taille appropriée */
+.adaptive-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu intelligent - taille appropriée */
+.smart-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu dynamique - taille appropriée */
+.dynamic-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu statique - taille appropriée */
+.static-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu fixe - taille appropriée */
+.fixed-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu flottant - taille appropriée */
+.floating-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu superposé - taille appropriée */
+.overlay-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu modal - taille appropriée */
+.modal-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu popup - taille appropriée */
+.popup-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu tooltip - taille appropriée */
+.tooltip-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu info - taille appropriée */
+.info-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu aide - taille appropriée */
+.help-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu support - taille appropriée */
+.support-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu contact - taille appropriée */
+.contact-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu à propos - taille appropriée */
+.about-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu conditions - taille appropriée */
+.terms-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu politique - taille appropriée */
+.policy-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu confidentialité - taille appropriée */
+.privacy-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu cookies - taille appropriée */
+.cookies-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu mentions légales - taille appropriée */
+.legal-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu CGU - taille appropriée */
+.cgu-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu CGV - taille appropriée */
+.cgv-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu FAQ - taille appropriée */
+.faq-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu forum - taille appropriée */
+.forum-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu blog - taille appropriée */
+.blog-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu actualités - taille appropriée */
+.news-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu événements - taille appropriée */
+.events-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu calendrier - taille appropriée */
+.calendar-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu agenda - taille appropriée */
+.agenda-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu planning - taille appropriée */
+.planning-menu-nav-icon {
+    @apply text-base;
+}
+
+/* Icônes de navigation de menu horaire - taille appropriée */
+.schedule-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu temps - taille appropriée */
+.time-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu date - taille appropriée */
+.date-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu année - taille appropriée */
+.year-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu mois - taille appropriée */
+.month-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu semaine - taille appropriée */
+.week-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu jour - taille appropriée */
+.day-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu heure - taille appropriée */
+.hour-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu minute - taille appropriée */
+.minute-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu seconde - taille appropriée */
+.second-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu milliseconde - taille appropriée */
+.millisecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu microseconde - taille appropriée */
+.microsecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu nanoseconde - taille appropriée */
+.nanosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu picoseconde - taille appropriée */
+.picosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu femtoseconde - taille appropriée */
+.femtosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu attoseconde - taille appropriée */
+.attosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu zeptoseconde - taille appropriée */
+.zeptosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu yoctoseconde - taille appropriée */
+.yoctosecond-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu planck - taille appropriée */
+.planck-menu-nav-icon {
+    @apply text-xs;
+}
+
+/* Icônes de navigation de menu quantum - taille appropriée */
+.quantum-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu atomique - taille appropriée */
+.atomic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu moléculaire - taille appropriée */
+.molecular-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu cellulaire - taille appropriée */
+.cellular-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu tissulaire - taille appropriée */
+.tissue-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu organique - taille appropriée */
+.organic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu systémique - taille appropriée */
+.systemic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu holistique - taille appropriée */
+.holistic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu intégratif - taille appropriée */
+.integrative-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu synergique - taille appropriée */
+.synergistic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu harmonique - taille appropriée */
+.harmonic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu équilibré - taille appropriée */
+.balanced-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu proportionnel - taille appropriée */
+.proportional-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu symétrique - taille appropriée */
+.symmetric-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu asymétrique - taille appropriée */
+.asymmetric-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu irrégulier - taille appropriée */
+.irregular-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu chaotique - taille appropriée */
+.chaotic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu ordonné - taille appropriée */
+.ordered-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu structuré - taille appropriée */
+.structured-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu organisé - taille appropriée */
+.organized-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu planifié - taille appropriée */
+.planned-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu programmé - taille appropriée */
+.programmed-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu automatisé - taille appropriée */
+.automated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu manuel - taille appropriée */
+.manual-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu semi-automatique - taille appropriée */
+.semi-automatic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu hybride - taille appropriée */
+.hybrid-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu mixte - taille appropriée */
+.mixed-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu combiné - taille appropriée */
+.combined-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu fusionné - taille appropriée */
+.merged-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu séparé - taille appropriée */
+.separated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu divisé - taille appropriée */
+.divided-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu fractionné - taille appropriée */
+.fractionated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu segmenté - taille appropriée */
+.segmented-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu partitionné - taille appropriée */
+.partitioned-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu distribué - taille appropriée */
+.distributed-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu centralisé - taille appropriée */
+.centralized-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu décentralisé - taille appropriée */
+.decentralized-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu fédéré - taille appropriée */
+.federated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu confédéré - taille appropriée */
+.confederated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu unifié - taille appropriée */
+.unified-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu intégré - taille appropriée */
+.integrated-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu modulaire - taille appropriée */
+.modular-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu extensible - taille appropriée */
+.extensible-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu flexible - taille appropriée */
+.flexible-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu adaptatif - taille appropriée */
+.adaptive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu évolutif - taille appropriée */
+.evolutionary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu progressif - taille appropriée */
+.progressive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu régressif - taille appropriée */
+.regressive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu cyclique - taille appropriée */
+.cyclic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu périodique - taille appropriée */
+.periodic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu saisonnier - taille appropriée */
+.seasonal-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu temporel - taille appropriée */
+.temporal-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu spatial - taille appropriée */
+.spatial-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu géographique - taille appropriée */
+.geographic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu topographique - taille appropriée */
+.topographic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu cartographique - taille appropriée */
+.cartographic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu géodésique - taille appropriée */
+.geodetic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu astronomique - taille appropriée */
+.astronomical-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu cosmologique - taille appropriée */
+.cosmological-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu astrophysique - taille appropriée */
+.astrophysical-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu planétaire - taille appropriée */
+.planetary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu stellaire - taille appropriée */
+.stellar-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu galactique - taille appropriée */
+.galactic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu intergalactique - taille appropriée */
+.intergalactic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu interstellaire - taille appropriée */
+.interstellar-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu interplanétaire - taille appropriée */
+.interplanetary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu intercontinental - taille appropriée */
+.intercontinental-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu international - taille appropriée */
+.international-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu national - taille appropriée */
+.national-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu régional - taille appropriée */
+.regional-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu local - taille appropriée */
+.local-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu global - taille appropriée */
+.global-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu universel - taille appropriée */
+.universal-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu général - taille appropriée */
+.general-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu spécifique - taille appropriée */
+.specific-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu particulier - taille appropriée */
+.particular-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu spécial - taille appropriée */
+.special-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu exceptionnel - taille appropriée */
+.exceptional-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu extraordinaire - taille appropriée */
+.extraordinary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu remarquable - taille appropriée */
+.remarkable-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu notable - taille appropriée */
+.notable-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu important - taille appropriée */
+.important-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu significatif - taille appropriée */
+.significant-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu pertinent - taille appropriée */
+.relevant-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu approprié - taille appropriée */
+.appropriate-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu convenable - taille appropriée */
+.suitable-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu adéquat - taille appropriée */
+.adequate-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu suffisant - taille appropriée */
+.sufficient-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu insuffisant - taille appropriée */
+.insufficient-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu excessif - taille appropriée */
+.excessive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu modéré - taille appropriée */
+.moderate-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu équilibré - taille appropriée */
+.balanced-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu harmonieux - taille appropriée */
+.harmonious-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu cohérent - taille appropriée */
+.coherent-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu logique - taille appropriée */
+.logical-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu rationnel - taille appropriée */
+.rational-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu raisonnable - taille appropriée */
+.reasonable-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu sensé - taille appropriée */
+.sensible-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu judicieux - taille appropriée */
+.judicious-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu sage - taille appropriée */
+.wise-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu intelligent - taille appropriée */
+.intelligent-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu brillant - taille appropriée */
+.brilliant-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu génial - taille appropriée */
+.genius-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu créatif - taille appropriée */
+.creative-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu innovant - taille appropriée */
+.innovative-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu original - taille appropriée */
+.original-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu unique - taille appropriée */
+.unique-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu distinctif - taille appropriée */
+.distinctive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu caractéristique - taille appropriée */
+.characteristic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu typique - taille appropriée */
+.typical-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu représentatif - taille appropriée */
+.representative-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu exemplaire - taille appropriée */
+.exemplary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu modèle - taille appropriée */
+.model-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu standard - taille appropriée */
+.standard-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu conventionnel - taille appropriée */
+.conventional-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu traditionnel - taille appropriée */
+.traditional-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu classique - taille appropriée */
+.classic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu moderne - taille appropriée */
+.modern-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu contemporain - taille appropriée */
+.contemporary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu actuel - taille appropriée */
+.current-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu présent - taille appropriée */
+.present-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu futur - taille appropriée */
+.future-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu prospectif - taille appropriée */
+.prospective-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu visionnaire - taille appropriée */
+.visionary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu prévisionnel - taille appropriée */
+.forecasting-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu prédictif - taille appropriée */
+.predictive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu anticipatif - taille appropriée */
+.anticipatory-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu préventif - taille appropriée */
+.preventive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu protectif - taille appropriée */
+.protective-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu défensif - taille appropriée */
+.defensive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu offensif - taille appropriée */
+.offensive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu agressif - taille appropriée */
+.aggressive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu passif - taille appropriée */
+.passive-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu actif - taille appropriée */
+.active-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu dynamique - taille appropriée */
+.dynamic-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu statique - taille appropriée */
+.static-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu stationnaire - taille appropriée */
+.stationary-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu mobile - taille appropriée */
+.mobile-menu-nav-icon {
+    @apply text-sm;
+}
+
+/* Icônes de navigation de menu portable - taille appropriée */
+.portable-menu-nav-icon {
+    @apply text-sm};

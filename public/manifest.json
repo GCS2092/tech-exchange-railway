@@ -1,0 +1,37 @@
+{
+    "name": "Mon Site Cosmétique",
+    "short_name": "Cosmétiques",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#e91e63",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "/images/icons/images.jpg",
+        "sizes": "360x360",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/icons/image.png",
+        "sizes": "225x225",
+        "type": "image/png"
+      }
+    ],
+    "screenshots": [
+  {
+    "src": "/images/screenshotdesktop.png",
+    "type": "image/png",
+    "sizes": "360x360",
+    "form_factor": "wide"
+  },
+  {
+    "src": "/images/screenshotmobile.png",
+    "type": "image/png",
+    "sizes": "360x750",
+    "form_factor": "narrow"
+  }
+]
+
+  }
+  
