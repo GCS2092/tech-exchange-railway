@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('seller_id')->nullable()->after('id');
-            $table->foreign('seller_id')->references('id')->on('users')->onDelete('set null');
-        });
+        if (!Schema::hasColumn('products', 'seller_id')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->unsignedBigInteger('seller_id')->nullable()->after('id');
+                $table->foreign('seller_id')->references('id')->on('users')->onDelete('set null');
+            });
+        }
     }
 
     /**

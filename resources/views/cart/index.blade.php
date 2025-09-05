@@ -1,241 +1,235 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 py-12">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <!-- Header avec animation -->
-        <div class="text-center mb-12 transform transition duration-700 hover:scale-105">
-            <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
-                Mon Panier
-            </h1>
-            <div class="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+<div class="min-h-screen bg-white">
+    <div class="container-nike py-12">
+        
+        <!-- Header - Style Nike -->
+        <div class="text-center mb-16">
+            <h1 class="nike-title mb-4">PANIER</h1>
+            <p class="nike-text text-gray-600">Vérifiez vos articles et finalisez votre commande</p>
         </div>
 
-        <!-- Message de confirmation -->
-        @if (session('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg mb-8 flex items-center animate-fade-in">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span class="font-medium">{{ session('success') }}</span>
+        @if($cartItems->count() > 0)
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                
+                <!-- Liste des articles - Style Nike -->
+                <div class="lg:col-span-2">
+                    <div class="space-y-6">
+                        @foreach($cartItems as $item)
+                            <div class="product-card-nike">
+                                <div class="flex items-center space-x-6">
+                                    <!-- Image du produit -->
+                                    <div class="flex-shrink-0">
+                                        @if($item->product->images && count($item->product->images) > 0)
+                                            <img src="{{ asset('storage/' . $item->product->images->first()->path) }}" 
+                                                 alt="{{ $item->product->name }}" 
+                                                 class="w-24 h-24 object-cover rounded-lg">
+                                        @else
+                                            <div class="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-image text-lg text-gray-400"></i>
             </div>
-        @endif
-
-        <!-- Message d'erreur -->
-        @if (session('error'))
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg mb-8 flex items-center animate-fade-in">
-                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span class="font-medium">{{ session('error') }}</span>
-            </div>
-        @endif
-
-        <!-- Panier vide -->
-        @if($cart->isEmpty())
-            <div class="bg-white rounded-2xl shadow-xl p-8 text-center animate-scale-in">
-                <div class="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-6 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Votre panier est vide</h2>
-                <p class="text-gray-600 mb-8">Découvrez nos produits et commencez vos achats</p>
-                <a href="{{ route('products.index') }}" class="btn btn-primary group">
-                    <span>Découvrir nos produits</span>
-                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- Suggestions de produits -->
-            <div class="mt-16">
-                <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Produits populaires</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    @foreach($popularProducts as $product)
-                    <div class="card hover:shadow-lg transform hover:-translate-y-2 transition-all duration-300">
-                        <div class="aspect-ratio-1">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover rounded-t-xl">
-                        </div>
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>
-                            <p class="text-indigo-600 font-bold mt-2">{{ $product->price }}€</p>
-                            <button class="btn btn-secondary w-full mt-4" onclick="addToCart({{ $product->id }})">
-                                Ajouter au panier
-                            </button>
+            @endif
+                            </div>
+                            
+                            <!-- Informations du produit -->
+                            <div class="flex-1 min-w-0">
+                                        <h3 class="product-title-nike mb-2">
+                                            <a href="{{ route('products.show', $item->product) }}" class="hover:text-gray-600 transition-colors">
+                                                {{ $item->product->name }}
+                                            </a>
+                                        </h3>
+                                        <p class="text-gray-600 text-sm mb-2">{{ $item->product->category->name ?? 'Sans catégorie' }}</p>
+                                        
+                                        <!-- Prix -->
+                                        <div class="flex items-center space-x-4 mb-4">
+                                            @if($item->product->promo_price)
+                                                <span class="product-price-old-nike">{{ number_format($item->product->price) }} FCFA</span>
+                                                <span class="product-price-nike">{{ number_format($item->product->promo_price) }} FCFA</span>
+                                            @else
+                                                <span class="product-price-nike">{{ number_format($item->product->price) }} FCFA</span>
+                                            @endif
+                            </div>
+                            
+                                        <!-- Quantité et actions -->
+                                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                                <form action="{{ route('cart.update', $item->id) }}" method="POST" class="flex items-center space-x-2">
+                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="decreaseQuantity({{ $item->id }})">
+                                                        <i class="fas fa-minus text-gray-600 text-sm"></i>
+                                                    </button>
+                                                    <input type="number" name="quantity" id="quantity-{{ $item->id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock ?? 99 }}" class="w-16 text-center border border-gray-300 rounded-lg py-1 text-sm">
+                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="increaseQuantity({{ $item->id }})">
+                                                        <i class="fas fa-plus text-gray-600 text-sm"></i>
+                                    </button>
+                                                    <button type="submit" class="ml-2 text-sm text-gray-600 hover:text-black transition-colors">
+                                                        <i class="fas fa-save"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <!-- Supprimer -->
+                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="flex-shrink-0">
+                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700 transition-colors">
+                                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                                        </div>
+                                    </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
-            </div>
-        @else
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Résumé du panier -->
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                        <div class="p-6 border-b border-gray-100">
-                            <h2 class="text-xl font-semibold text-gray-800">Résumé du panier</h2>
-                        </div>
+                
+                    <!-- Actions du panier -->
+                    <div class="mt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                        <a href="{{ route('products.index') }}" class="btn-nike-outline">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Continuer les achats
+                        </a>
                         
-                        <div class="divide-y divide-gray-100">
-                            @php $currentCurrency = session('currency', 'XOF'); @endphp
-                            @foreach ($cart as $item)
-                            <div class="p-6 hover:bg-gray-50 transition-colors duration-300 group animate-fade-in">
-                                <div class="flex items-center space-x-4">
-                                    <!-- Image du produit -->
-                                    <div class="relative w-24 h-24 rounded-xl overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
-                                        <img 
-                                            src="{{ Str::startsWith($item->product->image, 'http') 
-                                                ? $item->product->image 
-                                                : asset('storage/' . $item->product->image) }}" 
-                                            alt="{{ $item->product->name }}" 
-                                            class="w-full h-full max-w-full h-auto object-cover group-hover:scale-110 transition-transform duration-500">
-                                    </div>
-                                    
-                                    <!-- Informations du produit -->
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
-                                            {{ $item->product->name }}
-                                        </h3>
-                                        <p class="text-gray-600 text-sm mt-1">
-                                            Prix unitaire: {{ \App\Helpers\CurrencyHelper::format($item->price, $currentCurrency) }}
-                                        </p>
-                                        
-                                        <!-- Contrôles de quantité -->
-                                        <div class="flex items-center mt-4 space-x-4">
-                                            <form action="/panier/mise-a-jour/{{ $item->id }}" method="POST" class="flex items-center">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                                <button type="submit" name="action" value="decrease" 
-                                                    class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-                                                    </svg>
-                                                </button>
-                                                <span class="mx-4 font-medium">{{ $item->quantity }}</span>
-                                                <button type="submit" name="action" value="increase" 
-                                                    class="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                            
-                                            <!-- Supprimer l'article -->
-                                            <form action="{{ route('cart.remove') }}" method="POST" class="ml-auto">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                                <button type="submit" 
-                                                    class="text-red-500 hover:text-red-600 transition-colors"
-                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
+                        <form action="{{ route('cart.clear') }}" method="POST" class="flex-shrink-0">
+                            @csrf
+                            <button type="submit" class="text-red-500 hover:text-red-700 transition-colors font-medium">
+                                <i class="fas fa-trash mr-2"></i>
+                                Vider le panier
+                            </button>
+                        </form>
                         </div>
                     </div>
-                </div>
-
-                <!-- Récapitulatif de la commande -->
+                    
+                <!-- Résumé de la commande - Style Nike -->
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl shadow-xl p-6 sticky top-4">
-                        <h2 class="text-xl font-semibold text-gray-800 mb-6">Récapitulatif</h2>
+                    <div class="card-nike sticky top-8">
+                        <h2 class="nike-heading mb-6">RÉSUMÉ DE LA COMMANDE</h2>
                         
-                        <div class="space-y-4">
+                        <!-- Détails des prix -->
+                        <div class="space-y-4 mb-6">
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Sous-total</span>
-                                <span class="font-medium">{{ \App\Helpers\CurrencyHelper::format($originalTotal, 'XOF') }}</span>
+                                <span class="font-semibold">{{ number_format($subtotal) }} FCFA</span>
                             </div>
                             
-                            @if($promo)
-                            <div class="flex justify-between text-green-600">
-                                <span>Réduction ({{ $promo['value'] }}%)</span>
-                                <span class="font-medium">-{{ \App\Helpers\CurrencyHelper::format($discount, 'XOF') }}</span>
+                            @if($discount > 0)
+                                <div class="flex justify-between text-green-600">
+                                    <span>Réduction</span>
+                                    <span>-{{ number_format($discount) }} FCFA</span>
+                    </div>
+                    @endif
+                    
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Livraison</span>
+                                <span class="font-semibold">{{ $shipping > 0 ? number_format($shipping) . ' FCFA' : 'Gratuite' }}</span>
                             </div>
-                            @endif
                             
                             <div class="border-t border-gray-200 pt-4">
                                 <div class="flex justify-between">
-                                    <span class="text-lg font-semibold">Total</span>
-                                    <span class="text-lg font-bold text-purple-600">{{ \App\Helpers\CurrencyHelper::format($total, 'XOF') }}</span>
+                                    <span class="text-lg font-semibold text-black">Total</span>
+                                    <span class="text-2xl font-bold text-black">{{ number_format($total) }} FCFA</span>
                                 </div>
                             </div>
-
-                            @if(!$isMinimumAmountReached)
-                            <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg">
-                                <p class="text-yellow-700 text-sm">
-                                    Le montant minimum pour passer commande est de {{ \App\Helpers\CurrencyHelper::format($minimumAmount, 'XOF') }}
-                                </p>
-                            </div>
-                            @endif
                         </div>
-
-                        <div class="mt-6">
-                            <a href="{{ route('checkout.index') }}" class="btn btn-primary w-full py-3 group {{ !$isMinimumAmountReached ? 'opacity-50 cursor-not-allowed' : '' }}">
-                                <span>Passer la commande</span>
-                                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                </svg>
-                            </a>
-                        </div>
-
-                        <!-- Code promo -->
-                        <div class="mt-6">
-                            <form action="{{ route('cart.apply-coupon') }}" method="POST" class="flex">
-                                @csrf
-                                <input type="text" name="code" placeholder="Code promo" 
-                                    class="form-input flex-1 rounded-r-none focus:ring-2 focus:ring-purple-500"
-                                    value="{{ $promo['code'] ?? '' }}">
-                                @if($promo)
-                                    <button type="submit" formaction="{{ route('cart.removePromo') }}" 
-                                        class="btn btn-danger rounded-l-none">
-                                        Retirer
-                                    </button>
-                                @else
-                                    <button type="submit" class="btn btn-secondary rounded-l-none">
-                                        Appliquer
-                                    </button>
-                                @endif
-                            </form>
-                            @if($promo)
-                            <div class="mt-2 text-sm text-green-600">
-                                <p>Code promo "{{ $promo['code'] }}" appliqué</p>
-                                <p>Réduction de {{ $promo['value'] }}%</p>
-                            </div>
-                            @endif
+                        
+                        <!-- Bouton de finalisation -->
+                        <a href="{{ route('checkout.index') }}" class="btn-nike w-full text-center">
+                            FINALISER LA COMMANDE
+                        </a>
+                        
+                        <!-- Informations supplémentaires -->
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-gray-500">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                Paiement sécurisé
+                            </p>
+                            <p class="text-sm text-gray-500 mt-2">
+                                <i class="fas fa-truck mr-2"></i>
+                                Livraison gratuite dès 50 000 FCFA
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Produits complémentaires -->
-            <div class="mt-16">
-                <h2 class="text-2xl font-bold text-gray-800 mb-8">Produits complémentaires</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    @foreach($complementaryProducts as $product)
-                    <div class="card hover:shadow-lg transform hover:-translate-y-2 transition-all duration-300">
-                        <div class="aspect-ratio-1">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover rounded-t-xl">
+            
+                            @else
+            <!-- Panier vide - Style Nike -->
+            <div class="text-center py-20">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shopping-cart text-xl text-gray-400"></i>
+                </div>
+                <h3 class="nike-heading mb-4">Votre panier est vide</h3>
+                <p class="nike-text text-gray-600 mb-8">
+                    Découvrez nos produits et commencez votre shopping
+                </p>
+                <a href="{{ route('products.index') }}" class="btn-nike">
+                    EXPLORER LES PRODUITS
+                </a>
+            </div>
+                            @endif
+        
+        <!-- Produits recommandés -->
+        @if($recommendedProducts && $recommendedProducts->count() > 0)
+            <div class="mt-20 border-t border-gray-200 pt-16">
+                <h2 class="nike-heading text-center mb-12">PRODUITS RECOMMANDÉS</h2>
+                <div class="grid-nike grid-nike-3 gap-nike-lg">
+                    @foreach($recommendedProducts as $product)
+                        <div class="product-card-nike group">
+                            <!-- Image du produit -->
+                            <div class="relative overflow-hidden">
+                                @if($product->images && count($product->images) > 0)
+                                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" 
+                                         alt="{{ $product->name }}" 
+                                         class="product-image-nike group-hover:scale-105 transition-transform duration-300">
+                                @else
+                                    <div class="product-image-nike bg-gray-100 flex items-center justify-center">
+                                        <i class="fas fa-image text-lg text-gray-400"></i>
                         </div>
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>
-                            <p class="text-indigo-600 font-bold mt-2">{{ \App\Helpers\CurrencyHelper::format($product->price, 'XOF') }}</p>
-                            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-4">
-                                @csrf
-                                <button type="submit" class="btn btn-secondary w-full group">
-                                    <span>Ajouter au panier</span>
-                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
+                        @endif
+                                
+                                <!-- Badge de promotion -->
+                                @if($product->promo_price)
+                                    <div class="absolute top-4 left-4 bg-black text-white px-3 py-1 text-sm font-semibold">
+                                        PROMO
+                    </div>
+                    @endif
+                </div>
+                            
+                            <!-- Informations du produit -->
+                            <div class="product-info-nike">
+                                <h3 class="product-title-nike group-hover:text-gray-600 transition-colors">
+                                    <a href="{{ route('products.show', $product) }}">{{ $product->name }}</a>
+                                </h3>
+                                
+                                <!-- Prix -->
+                                <div class="flex items-center justify-between mb-4">
+                                    @if($product->promo_price)
+                                        <div class="flex items-center space-x-2">
+                                            <span class="product-price-old-nike">{{ number_format($product->price) }} FCFA</span>
+                                            <span class="product-price-nike">{{ number_format($product->promo_price) }} FCFA</span>
+                                        </div>
+                                    @else
+                                        <span class="product-price-nike">{{ number_format($product->price) }} FCFA</span>
+                                    @endif
+            </div>
+
+                                <!-- Bouton d'action -->
+                                <div class="grid grid-cols-1 gap-2">
+                                    <a href="{{ route('products.show', $product) }}" class="btn-nike text-center">
+                                        Voir détails
+                                    </a>
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn-nike-outline w-full">
+                                            <i class="fas fa-shopping-cart mr-2"></i>
+                                    Ajouter au panier
                                 </button>
                             </form>
+                                </div>
                         </div>
                     </div>
                     @endforeach
@@ -245,34 +239,20 @@
     </div>
 </div>
 
-@push('scripts')
 <script>
-    // Fonction pour ajouter un produit au panier
-    function addToCart(productId) {
-        // Créer un formulaire dynamique
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = `/cart/add/${productId}`;
-        
-        // Ajouter le token CSRF
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = document.querySelector('meta[name="csrf-token"]').content;
-        form.appendChild(csrfToken);
-        
-        // Ajouter le formulaire à la page et le soumettre
-        document.body.appendChild(form);
-        form.submit();
+function decreaseQuantity(itemId) {
+    const input = document.getElementById('quantity-' + itemId);
+    if (input.value > 1) {
+        input.value = parseInt(input.value) - 1;
     }
+}
 
-    // Animation pour les éléments du panier
-    document.addEventListener('DOMContentLoaded', function() {
-        const items = document.querySelectorAll('.animate-fade-in');
-        items.forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.1}s`;
-        });
-    });
+function increaseQuantity(itemId) {
+    const input = document.getElementById('quantity-' + itemId);
+    const max = parseInt(input.getAttribute('max'));
+    if (input.value < max) {
+        input.value = parseInt(input.value) + 1;
+    }
+}
 </script>
-@endpush
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    <h1 class="text-4xl font-bold text-center text-gray-800 mb-8 relative">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-8 relative">
         <span class="relative inline-block after:content-[''] after:absolute after:w-1/2 after:h-1 after:bg-blue-500 after:bottom-0 after:left-1/4">
             Add Product
         </span>
@@ -27,7 +27,7 @@
 <div>
     <label for="currency" class="block text-sm font-medium text-gray-700">Devise</label>
     <select name="currency" id="currency" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        <option value="EUR">Euro (€)</option>
+                                    <option value="XOF">Franc CFA (FCFA)</option>
         <option value="USD">Dollar ($)</option>
         <option value="XOF">Franc CFA (XOF)</option>
         <option value="GBP">Livre (£)</option>

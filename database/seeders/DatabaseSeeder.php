@@ -1,51 +1,26 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Product;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Run role seeder first to ensure roles exist
+        // Utiliser le nouveau seeder amélioré qui créé tout ce dont nous avons besoin
         $this->call([
-            RoleSeeder::class,
-            ProductSeeder::class,
+            EnhancedTestSeeder::class,
         ]);
-
-        // Create default admin user
-        $admin = User::create([
-            'name' => 'Coeursonn',
-            'username' => 'admin',
-            'email' => 'Slovengama@gmail.com',
-            'password' => Hash::make('qwertyuiop'),
-        ]);
-        $admin->assignRole('admin');
-
-        // Create sample products
-        Product::create([
-            'name' => 'Parfum Dior Sauvage',
-            'description' => 'Un parfum frais et intense pour homme.',
-            'price' => 89.99,
-            'image' => 'https://example.com/images/dior_sauvage.jpg',
-        ]);
-
-        Product::create([
-            'name' => 'Crème Hydratante Nivea',
-            'description' => 'Hydratation intense pour une peau douce.',
-            'price' => 12.99,
-            'image' => 'https://example.com/images/nivea_creme.jpg',
-        ]);
-
-        Product::create([
-            'name' => 'Rouge à Lèvres MAC',
-            'description' => 'Une couleur intense et longue tenue.',
-            'price' => 24.99,
-            'image' => 'https://example.com/images/mac_rouge.jpg',
-        ]);
+        
+        echo "\n🎉 Base de données peuplée avec succès !\n";
+        echo "👥 Utilisateurs créés :\n";
+        echo "   - Admin: slovengama@gmail.com / qwertyuiop\n";
+        echo "   - Vendeur: vendeur@techhub.com / password123\n";
+        echo "   - Livreur: livreur@techhub.com / password123\n";
+        echo "   - Client: client@techhub.com / password123\n\n";
+        echo "📱 Nombreux appareils électroniques ajoutés pour le système d'échange\n";
+        echo "🔄 Offres d'échange et commandes de test créées\n\n";
+        echo "🌐 Accédez au système d'échange: http://127.0.0.1:8000/trades/search\n";
     }
 }

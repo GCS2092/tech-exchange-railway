@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('head')
     @vite(['resources/css/pages/dashboard.css'])

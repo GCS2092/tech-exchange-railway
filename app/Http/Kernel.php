@@ -37,20 +37,21 @@ class Kernel extends HttpKernel
         ],
     ];
 
+
+
     /**
-     * Les middlewares route individuels.
+     * Les alias de middleware pour Laravel 11.
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
-        'livreur' => \App\Http\Middleware\LivreurMiddleware::class,
-        // Ajout Spatie
-        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-        'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+        'livreur' => \App\Http\Middleware\IsLivreur::class,
+        'track.pageviews' => \App\Http\Middleware\TrackPageViews::class,
     ];
+
+
 }

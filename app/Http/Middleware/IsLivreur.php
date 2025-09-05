@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LivreurMiddleware
+class IsLivreur
 {
     public function handle($request, Closure $next)
     {

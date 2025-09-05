@@ -5,7 +5,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">
                 🚚 Guide du livreur
             </h1>
             <p class="text-xl text-gray-600">
@@ -17,7 +17,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <a href="#commandes" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">📋</div>
+                    <div class="text-xl mb-3">📋</div>
                     <h3 class="text-lg font-semibold text-gray-900">Commandes</h3>
                     <p class="text-gray-600 text-sm">Voir vos livraisons</p>
                 </div>
@@ -25,7 +25,7 @@
             
             <a href="#livraison" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">🚚</div>
+                    <div class="text-xl mb-3">🚚</div>
                     <h3 class="text-lg font-semibold text-gray-900">Livraison</h3>
                     <p class="text-gray-600 text-sm">Marquer comme livré</p>
                 </div>
@@ -33,7 +33,7 @@
             
             <a href="#navigation" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">🗺️</div>
+                    <div class="text-xl mb-3">🗺️</div>
                     <h3 class="text-lg font-semibold text-gray-900">Navigation</h3>
                     <p class="text-gray-600 text-sm">Itinéraires</p>
                 </div>
@@ -44,8 +44,8 @@
         <div class="space-y-12">
             <!-- Section Commandes -->
             <section id="commandes" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">📋</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">📋</span>
                     Consulter vos commandes
                 </h2>
                 
@@ -94,8 +94,8 @@
 
             <!-- Section Livraison -->
             <section id="livraison" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">🚚</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">🚚</span>
                     Effectuer une livraison
                 </h2>
                 
@@ -140,8 +140,8 @@
 
             <!-- Section Navigation -->
             <section id="navigation" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">🗺️</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">🗺️</span>
                     Navigation et itinéraires
                 </h2>
                 
@@ -186,8 +186,8 @@
 
             <!-- Section Gestion des problèmes -->
             <section class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">⚠️</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">⚠️</span>
                     Gestion des problèmes
                 </h2>
                 
@@ -217,26 +217,26 @@
 
             <!-- Section Statistiques -->
             <section class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">📊</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">📊</span>
                     Vos performances
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="text-center p-6 bg-green-50 rounded-xl">
-                        <div class="text-3xl mb-2">✅</div>
+                        <div class="text-xl mb-2">✅</div>
                         <h3 class="font-semibold text-gray-900">Livraisons réussies</h3>
                         <p class="text-gray-600 text-sm">Suivi de vos performances</p>
                     </div>
                     
                     <div class="text-center p-6 bg-blue-50 rounded-xl">
-                        <div class="text-3xl mb-2">⏱️</div>
+                        <div class="text-xl mb-2">⏱️</div>
                         <h3 class="font-semibold text-gray-900">Temps moyen</h3>
                         <p class="text-gray-600 text-sm">Efficacité de livraison</p>
                     </div>
                     
                     <div class="text-center p-6 bg-purple-50 rounded-xl">
-                        <div class="text-3xl mb-2">⭐</div>
+                        <div class="text-xl mb-2">⭐</div>
                         <h3 class="font-semibold text-gray-900">Satisfaction client</h3>
                         <p class="text-gray-600 text-sm">Évaluations reçues</p>
                     </div>

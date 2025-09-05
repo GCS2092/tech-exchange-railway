@@ -5,7 +5,7 @@
     <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- En-tête avec animation -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            <h1 class="text-2xl md:text-xl font-extrabold text-gray-900 mb-4">
                 <span class="inline-block bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600 animate-pulse">
                     Produits en vedette
                 </span>
@@ -101,7 +101,7 @@
         <div class="mt-16 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
             <div class="md:flex">
                 <div class="px-6 py-12 md:p-12 md:w-1/2">
-                    <h2 class="text-3xl font-extrabold text-white mb-4">Recevez 20% de réduction sur votre première commande !</h2>
+                    <h2 class="text-xl font-extrabold text-white mb-4">Recevez 20% de réduction sur votre première commande !</h2>
                     <p class="text-indigo-100 mb-6">Inscrivez-vous à notre newsletter pour profiter de cette offre exceptionnelle et recevoir nos promotions exclusives.</p>
                     <form class="flex flex-col sm:flex-row gap-3">
                         <input type="email" placeholder="Votre email" class="flex-grow px-4 py-3 rounded-lg focus:ring-2 focus:ring-indigo-300 focus:outline-none">

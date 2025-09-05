@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     OrderController,
     PaymentController,
     DashboardController,
+    AdminDashboardController,
     Auth\AuthenticatedSessionController,
     Auth\RegisteredUserController,
     MessageController,
@@ -28,7 +29,10 @@ use App\Http\Controllers\{
     VendorDashboardController,
     VendorOrderController,
     VendorProductController,
-    VendorQuickManageController
+    VendorQuickManageController,
+    TradeController,
+    ExchangeInfoController,
+    GoogleController
 };
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\StockController;
@@ -44,8 +48,21 @@ use Illuminate\Support\Facades\Cache;
 |--------------------------------------------------------------------------
 */
 
-// Route principale pour React (doit être la première route)
-Route::get('/', [WelcomeController::class, 'index'])->name('home')->middleware('web');
+// Routes principales avec tracking des visites
+Route::middleware(['web', 'track.pageviews'])->group(function () {
+    
+    // Route d'accueil
+    Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+    // Routes des produits
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+    
+
+    
+
+});
 
 // Page d'accueil alternative
 Route::get('/welcome', function () {
@@ -55,11 +72,9 @@ Route::get('/welcome', function () {
 // Produits publics
 Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/featured', [ProductController::class, 'featured'])->name('products.featured');
 Route::get('/products/filter/ajax', [ProductController::class, 'ajaxFilter'])->name('products.ajax.filter');
 Route::get('/products/category/{category}', [ProductController::class, 'filterByCategory'])->name('products.filter');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::post('/products/{product}/favorite', [ProductController::class, 'addToFavorites'])->name('products.favorite');
 
 // Vérification de factures
@@ -69,6 +84,13 @@ Route::get('/invoices/verify/{id}/{token}', [InvoiceController::class, 'verify']
 Route::get('/test', function () {
     return response()->json(['message' => 'API OK']);
 });
+
+// Système d'échange - Information
+Route::get('/exchange-info', [ExchangeInfoController::class, 'index'])->name('exchange.info');
+Route::get('/exchange/start', [ExchangeInfoController::class, 'startExchange'])->name('exchange.start');
+
+// Newsletter subscription
+Route::post('/newsletter/subscribe', [WelcomeController::class, 'subscribeNewsletter'])->name('newsletter.subscribe');
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +103,10 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+// Authentification Google
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 // Routes pour invités uniquement
 Route::middleware('guest')->group(function () {
     // Inscription avec étapes
@@ -90,8 +116,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/register/verify-code', [RegisterWithCodeController::class, 'showVerifyForm'])->name('register.verify');
     Route::post('/register/verify-code', [RegisterWithCodeController::class, 'verifyCode'])->name('register.verify.submit');
     Route::post('/register/code/resend', [RegisterWithCodeController::class, 'resendCode'])->name('register.code.resend');
-    Route::get('/register/set-password', [RegisterWithCodeController::class, 'showSetPasswordForm'])->name('register.set.password');
+    Route::get('/register/set-password', [RegisterWithCodeController::class, 'setPassword'])->name('register.set.password');
     Route::post('/register/set-password', [RegisterWithCodeController::class, 'setPassword'])->name('register.set.password.submit');
+    Route::get('/register/init', [RegisterWithCodeController::class, 'init'])->name('register.init');
+    Route::post('/register/submit', [RegisterWithCodeController::class, 'submit'])->name('register.submit');
+    Route::post('/register/resend-code', [RegisterWithCodeController::class, 'resendCode'])->name('register.resend-code');
 
     // Récupération de mot de passe avec code (OTP)
     Route::get('/forgot-password-code', [ForgotPasswordWithCodeController::class, 'showRequestForm'])->name('password.code.request');
@@ -118,16 +147,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/preferences', [ProfileController::class, 'preferences'])->name('profile.preferences');
+    Route::get('/profile/notifications', [ProfileController::class, 'notifications'])->name('profile.notifications');
 
     // Gestion du panier
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::put('/cart/update/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::post('/panier/mise-a-jour/{cartItemId}', [CartController::class, 'update'])->name('cart.update');
     
     // Codes promo dans le panier
-    Route::post('/cart/apply-coupon', [CartController::class, 'applyPromo'])->name('cart.apply-coupon');
     Route::post('/cart/apply-promo', [CartController::class, 'applyPromo'])->name('cart.applyPromo');
     Route::post('/cart/remove-promo', [CartController::class, 'removePromo'])->name('cart.removePromo');
 
@@ -142,6 +172,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
     Route::delete('/orders/clear', [OrderController::class, 'clear'])->name('orders.clear');
+    Route::post('/orders/{order}/review', [OrderController::class, 'review'])->name('orders.review');
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -156,13 +188,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fidelite', [FidelityController::class, 'index'])->name('fidelity.calendar');
 
     // Codes promos
-    Route::resource('promos', PromoController::class);
-    Route::get('/promos/{promo}/usage-history', [PromoController::class, 'usageHistory'])->name('promos.usage-history');
+Route::resource('promos', PromoController::class);
+Route::get('/promos/{promo}/usage-history', [PromoController::class, 'usageHistory'])->name('promos.usage-history');
+Route::post('/promos/validate', [PromoController::class, 'validate'])->name('promos.validate');
+Route::get('/promos/search', [PromoController::class, 'search'])->name('promos.search');
     
     // Produits favoris
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/add/{product}', [FavoriteController::class, 'add'])->name('favorites.add');
     Route::delete('/favorites/remove/{product}', [FavoriteController::class, 'remove'])->name('favorites.remove');
+    Route::post('/favorites/toggle/{product}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+    Route::delete('/favorites/clear', [FavoriteController::class, 'clear'])->name('favorites.clear');
 
     // Onboarding
     Route::post('/onboarding/mark-seen', [OnboardingController::class, 'markAsSeen'])->name('onboarding.mark-seen');
@@ -180,6 +216,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggleActive');
+
+    // Routes pour le système de troc (accessibles sans connexion)
+    Route::get('/trades/search', [TradeController::class, 'searchTradeProducts'])->name('trades.search');
+    Route::get('/trades/{product}', [TradeController::class, 'showTradePage'])->name('trades.show.page');
+    
+    // Routes pour le système de troc (nécessitent une connexion)
+    Route::middleware('auth')->group(function () {
+        Route::post('/trades/{product}/offer', [TradeController::class, 'createOffer'])->name('trades.create-offer');
+        Route::get('/trades/offers/my', [TradeController::class, 'myOffers'])->name('trades.my-offers');
+        Route::post('/trades/offers/{offer}/accept', [TradeController::class, 'acceptOffer'])->name('trades.accept-offer');
+        Route::post('/trades/offers/{offer}/reject', [TradeController::class, 'rejectOffer'])->name('trades.reject-offer');
+        Route::post('/trades/offers/{offer}/cancel', [TradeController::class, 'cancelOffer'])->name('trades.cancel-offer');
+    });
 });
 
 // Routes vendeur supprimées - conflit avec le groupe ci-dessous
@@ -190,31 +239,29 @@ Route::middleware(['auth'])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-// Routes livreurs avec middleware spécifique
-Route::middleware(['auth'])->prefix('livreurs')->name('livreur.')->group(function () {
-    Route::get('/orders', [LivreurController::class, 'index'])->name('orders');
-    Route::patch('/orders/{order}', [LivreurController::class, 'markAsDelivered'])->name('delivery.complete');
-    Route::get('/view-route/{order}', [LivreurController::class, 'viewRoute'])->name('view-route');
+/*
+|--------------------------------------------------------------------------
+| ROUTES LIVREURS
+|--------------------------------------------------------------------------
+*/
+
+// Routes livreurs unifiées
+Route::middleware(['auth', 'role:livreur'])->prefix('livreur')->name('livreur.')->group(function () {
+    Route::get('/orders', [LivreurController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [LivreurController::class, 'show'])->name('orders.show');
+    Route::get('/planning', [LivreurController::class, 'planning'])->name('planning');
+    Route::patch('/orders/{order}/complete', [LivreurController::class, 'markAsDelivered'])->name('orders.complete');
+    Route::get('/orders/{order}/route', [LivreurController::class, 'viewRoute'])->name('orders.route');
+    Route::put('/profile/update', [LivreurController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/settings', [LivreurController::class, 'settings'])->name('settings');
+    Route::get('/statistics', [LivreurController::class, 'statistics'])->name('statistics');
+    Route::post('/update-location', [LivreurController::class, 'updateLocation'])->name('update-location');
 });
 
-// Routes livreurs alternatives (sans middleware livreur spécifique)
+// Routes AJAX pour livreurs (hors du groupe principal pour éviter les conflits de middleware)
 Route::middleware(['auth'])->group(function () {
-    Route::get('/livreurs', [LivreurController::class, 'index'])->name('livreurs.route_liste');
-    Route::get('/livreurs/orders', [LivreurController::class, 'index'])->name('livreur.orders');
-    Route::patch('/livreurs/orders/{order}', [LivreurController::class, 'markAsDelivered'])->name('livreurs.delivery.complete');
-    Route::get('/livreurs/view-route/{order}', [LivreurController::class, 'viewRoute'])->name('livreur.view-route');
-    Route::get('/livreur/planning', [LivreurController::class, 'planning'])->name('livreurs.planning');
-    // Route protégée pour livreur
-    Route::middleware(['auth'])->get('/livreur/commandes', [OrderController::class, 'livreurCommandes'])->name('livreurs.orders.index');
-    Route::patch('/livreur/commande/{id}/complete', [OrderController::class, 'completeDelivery'])->name('livreur.commande.complete');
+    Route::post('/livreur/fetch-deliveries', [LivreurController::class, 'fetchDeliveries'])->name('livreur.fetch-deliveries');
 });
-
-// Route AJAX pour mise à jour de la position du livreur
-Route::post('/livreur/update-location', [LivreurController::class, 'updateLocation'])
-    ->middleware(['auth']);
-
-// Route AJAX pour récupération des livraisons selon la période
-Route::post('/livreur/fetch-deliveries', [LivreurController::class, 'fetchDeliveries'])->middleware(['auth']);
 
 // Page de livraison
 Route::get('/delivery', function () {
@@ -231,6 +278,7 @@ Route::get('/delivery', function () {
 Route::middleware(['auth', 'role:vendeur'])->prefix('vendeur')->name('vendeur.')->group(function () {
     // Dashboard vendeur
     Route::get('/dashboard', [\App\Http\Controllers\VendorDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/vendeur-dashboard', [\App\Http\Controllers\VendorDashboardController::class, 'index'])->name('vendeur.dashboard'); // Alias pour compatibilité
     
     // Gestion des commandes vendeur
     Route::get('/orders', [\App\Http\Controllers\VendorOrderController::class, 'index'])->name('orders.index');
@@ -256,6 +304,9 @@ Route::middleware(['auth', 'role:vendeur'])->prefix('vendeur')->name('vendeur.')
     Route::get('/quickmanage', [\App\Http\Controllers\VendorQuickManageController::class, 'index'])->name('quickmanage');
 });
 
+// Route alias pour vendor.dashboard (en dehors du groupe vendeur)
+Route::get('/vendor/dashboard', [\App\Http\Controllers\VendorDashboardController::class, 'index'])->name('vendor.dashboard');
+
 /*
 |--------------------------------------------------------------------------
 | ROUTES ADMINISTRATEUR
@@ -279,32 +330,38 @@ Route::get('/test-admin', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
     // Dashboard admin
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('dashboard');
+    Route::get('/dashboard-advanced', [DashboardController::class, 'adminDashboardAdvanced'])->name('dashboard-advanced');
     
     // Gestion des utilisateurs
-    Route::get('/users', [UserManagementController::class, 'details'])->name('users.list');
-    Route::resource('users', AdminUserController::class);
-    Route::put('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.update-role');
-    Route::get('users/{user}', [UserManagementController::class, 'show'])->name('users.show');
-    Route::post('users/{user}/update-password', [AdminUserController::class, 'updatePassword'])->name('users.update-password');
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::put('users/{user}/role', [\App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.update-role');
+    Route::post('users/{user}/update-password', [\App\Http\Controllers\Admin\UserController::class, 'updatePassword'])->name('users.update-password');
     Route::post('users/{user}/block', [\App\Http\Controllers\Admin\UserController::class, 'block'])->name('users.block');
     Route::post('users/{user}/unblock', [\App\Http\Controllers\Admin\UserController::class, 'unblock'])->name('users.unblock');
     
     // Gestion des commandes admin
     Route::get('/orders', [OrderController::class, 'adminIndex'])->name('orders.index');
+    
+    // Gestion complète des commandes (AVANT la route générique)
+    Route::get('/orders/{order}/manage', [\App\Http\Controllers\Admin\OrderManagementController::class, 'show'])->name('orders.manage');
+    Route::put('/orders/{order}/status', [\App\Http\Controllers\Admin\OrderManagementController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::put('/orders/{order}/assign-livreur', [\App\Http\Controllers\Admin\OrderManagementController::class, 'assignLivreur'])->name('orders.assign-livreur');
+    Route::get('/orders/{order}/invoice', [\App\Http\Controllers\Admin\OrderManagementController::class, 'downloadInvoice'])->name('orders.invoice');
+    
+    // Route générique pour les détails simples (APRÈS les routes spécifiques)
     Route::get('/orders/{order}', [OrderController::class, 'adminShow'])->name('orders.show');
     Route::put('/orders/{order}/delivery-notes', [OrderController::class, 'updateDeliveryNotes'])->name('orders.updateDeliveryNotes');
     Route::put('/orders/{order}/update-delivery-notes', [OrderController::class, 'updateDeliveryNotes'])->name('orders.updateDeliveryNotesAlt');
     Route::post('/orders/{order}/assign-livreur', [OrderController::class, 'assignLivreur'])->name('orders.assignLivreur');
-    Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    // Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
     
     // Factures admin
     Route::get('/orders/{order}/facture', [OrderController::class, 'invoice'])->name('orders.invoice');
     Route::get('/orders/export/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
     Route::get('/orders/pdf', [OrderController::class, 'exportPdf'])->name('orders.exportPdf');
     
-    // Gestion des stocks
-    Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+    // Gestion des stocks (routes principales dans le groupe admin)
     Route::get('/products/inventory', [ProductController::class, 'inventory'])->name('products.inventory');
     Route::patch('/products/{id}/update-stock', [ProductController::class, 'updateStock'])->name('products.updateStock');
     
@@ -331,6 +388,40 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // ... autres routes admin ...
     Route::get('/products', [ProductController::class, 'adminIndex'])->name('products.index');
+    
+    // Analytics et statistiques de visites
+    Route::get('/analytics', [\App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('/analytics/top-pages', [\App\Http\Controllers\Admin\AnalyticsController::class, 'topPages'])->name('analytics.top-pages');
+    Route::get('/analytics/period-stats', [\App\Http\Controllers\Admin\AnalyticsController::class, 'periodStats'])->name('analytics.period-stats');
+    Route::get('/analytics/real-time', [\App\Http\Controllers\Admin\AnalyticsController::class, 'realTime'])->name('analytics.real-time');
+    Route::get('/analytics/export', [\App\Http\Controllers\Admin\AnalyticsController::class, 'export'])->name('analytics.export');
+    Route::get('/analytics/api', [\App\Http\Controllers\Admin\AnalyticsController::class, 'api'])->name('analytics.api');
+    
+    // Gestion des stocks
+    Route::get('/stocks', [\App\Http\Controllers\Admin\StockController::class, 'index'])->name('stocks.index');
+    Route::post('/stocks/send-report', [\App\Http\Controllers\Admin\StockController::class, 'sendLowStockReport'])->name('stocks.send-report');
+    Route::put('/stocks/{product}/update', [\App\Http\Controllers\Admin\StockController::class, 'updateStock'])->name('stocks.update');
+    Route::get('/stocks/export', [\App\Http\Controllers\Admin\StockController::class, 'export'])->name('stocks.export');
+
+    // Gestion des codes promos
+    // Routes spécifiques AVANT la route resource pour éviter les conflits
+    Route::get('/promos/generate-code', [\App\Http\Controllers\Admin\PromoController::class, 'generateCode'])->name('promos.generate-code');
+    Route::post('/promos/create-bulk', [\App\Http\Controllers\Admin\PromoController::class, 'createBulk'])->name('promos.create-bulk');
+    Route::get('/promos/export/csv', [\App\Http\Controllers\Admin\PromoController::class, 'export'])->name('promos.export');
+    
+    // Route resource pour les opérations CRUD standard
+    Route::resource('promos', \App\Http\Controllers\Admin\PromoController::class)->names([
+        'index' => 'promos.index',
+        'create' => 'promos.create',
+        'store' => 'promos.store',
+        'show' => 'promos.show',
+        'edit' => 'promos.edit',
+        'update' => 'promos.update',
+        'destroy' => 'promos.destroy',
+    ]);
+    Route::post('/promos/{promo}/toggle-status', [\App\Http\Controllers\Admin\PromoController::class, 'toggleStatus'])->name('promos.toggle-status');
+
+
 });
 
 // Routes admin alternatives (pour compatibilité)
@@ -373,6 +464,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('permissions/{permission}/assign-role', [\App\Http\Controllers\Admin\PermissionController::class, 'assignToRole'])->name('permissions.assign-role');
     Route::post('permissions/{permission}/remove-role', [\App\Http\Controllers\Admin\PermissionController::class, 'removeFromRole'])->name('permissions.remove-role');
 });
+
+// Routes dupliquées supprimées - gérées par le groupe principal admin
 
 /*
 |--------------------------------------------------------------------------
@@ -492,3 +585,23 @@ require __DIR__.'/auth.php';
 Route::get('/contact-admin', [ContactAdminController::class, 'show'])->name('contact-admin.show');
 Route::post('/contact-admin', [ContactAdminController::class, 'send'])->name('contact-admin.send');
 Route::get('/livreur/profil', [LivreurController::class, 'profile'])->name('livreur.profile');
+
+// Profile routes for different roles
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/profile', function () {
+        $user = auth()->user();
+        return view('admin.profile', compact('user'));
+    })->name('admin.profile')->middleware('admin');
+    
+    Route::get('/vendeur/profile', function () {
+        $user = auth()->user();
+        return view('vendor.profile', compact('user'));
+    })->name('vendeur.profile')->middleware('role:vendeur');
+});
+
+// Routes pour le tableau de bord avancé
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard-advanced', [AdminDashboardController::class, 'index'])->name('admin.dashboard.advanced');
+    Route::get('/dashboard/export/pdf', [AdminDashboardController::class, 'exportPDF'])->name('admin.dashboard.export.pdf');
+    Route::get('/dashboard/export/excel', [AdminDashboardController::class, 'exportExcel'])->name('admin.dashboard.export.excel');
+});

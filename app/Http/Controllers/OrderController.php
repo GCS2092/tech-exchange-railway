@@ -99,7 +99,7 @@ class OrderController extends Controller
 
     if ($total < 100 && $request->currency === 'XOF') {
         Log::warning('Montant de commande trop bas', ['total' => $total, 'currency' => $request->currency]);
-        return redirect()->route('checkout')->with('error', 'Le montant minimum pour passer une commande est de 100 FCFA.');
+        return redirect()->route('checkout.index')->with('error', 'Le montant minimum pour passer une commande est de 100 FCFA.');
     }
 
     // Créer la commande
@@ -118,8 +118,6 @@ class OrderController extends Controller
             'delivery_address' => $request->delivery_address,
             'shipping_address' => $request->shipping_address ?? $request->delivery_address,
             'billing_address' => $request->billing_address ?? $request->delivery_address,
-            'total' => $total,
-            'currency' => $request->currency,
         ]);
 
         Log::info('Commande créée avec succès', [
@@ -129,22 +127,65 @@ class OrderController extends Controller
             'products' => $cart->pluck('product_id')->toArray()
         ]);
 
-        // Attacher les produits ET décrémenter le stock
-        foreach ($cart as $item) {
-            $product = $item->product;
-            if ($product->quantity < $item->quantity) {
-                return redirect()->route('cart.index')->with('error', 'Stock insuffisant pour ' . $product->name . '. Il reste seulement ' . $product->quantity . ' unités disponibles.');
+        // CORRECTION: Gestion atomique des stocks avec transaction
+        try {
+            DB::transaction(function () use ($cart, $order) {
+            foreach ($cart as $item) {
+                $product = $item->product;
+                
+                // Vérifier le stock de manière atomique
+                $currentStock = DB::table('products')
+                    ->where('id', $product->id)
+                    ->where('quantity', '>=', $item->quantity)
+                    ->lockForUpdate()
+                    ->value('quantity');
+                
+                if (!$currentStock) {
+                    throw new \Exception('Stock insuffisant pour ' . $product->name . '. Il reste seulement ' . $product->quantity . ' unités disponibles.');
+                }
+                
+                // Attacher le produit à la commande
+                $order->products()->attach($item->product_id, [
+                    'quantity' => $item->quantity,
+                    'price' => $item->price ?? $product->price
+                ]);
+                
+                // Décrémenter le stock de manière atomique
+                $newStock = DB::table('products')
+                    ->where('id', $product->id)
+                    ->decrement('quantity', $item->quantity);
+                
+                // Recharger le produit pour avoir le nouveau stock
+                $product->refresh();
+                
+                // Alerte stock faible
+                if ($product->quantity <= 10) {
+                    try {
+                        \Mail::to(config('mail.admin_email', 'admin@example.com'))->send(new \App\Mail\LowStockAlertMail($product));
+                    } catch (\Exception $e) {
+                        Log::warning('Échec de l\'envoi de l\'alerte stock faible', [
+                            'product_id' => $product->id,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
+                }
+                
+                Log::info('Stock décrémenté pour commande', [
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'quantity_ordered' => $item->quantity,
+                    'new_stock' => $product->quantity
+                ]);
             }
-            $order->products()->attach($item->product_id, [
-                'quantity' => $item->quantity,
-                'price' => $item->price ?? $product->price
+        });
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la création de la commande', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage(),
+                'cart_items' => $cart->count()
             ]);
-            // Décrémenter le stock
-            $product->decrement('quantity', $item->quantity);
-            // Alerte stock faible
-            if ($product->quantity <= 10) {
-                \Mail::to(config('mail.admin_email', 'admin@example.com'))->send(new \App\Mail\LowStockAlertMail($product));
-            }
+            
+            return redirect()->route('cart.index')->with('error', $e->getMessage());
         }
 
         // Enregistrer l'utilisation de la promo
@@ -192,7 +233,7 @@ class OrderController extends Controller
             'error' => $e->getMessage(),
             'trace' => $e->getTraceAsString()
         ]);
-        return redirect()->route('checkout')->with('error', 'Une erreur est survenue lors de la création de la commande.');
+        return redirect()->route('checkout.index')->with('error', 'Une erreur est survenue lors de la création de la commande.');
     }
 }
 
@@ -236,7 +277,7 @@ class OrderController extends Controller
     {
         $this->authorizeAdmin();
 
-        $orders = Order::query()->with('user');
+        $orders = Order::query()->with(['user', 'products']);
 
         if ($request->filled('date')) {
             $date = $request->date;
@@ -325,7 +366,7 @@ class OrderController extends Controller
             return $order->load(['products', 'user']);
         });
         
-        $livreurs = User::role('delivery')->get();
+        $livreurs = User::role('livreur')->get();
     
         $storeLat = config('app.store_lat');
         $storeLng = config('app.store_lng');
@@ -443,7 +484,7 @@ class OrderController extends Controller
 
     public function livreurCommandes()
     {
-        if (!auth()->user()->hasRole('livreur') && !auth()->user()->hasRole('delivery')) {
+        if (!auth()->user()->hasRole('livreur')) {
             abort(403);
         }
 
@@ -460,13 +501,13 @@ class OrderController extends Controller
         });
 
         $deliveredOrders = $orders->filter(function ($order) {
-            return $order->status === 'livré' || $order->status === 'livrée';
+            return $order->status === 'livré';
         });
 
         // Comptage des statuts pour le graphique
         $statusCounts = [
             'En attente' => $pendingOrders->count(),
-            'Livrée' => $deliveredOrders->count(),
+            'Livré' => $deliveredOrders->count(),
         ];
 
         return view('livreurs.orders.index', compact('orders', 'todayOrders', 'pendingOrders', 'deliveredOrders', 'statusCounts'));
@@ -474,7 +515,7 @@ class OrderController extends Controller
 
     public function markAsDelivered(Order $order)
     {
-        if (!auth()->user()->hasRole('delivery') || $order->livreur_id !== auth()->id()) {
+        if (!auth()->user()->hasRole('livreur') || $order->livreur_id !== auth()->id()) {
             abort(403);
         }
 
@@ -512,7 +553,7 @@ class OrderController extends Controller
     public function completeDelivery($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 'livré'; // ou un autre statut selon ta logique
+        $order->status = Order::STATUS_DELIVERED; // ou un autre statut selon ta logique
         $order->save();
 
         return redirect()->back()->with('success', 'Commande complétée avec succès.');
@@ -603,7 +644,7 @@ class OrderController extends Controller
         
         return view('admin.orders.show', [
             'order' => $order,
-            'livreurs' => User::role('delivery')->get()
+            'livreurs' => User::role('livreur')->get()
         ]);
     }
 }

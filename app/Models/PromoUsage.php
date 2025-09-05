@@ -6,6 +6,7 @@ class PromoUsage extends Model
 {
     protected $fillable = [
         'promotion_id', 
+        'promo_code_id',
         'user_id', 
         'order_id',
         'original_amount',
@@ -21,5 +22,10 @@ class PromoUsage extends Model
     public function promotion()
     {
         return $this->belongsTo(Promotion::class);
+    }
+    
+    public function promoCode()
+    {
+        return $this->belongsTo(PromoCode::class);
     }
 }

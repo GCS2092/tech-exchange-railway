@@ -15,7 +15,7 @@
                     Retour aux catégories
                 </a>
             </div>
-            <h1 class="text-3xl font-bold text-gray-900">
+            <h1 class="text-xl font-bold text-gray-900">
                 Modifier la catégorie
             </h1>
             <p class="text-gray-600 mt-2">

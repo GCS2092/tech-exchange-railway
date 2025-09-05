@@ -8,7 +8,7 @@
             </svg>
         </div>
         
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+        <h1 class="text-xl sm:text-2xl font-extrabold text-white mb-4 tracking-tight">
             Vous avez été déconnecté
         </h1>
         

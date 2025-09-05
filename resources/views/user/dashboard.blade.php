@@ -22,7 +22,7 @@
                             <div class="h-40 w-40 rounded-full bg-gray-300 border-4 border-white shadow-lg overflow-hidden mb-4">
                                 <img src="{{ asset('images/default-avatar.png') }}" alt="Avatar" class="h-full w-full object-cover">
                             </div>
-                            <h2 class="text-3xl font-bold text-gray-800 mt-2">{{ Auth::user()->name }}</h2>
+                            <h2 class="text-xl font-bold text-gray-800 mt-2">{{ Auth::user()->name }}</h2>
                         </div>
                     </div>
 
@@ -98,41 +98,65 @@
                 </div>
             </div>
 
-            <!-- Colonne de droite: Section Notifications -->
+            <!-- Colonne de droite: Section Notifications et Troc -->
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden md:w-1/2 recent-orders">
-                <div class="bg-gray-800 text-white p-4">
-                    <h1 class="text-xl font-medium">Mes Notifications</h1>
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4">
+                    <h1 class="text-xl font-medium">Mon Espace</h1>
                 </div>
                 <div class="p-6">
-                    @if (Auth::user()->notifications->count() > 0)
-                        <div class="flex justify-end mb-4">
-                            <form action="{{ route('notifications.markAllAsRead') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition-colors">
-                                    Marquer toutes comme lues
-                                </button>
-                            </form>
-                        </div>
+                    <!-- Actions rapides -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <a href="{{ route('products.create') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 text-center">
+                            <i class="fas fa-plus text-lg mb-1"></i>
+                            <div class="text-sm font-medium">Ajouter un appareil</div>
+                        </a>
+                        <a href="{{ route('trades.search') }}" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 text-center">
+                            <i class="fas fa-exchange-alt text-lg mb-1"></i>
+                            <div class="text-sm font-medium">Découvrir le troc</div>
+                        </a>
+                        <a href="{{ route('trades.my-offers') }}" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-3 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all duration-200 text-center">
+                            <i class="fas fa-handshake text-lg mb-1"></i>
+                            <div class="text-sm font-medium">Mes offres</div>
+                        </a>
+                        <a href="{{ route('orders.index') }}" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-3 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 text-center">
+                            <i class="fas fa-shopping-bag text-lg mb-1"></i>
+                            <div class="text-sm font-medium">Mes commandes</div>
+                        </a>
+                    </div>
 
-                        <div class="max-h-[650px] overflow-y-auto pr-2">
-                            <ul class="space-y-4">
-                                @foreach (Auth::user()->notifications as $notification)
-                                    <li class="bg-gray-50 border-l-4 border-indigo-600 p-4 rounded-lg shadow">
-                                        <p class="text-gray-800">{{ $notification->data['message'] }}</p>
-                                        <small class="text-gray-500 block mt-1">Reçue {{ $notification->created_at->diffForHumans() }}</small>
-                                        @if($notification->read_at === null)
-                                            <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" class="mt-2">
-                                                @csrf
-                                                <button type="submit" class="text-sm text-indigo-600 hover:underline">Marquer comme lue</button>
-                                            </form>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @else
-                        <p class="text-gray-600">Aucune notification pour le moment.</p>
-                    @endif
+                    <!-- Notifications -->
+                    <div class="border-t border-gray-200 pt-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Notifications récentes</h3>
+                        @if (Auth::user()->notifications->count() > 0)
+                            <div class="flex justify-end mb-4">
+                                <form action="{{ route('notifications.markAllAsRead') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors">
+                                        Tout marquer comme lu
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="max-h-64 overflow-y-auto pr-2">
+                                <ul class="space-y-3">
+                                    @foreach (Auth::user()->notifications->take(5) as $notification)
+                                        <li class="bg-gray-50 border-l-4 border-blue-600 p-3 rounded-lg shadow-sm">
+                                            <p class="text-gray-800 text-sm">{{ $notification->data['message'] }}</p>
+                                            <small class="text-gray-500 block mt-1">Reçue {{ $notification->created_at->diffForHumans() }}</small>
+                                            @if($notification->read_at === null)
+                                                <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" class="mt-2">
+                                                    @csrf
+                                                    <button type="submit" class="text-xs text-blue-600 hover:underline">Marquer comme lue</button>
+                                                </form>
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @else
+                            <p class="text-gray-600 text-sm">Aucune notification pour le moment.</p>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

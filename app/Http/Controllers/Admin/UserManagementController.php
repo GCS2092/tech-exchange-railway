@@ -81,7 +81,7 @@ class UserManagementController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.list')->with('success', 'Compte administrateur supprimé.');
+        return redirect()->route('admin.users.index')->with('success', 'Compte administrateur supprimé.');
     }
 
     public function store(Request $request)
@@ -104,7 +104,7 @@ class UserManagementController extends Controller
         \App\Models\User::role('admin')->get()->each(function ($admin) use ($user) {
             $admin->notify(new \App\Notifications\NewUserCreatedNotification($user));
         });
-        return redirect()->route('admin.users.list')->with('success', 'Nouvel utilisateur ajouté et notification envoyée.');
+        return redirect()->route('admin.users.index')->with('success', 'Nouvel utilisateur ajouté et notification envoyée.');
     }
 
     public function updatePassword(Request $request, User $user)

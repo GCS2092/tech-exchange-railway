@@ -5,7 +5,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">
                 ⚙️ Guide d'administration
             </h1>
             <p class="text-xl text-gray-600">
@@ -17,7 +17,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <a href="#produits" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">📦</div>
+                    <div class="text-xl mb-3">📦</div>
                     <h3 class="text-lg font-semibold text-gray-900">Produits</h3>
                     <p class="text-gray-600 text-sm">Gérer le catalogue</p>
                 </div>
@@ -25,7 +25,7 @@
             
             <a href="#commandes" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">📋</div>
+                    <div class="text-xl mb-3">📋</div>
                     <h3 class="text-lg font-semibold text-gray-900">Commandes</h3>
                     <p class="text-gray-600 text-sm">Suivre les ventes</p>
                 </div>
@@ -33,7 +33,7 @@
             
             <a href="#utilisateurs" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">👥</div>
+                    <div class="text-xl mb-3">👥</div>
                     <h3 class="text-lg font-semibold text-gray-900">Utilisateurs</h3>
                     <p class="text-gray-600 text-sm">Gérer les comptes</p>
                 </div>
@@ -41,7 +41,7 @@
             
             <a href="#promotions" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">🎁</div>
+                    <div class="text-xl mb-3">🎁</div>
                     <h3 class="text-lg font-semibold text-gray-900">Promotions</h3>
                     <p class="text-gray-600 text-sm">Codes promo</p>
                 </div>
@@ -52,8 +52,8 @@
         <div class="space-y-12">
             <!-- Section Produits -->
             <section id="produits" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">📦</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">📦</span>
                     Gestion des produits
                 </h2>
                 
@@ -102,8 +102,8 @@
 
             <!-- Section Commandes -->
             <section id="commandes" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">📋</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">📋</span>
                     Gestion des commandes
                 </h2>
                 
@@ -136,8 +136,8 @@
 
             <!-- Section Utilisateurs -->
             <section id="utilisateurs" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">👥</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">👥</span>
                     Gestion des utilisateurs
                 </h2>
                 
@@ -182,8 +182,8 @@
 
             <!-- Section Promotions -->
             <section id="promotions" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">🎁</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">🎁</span>
                     Gestion des promotions
                 </h2>
                 
@@ -219,7 +219,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-purple-800">Montant fixe</h4>
-                                <p class="text-purple-700 text-sm">Ex: 10€ de réduction à partir de 50€</p>
+                                <p class="text-purple-700 text-sm">Ex: 10 000 FCFA de réduction à partir de 50 000 FCFA</p>
                             </div>
                         </div>
                     </div>
@@ -228,26 +228,26 @@
 
             <!-- Section Statistiques -->
             <section class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">📊</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">📊</span>
                     Statistiques et rapports
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="text-center p-6 bg-blue-50 rounded-xl">
-                        <div class="text-3xl mb-2">💰</div>
+                        <div class="text-xl mb-2">💰</div>
                         <h3 class="font-semibold text-gray-900">Ventes</h3>
                         <p class="text-gray-600 text-sm">Suivi des revenus</p>
                     </div>
                     
                     <div class="text-center p-6 bg-green-50 rounded-xl">
-                        <div class="text-3xl mb-2">📦</div>
+                        <div class="text-xl mb-2">📦</div>
                         <h3 class="font-semibold text-gray-900">Produits</h3>
                         <p class="text-gray-600 text-sm">Stock et popularité</p>
                     </div>
                     
                     <div class="text-center p-6 bg-purple-50 rounded-xl">
-                        <div class="text-3xl mb-2">👥</div>
+                        <div class="text-xl mb-2">👥</div>
                         <h3 class="font-semibold text-gray-900">Clients</h3>
                         <p class="text-gray-600 text-sm">Fidélisation</p>
                     </div>

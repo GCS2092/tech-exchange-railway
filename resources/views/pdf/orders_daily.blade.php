@@ -81,15 +81,15 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="stat-card">
             <h3 class="text-lg font-semibold text-gray-700">Total des Commandes</h3>
-            <p class="text-3xl font-bold text-indigo-600">{{ $totalOrders }}</p>
+            <p class="text-xl font-bold text-indigo-600">{{ $totalOrders }}</p>
         </div>
         <div class="stat-card">
             <h3 class="text-lg font-semibold text-gray-700">Revenu Total</h3>
-            <p class="text-3xl font-bold text-green-600">{{ number_format($totalRevenue, 2) }} FCFA</p>
+            <p class="text-xl font-bold text-green-600">{{ number_format($totalRevenue, 2) }} FCFA</p>
         </div>
         <div class="stat-card">
             <h3 class="text-lg font-semibold text-gray-700">Valeur Moyenne</h3>
-            <p class="text-3xl font-bold text-blue-600">{{ number_format($averageOrderValue, 2) }} FCFA</p>
+            <p class="text-xl font-bold text-blue-600">{{ number_format($averageOrderValue, 2) }} FCFA</p>
         </div>
     </div>
 

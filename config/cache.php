@@ -14,7 +14,7 @@ return [
     | specified when running a cache operation inside the application.
     |
     */
- 'default' => env('CACHE_DRIVER', 'redis'),
+     'default' => env('CACHE_DRIVER', 'file'),
 
 
     /*
@@ -67,11 +67,11 @@ return [
                 ],
             ],
         ],
-        'redis' => [
-            'driver' => 'redis',
-            'connection' => 'cache',
-            'lock_connection' => 'default',
-        ],
+        // 'redis' => [
+        //     'driver' => 'redis',
+        //     'connection' => 'cache',
+        //     'lock_connection' => 'default',
+        // ],
         'dynamodb' => [
             'driver' => 'dynamodb',
             'key' => env('AWS_ACCESS_KEY_ID'),

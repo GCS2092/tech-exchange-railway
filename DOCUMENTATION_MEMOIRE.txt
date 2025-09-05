@@ -1,7 +1,8 @@
 # Documentation complète du projet "Mon Site Cosmétique"
 
 ---
-LANCER DOCKER AVEC  docker-compose up -d --build
+LANCER DOCKER AVEC  # Démarrer tous les services
+docker-compose up -d
 
 ## 1. Introduction
 Ce projet est une plateforme e-commerce moderne dédiée à la vente de produits cosmétiques, avec gestion multi-rôles (admin, vendeur, livreur, client), reporting avancé, et interface responsive.

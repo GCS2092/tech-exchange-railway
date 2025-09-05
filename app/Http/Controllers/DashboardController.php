@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\TradeOffer;
+use App\Services\StatisticsService;
+use App\Services\StockService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -18,78 +21,101 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // ADMIN
+        // Redirection basée sur le rôle
         if ($user->hasRole('admin')) {
-            $totalUsers = User::count();
-            $activeUsers = User::where('active', true)->count();
-            $inactiveUsers = $totalUsers - $activeUsers;
-
-            $adminsCount = User::role('admin')->count();
-            $clientsCount = User::role('client')->count();
-            $vendeursCount = User::role('vendeur')->count();
-
-            $enAttenteCount = Order::where('status', 'en attente')->count();
-            $expedieCount = Order::where('status', 'expédié')->count();
-            $livreCount = Order::where('status', 'livré')->count();
-
-            $products = Product::with('category')->get();
-            $users = User::all(); // Simplifié, car 'roles' n'est pas utilisé dans la vue
-            $notifications = $user->unreadNotifications;
-
-            $totalProductsValue = Product::all()->reduce(function($carry, $product) {
-                return $carry + ($product->price * $product->quantity);
-            }, 0);
-
-            // Récupération directe sans cache
-            $stats = [
-                'total_orders' => Order::count(),
-                'total_revenue' => Order::where('status', '!=', 'annulé')->sum('total_price'),
-                'total_products' => Product::count(),
-                'total_users' => User::count(),
-                'recent_orders' => Order::with(['user', 'products'])
-                    ->latest()
-                    ->take(5)
-                    ->get(),
-                'top_products' => Product::select('products.*')
-                    ->join(DB::raw('(SELECT product_id, COUNT(*) as order_count 
-                        FROM order_product 
-                        GROUP BY product_id 
-                        ORDER BY order_count DESC 
-                        LIMIT 5) as top_products'), 
-                        'products.id', '=', 'top_products.product_id')
-                    ->orderBy('top_products.order_count', 'DESC')
-                    ->get()
-            ];
-
-            // Log pour déboguer
-            Log::info('Commandes récentes pour tableau de bord', [
-                'count' => $stats['recent_orders']->count(),
-                'orders' => $stats['recent_orders']->map(function ($order) {
-                    return [
-                        'id' => $order->id,
-                        'user_id' => $order->user_id,
-                        'user_name' => optional($order->user)->name,
-                        'total_price' => $order->total_price,
-                        'status' => $order->status,
-                        'products_count' => $order->products->count()
-                    ];
-                })->toArray()
-            ]);
-
-            return view('admin.dashboard', compact(
-                'totalUsers', 'activeUsers', 'inactiveUsers',
-                'adminsCount', 'clientsCount', 'vendeursCount',
-                'enAttenteCount', 'expedieCount', 'livreCount',
-                'products', 'users', 'notifications', 'stats', 'totalProductsValue'
-            ));
-        }
-        // VENDEUR
-        if ($user->hasRole('vendeur')) {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->hasRole('vendeur')) {
             return redirect()->route('vendeur.dashboard');
+        } elseif ($user->hasRole('livreur')) {
+            return redirect()->route('livreur.orders.index');
         }
-        // USER – vue plus simple
+
+        // Si on arrive ici, c'est un utilisateur normal (client)
+        // Affichage du dashboard utilisateur simple
         $notifications = $user->unreadNotifications;
         return view('user.dashboard', compact('user', 'notifications'));
+    }
+
+    public function adminDashboard()
+    {
+        $user = auth()->user();
+        
+        // Vérifier que l'utilisateur est admin
+        if (!$user->hasRole('admin')) {
+            return redirect()->route('dashboard')->with('error', 'Accès non autorisé.');
+        }
+
+        // Utiliser le service de statistiques pour des données précises et en temps réel
+        $statisticsService = new StatisticsService();
+        $stockService = new StockService();
+        $analyticsService = new \App\Services\AnalyticsService();
+        
+        $stats = $statisticsService->getAdminDashboardStats();
+        $visitStats = $analyticsService->getDashboardStats();
+        
+        // Ajouter les statistiques de visites aux stats générales
+        $stats['visits'] = [
+            'today' => $visitStats['today']['views'],
+            'this_week' => $visitStats['this_week']['views'],
+            'this_month' => $visitStats['this_month']['views'],
+            'unique_today' => $visitStats['today']['unique_visitors'],
+            'unique_week' => $visitStats['this_week']['unique_visitors'],
+            'unique_month' => $visitStats['this_month']['unique_visitors'],
+            'avg_duration' => $visitStats['today']['avg_duration'],
+            'bounce_rate' => $visitStats['today']['bounce_rate'],
+        ];
+        
+        // Données pour la compatibilité avec l'ancien code
+        $totalUsers = $stats['users']['total_users'];
+        $activeUsers = $stats['users']['active_users'];
+        $inactiveUsers = $totalUsers - $activeUsers;
+        
+        $adminsCount = $stats['users']['users_by_role']['admin'];
+        $clientsCount = $stats['users']['users_by_role']['client'];
+        $vendeursCount = $stats['users']['users_by_role']['vendeur'];
+        
+        $enAttenteCount = $stats['orders']['orders_by_status']['en_attente'];
+        $expedieCount = $stats['orders']['orders_by_status']['expedie'];
+        $livreCount = $stats['orders']['orders_by_status']['livre'];
+        
+        $products = Product::with('category')->get();
+        $users = User::all();
+        $notifications = $user->unreadNotifications;
+        
+        $totalProductsValue = $stats['inventory']['total_value'];
+
+        // Statistiques des codes promos
+        $promoStats = [
+            'total' => \App\Models\PromoCode::count(),
+            'active' => \App\Models\PromoCode::where('is_active', true)->where('expires_at', '>', now())->count(),
+            'expired' => \App\Models\PromoCode::where('expires_at', '<', now())->count(),
+            'used' => \App\Models\PromoCode::where('usage_count', '>', 0)->count(),
+        ];
+
+        return view('admin.dashboard', compact(
+            'totalUsers', 'activeUsers', 'inactiveUsers',
+            'adminsCount', 'clientsCount', 'vendeursCount',
+            'enAttenteCount', 'expedieCount', 'livreCount',
+            'products', 'users', 'notifications', 'stats', 'totalProductsValue', 'promoStats'
+        ));
+    }
+
+    public function adminDashboardAdvanced()
+    {
+        $user = auth()->user();
+        
+        // Statistiques avancées
+        $stats = $this->getAdvancedStats();
+        
+        // Statistiques des codes promos
+        $promoStats = [
+            'total' => \App\Models\PromoCode::count(),
+            'active' => \App\Models\PromoCode::where('is_active', true)->where('expires_at', '>', now())->count(),
+            'expired' => \App\Models\PromoCode::where('expires_at', '<', now())->count(),
+            'used' => \App\Models\PromoCode::where('usage_count', '>', 0)->count(),
+        ];
+
+        return view('admin.dashboard-advanced', compact('stats', 'promoStats'));
     }
 
     public function editUser(User $user)
@@ -123,7 +149,7 @@ class DashboardController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|exists:roles,name',
         ]);
-        $user = \App\Models\User::create([
+        $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,

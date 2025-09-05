@@ -18,7 +18,7 @@ class OrderObserver
             'order_id' => $order->id,
             'user_id' => $order->user_id,
             'amount' => $order->total_price,
-            'currency' => 'FCFA',
+            'currency' => 'XOF',
             'payment_method' => $order->payment_method ?? 'cash',
             'status' => Transaction::STATUS_PENDING,
         ]);

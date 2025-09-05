@@ -9,10 +9,32 @@ use Illuminate\Support\Facades\Log;
 class Product extends Model {
     use HasFactory;
 
+    /**
+     * Custom route binding logic to handle invalid IDs gracefully
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        // Check if the value is numeric (valid ID)
+        if (!is_numeric($value)) {
+            // Log the invalid access attempt
+            Log::warning('Invalid product ID attempted', [
+                'value' => $value,
+                'user_agent' => request()->userAgent(),
+                'ip' => request()->ip()
+            ]);
+            
+            // Return null to trigger 404
+            return null;
+        }
+        
+        return $this->where($field ?? $this->getRouteKeyName(), $value)->first();
+    }
+
     protected $fillable = [
         'name',
         'description',
         'price',
+        'currency',
         'image',
         'category_id',
         'is_active',
@@ -21,6 +43,22 @@ class Product extends Model {
         'min_stock_alert',
         'max_stock_alert',
         'seller_id',
+        // Champs pour appareils électroniques
+        'brand',
+        'model',
+        'condition',
+        'year_of_manufacture',
+        'technical_specs',
+        'is_trade_eligible',
+        'trade_value',
+        'trade_conditions',
+        'device_type',
+        'storage_capacity',
+        'color',
+        'has_original_box',
+        'has_original_accessories',
+        'defects_description',
+        'warranty_status',
     ];
 
     protected $casts = [
@@ -30,6 +68,13 @@ class Product extends Model {
         'is_featured' => 'boolean',
         'min_stock_alert' => 'integer',
         'max_stock_alert' => 'integer',
+        // Casts pour appareils électroniques
+        'technical_specs' => 'array',
+        'is_trade_eligible' => 'boolean',
+        'trade_value' => 'decimal:2',
+        'has_original_box' => 'boolean',
+        'has_original_accessories' => 'boolean',
+        'year_of_manufacture' => 'integer',
     ];
 
     // Relation avec les favoris
@@ -38,10 +83,28 @@ class Product extends Model {
         return $this->hasMany(Favorite::class);
     }
 
+    /**
+     * Vérifier si le produit est dans les favoris d'un utilisateur
+     */
+    public function isFavoritedBy($userId)
+    {
+        if (!$userId) {
+            return false;
+        }
+        
+        return $this->favorites()->where('user_id', $userId)->exists();
+    }
+
     // Relation avec les items de commande
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // Relation avec les items du panier
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 
     // Relation avec la catégorie
@@ -68,6 +131,25 @@ class Product extends Model {
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    // Relation avec les commandes (many-to-many)
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)
+            ->withPivot(['quantity', 'price'])
+            ->withTimestamps();
+    }
+
+    // Relations pour le système de troc
+    public function tradeOffers()
+    {
+        return $this->hasMany(TradeOffer::class, 'product_id');
+    }
+
+    public function offeredTrades()
+    {
+        return $this->hasMany(TradeOffer::class, 'offered_product_id');
     }
 
     // === GESTION AVANCÉE DES STOCKS ===
@@ -295,5 +377,105 @@ class Product extends Model {
         }
         
         return 'text-green-600 bg-green-100';
+    }
+
+    // === MÉTHODES POUR APPAREILS ÉLECTRONIQUES ===
+
+    /**
+     * Vérifier si le produit est éligible au troc
+     */
+    public function isTradeEligible(): bool
+    {
+        return $this->is_trade_eligible && $this->is_active;
+    }
+
+    /**
+     * Obtenir la valeur d'échange formatée
+     */
+    public function getFormattedTradeValueAttribute(): string
+    {
+        if (!$this->trade_value) {
+            return 'Non disponible';
+        }
+        return \App\Helpers\CurrencyHelper::formatXOF($this->trade_value);
+    }
+
+    /**
+     * Obtenir l'état formaté
+     */
+    public function getFormattedConditionAttribute(): string
+    {
+        $conditions = [
+            'excellent' => 'Excellent',
+            'very_good' => 'Très bon',
+            'good' => 'Bon',
+            'acceptable' => 'Acceptable',
+            'fair' => 'Passable'
+        ];
+
+        return $conditions[$this->condition] ?? 'Non spécifié';
+    }
+
+    /**
+     * Obtenir le type d'appareil formaté
+     */
+    public function getFormattedDeviceTypeAttribute(): string
+    {
+        $types = [
+            'smartphone' => 'Smartphone',
+            'tablet' => 'Tablette',
+            'laptop' => 'Ordinateur portable',
+            'desktop' => 'Ordinateur de bureau',
+            'smartwatch' => 'Montre connectée',
+            'headphones' => 'Écouteurs',
+            'console' => 'Console de jeu',
+            'camera' => 'Appareil photo',
+            'other' => 'Autre'
+        ];
+
+        return $types[$this->device_type] ?? 'Non spécifié';
+    }
+
+    /**
+     * Obtenir les spécifications techniques décodées
+     */
+    public function getTechnicalSpecsArrayAttribute(): array
+    {
+        if (is_string($this->technical_specs)) {
+            return json_decode($this->technical_specs, true) ?? [];
+        }
+        return $this->technical_specs ?? [];
+    }
+
+    /**
+     * Scope pour les produits éligibles au troc
+     */
+    public function scopeTradeEligible($query)
+    {
+        return $query->where('is_trade_eligible', true)->where('is_active', true);
+    }
+
+    /**
+     * Scope pour les produits par type d'appareil
+     */
+    public function scopeByDeviceType($query, $deviceType)
+    {
+        return $query->where('device_type', $deviceType);
+    }
+
+    /**
+     * Scope pour les produits par marque
+     */
+    public function scopeByBrand($query, $brand)
+    {
+        return $query->where('brand', $brand);
+    }
+
+    /**
+     * Scope pour les produits par état
+     */
+    public function scopeByCondition($query, $condition)
+    {
+        return $query->where('condition', $condition);
     }
 }

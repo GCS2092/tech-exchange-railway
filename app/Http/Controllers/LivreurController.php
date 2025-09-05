@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class LivreurController extends Controller
 {
@@ -14,16 +15,24 @@ class LivreurController extends Controller
         $orders = Order::where('livreur_id', $userId)->get();
         $todayOrders = Order::where('livreur_id', $userId)->whereDate('created_at', today())->get();
         $pendingOrders = Order::where('livreur_id', $userId)->where('status', 'en attente')->get();
-        $deliveredOrders = Order::where('livreur_id', $userId)->where('status', 'livrée')->get();
+        $deliveredOrders = Order::where('livreur_id', $userId)->where('status', 'livré')->get();
+
+        // Calcul de la distance totale parcourue
+        $totalDistance = 0;
+        foreach ($deliveredOrders as $order) {
+            if ($order->latitude && $order->longitude) {
+                // Distance depuis Dakar (centre) - à adapter selon la logique métier
+                $totalDistance += self::haversine(14.6928, -17.4467, $order->latitude, $order->longitude);
+            }
+        }
 
         // Comptage des statuts pour le graphique
         $statusCounts = [
             'En attente' => $pendingOrders->count(),
-            'Livrée' => $deliveredOrders->count(),
+            'Livré' => $deliveredOrders->count(),
         ];
-        // Ajoute d'autres statuts si besoin, ex : 'Annulée' => ...
 
-        return view('livreurs.orders.index', compact('orders', 'todayOrders', 'pendingOrders', 'deliveredOrders', 'statusCounts'));
+        return view('livreurs.orders.index', compact('orders', 'todayOrders', 'pendingOrders', 'deliveredOrders', 'statusCounts', 'totalDistance'));
     }
 
     public function markAsDelivered(Request $request, Order $order)
@@ -36,7 +45,7 @@ class LivreurController extends Controller
             abort(404, 'Commande non trouvée.');
         }
 
-        $order->status = 'livrée';
+        $order->status = 'livré';
         $order->delivered_at = now();
         $order->save();
 
@@ -54,6 +63,16 @@ class LivreurController extends Controller
         }
 
         return view('livreurs.orders.route', compact('order'));
+    }
+
+    public function show(Order $order)
+    {
+        // Vérifier que la commande appartient au livreur connecté
+        if ($order->livreur_id !== auth()->id()) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        return view('livreurs.orders.show', compact('order'));
     }
    public function planning()
 {
@@ -76,7 +95,74 @@ class LivreurController extends Controller
 
     public function profile()
     {
-        return view('livreurs.profile');
+        $user = auth()->user();
+        return view('livreurs.profile', compact('user'));
+    }
+
+    public function settings()
+    {
+        return view('livreurs.settings');
+    }
+
+    public function statistics()
+    {
+        $userId = auth()->id();
+        
+        // Statistiques de base
+        $totalDeliveries = Order::where('livreur_id', $userId)->where('status', 'livré')->count();
+        $onTimeDeliveries = Order::where('livreur_id', $userId)
+            ->where('status', 'livré')
+            ->where('delivered_at', '<=', \DB::raw('created_at + INTERVAL \'1 hour\''))
+            ->count();
+        
+        $onTimeRate = $totalDeliveries > 0 ? round(($onTimeDeliveries / $totalDeliveries) * 100, 1) : 0;
+        
+        // Statistiques par mois (derniers 6 mois)
+        $monthlyStats = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $monthlyStats[] = [
+                'month' => $date->format('M Y'),
+                'deliveries' => Order::where('livreur_id', $userId)
+                    ->where('status', 'livré')
+                    ->whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count()
+            ];
+        }
+        
+        return view('livreurs.statistics', compact('totalDeliveries', 'onTimeRate', 'monthlyStats'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:20',
+            'vehicle_type' => 'nullable|string|max:100',
+            'current_password' => 'nullable|required_with:new_password',
+            'new_password' => 'nullable|min:8|confirmed',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->vehicle_type = $request->vehicle_type;
+
+        // Mise à jour du mot de passe si fourni
+        if ($request->filled('new_password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Le mot de passe actuel est incorrect.']);
+            }
+            $user->password = Hash::make($request->new_password);
+        }
+
+        $user->save();
+
+        return redirect()->route('livreur.profile')->with('success', 'Profil mis à jour avec succès.');
     }
 
     // Calcul de distance Haversine (en km)

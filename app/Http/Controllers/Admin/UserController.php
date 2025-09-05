@@ -49,6 +49,12 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        // CORRECTION: Empêcher l'édition des utilisateurs qui ne sont pas vendeurs ou livreurs
+        if (!$user->hasAnyRole(['vendeur', 'livreur'])) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Vous ne pouvez éditer que les vendeurs et livreurs.');
+        }
+        
         // Limiter aux rôles ayant des vues et logique : admin, vendeur, delivery, user
         $availableRoles = \Spatie\Permission\Models\Role::whereIn('name', ['admin', 'vendeur', 'livreur', 'user'])->get();
         $permissions = \Spatie\Permission\Models\Permission::all();
@@ -58,6 +64,12 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // CORRECTION: Empêcher la mise à jour des utilisateurs qui ne sont pas vendeurs ou livreurs
+        if (!$user->hasAnyRole(['vendeur', 'livreur'])) {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Vous ne pouvez modifier que les vendeurs et livreurs.');
+        }
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
@@ -141,8 +153,19 @@ class UserController extends Controller
         }
         $user->is_blocked = true;
         $user->save();
-        // Envoi d'un email à l'utilisateur avec lien de contact admin
+        
+        // ✅ LOGIQUE CORRECTE : 
+        // 1. Email à l'utilisateur (il doit savoir qu'il est bloqué)
         \Mail::to($user->email)->send(new \App\Mail\UserBlockedMail($user, auth()->user()));
+        
+        // 2. Email à l'admin (confirmation de son action)
+        \Mail::to(auth()->user()->email)->send(new \App\Mail\AdminUserActionNotificationMail(
+            auth()->user(), 
+            $user, 
+            'block',
+            ['reason' => $request->reason ?? 'Aucune raison spécifiée']
+        ));
+        
         return back()->with('success', 'Utilisateur bloqué et notifié par email.');
     }
 
@@ -162,8 +185,19 @@ class UserController extends Controller
         }
         $user->is_blocked = false;
         $user->save();
-        // Envoi d'un email à l'utilisateur pour l'informer du déblocage
+        
+        // ✅ LOGIQUE CORRECTE : 
+        // 1. Email à l'utilisateur (il doit savoir qu'il est débloqué)
         \Mail::to($user->email)->send(new \App\Mail\UserUnblockedMail($user, auth()->user()));
+        
+        // 2. Email à l'admin (confirmation de son action)
+        \Mail::to(auth()->user()->email)->send(new \App\Mail\AdminUserActionNotificationMail(
+            auth()->user(), 
+            $user, 
+            'unblock',
+            ['reason' => $request->reason ?? 'Aucune raison spécifiée']
+        ));
+        
         return back()->with('success', 'Utilisateur débloqué et notifié par email.');
     }
 

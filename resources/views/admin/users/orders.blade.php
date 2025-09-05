@@ -2,7 +2,7 @@
 <tr class="border-t border-gray-200">
     <td class="py-2 px-4 text-sm text-gray-700">{{ $order->id }}</td>
     <td class="py-2 px-4 text-sm text-gray-700">{{ $order->user->name }}</td>
-    <td class="py-2 px-4 text-sm text-gray-700">{{ number_format($order->total_price, 2) }} €</td>
+                            <td class="py-2 px-4 text-sm text-gray-700">{{ number_format($order->total_price, 2) }} FCFA</td>
     <td class="py-2 px-4 text-sm text-gray-700">
         <span class="inline-block px-3 py-1 rounded-full text-xs
             @if($order->status == 'en attente') bg-yellow-200 text-yellow-800

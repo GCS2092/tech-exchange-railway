@@ -10,7 +10,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-rose-600 mb-4">
+            <h1 class="text-2xl md:text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-rose-600 mb-4">
                 Paiement Annulé
             </h1>
             <p class="text-gray-600 text-lg">Votre paiement a été annulé ou n'a pas abouti.</p>

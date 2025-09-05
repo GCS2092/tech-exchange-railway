@@ -71,6 +71,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\RolesReport::class,
         \App\Console\Commands\SendDailyTransactionsReport::class,
+        \App\Console\Commands\SendLowStockReport::class,
+        \App\Console\Commands\TestAdminEmails::class,
+        \App\Console\Commands\TestAllEmails::class,
+        \App\Console\Commands\SendVendorSalesReports::class,
     ];
 
     /**
@@ -82,6 +86,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('report:transactions-daily')->dailyAt('23:59');
+        $schedule->command('report:low-stock-daily')->dailyAt('08:00');
+        
+        // Rapports de ventes vendeurs
+        $schedule->command('report:vendor-sales --type=daily --send-to=all')->dailyAt('20:00');
+        $schedule->command('report:vendor-sales --type=weekly --send-to=all')->weekly()->mondays()->at('09:00');
+        $schedule->command('report:vendor-sales --type=monthly --send-to=all')->monthlyOn(1, '10:00');
+        
         $schedule->command('inspire')->hourly();
     }
 } 

@@ -1,105 +1,155 @@
-@extends('layouts.app')
+@extends('layouts.livreur')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <!-- En-tête modernisé -->
-    <div class="flex justify-between items-center mb-8">
-        <h1 class="text-3xl font-extrabold text-indigo-700 flex items-center gap-2">
-            <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full px-3 py-1 mr-2">🚚</span> Mes Livraisons
-        </h1>
-        <div class="text-base font-semibold text-indigo-600">Livreur: <span class="underline">{{ Auth::user()->name }}</span></div>
-    </div>
-
-    <!-- Message de succès -->
-    @if(session('success'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded shadow">
-            <p>{{ session('success') }}</p>
+<div class="min-h-screen bg-white">
+    <div class="container-nike py-12">
+        
+        <!-- Navigation et redirections -->
+        <x-livreur-nav-buttons />
+        
+        <!-- Header - Style Nike -->
+        <div class="text-center mb-16">
+            <h1 class="nike-title mb-4">MES LIVRAISONS</h1>
+            <p class="nike-text text-gray-600">Gérez vos livraisons avec style</p>
+            <div class="mt-4">
+                <span class="inline-block bg-black text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                    Livreur: {{ Auth::user()->name }}
+                </span>
+            </div>
         </div>
-    @endif
 
-    <!-- Centre de notifications -->
-    <div class="bg-white rounded-xl shadow p-4 mb-6">
-        <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center gap-2"><i class="fas fa-bell text-yellow-400"></i> Notifications</h2>
-        <div class="max-h-40 overflow-y-auto">
-            @forelse(Auth::user()->unreadNotifications as $notification)
-                <div class="bg-blue-50 p-3 rounded mb-2 flex justify-between items-center">
-                    <div>
-                        <p class="text-sm">{{ $notification->data['message'] ?? 'Notification' }}</p>
-                        <p class="text-xs text-gray-500">{{ $notification->created_at->diffForHumans() }}</p>
-                    </div>
-                    <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" class="inline">
-                        @csrf
-                        <button class="text-xs text-blue-500 hover:text-blue-700">Marquer comme lue</button>
-                    </form>
+        <!-- Message de succès -->
+        @if(session('success'))
+            <div class="card-nike mb-8">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                    <p class="text-green-700 font-medium">{{ session('success') }}</p>
                 </div>
-            @empty
-                <p class="text-gray-500 text-sm">Pas de nouvelles notifications</p>
-            @endforelse
-        </div>
-        @if(Auth::user()->unreadNotifications->count() > 0)
-            <div class="mt-2 text-right">
-                <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="inline">
-                    @csrf
-                    <button class="text-sm text-blue-500 hover:text-blue-700">Marquer toutes comme lues</button>
-                </form>
             </div>
         @endif
-    </div>
 
-    <!-- Tableau de bord modernisé -->
-    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-xl p-6 mb-8">
-        <h2 class="text-xl font-bold text-indigo-700 mb-4 flex items-center gap-2"><i class="fas fa-chart-bar"></i> Tableau de bord</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="bg-blue-100 p-6 rounded-xl text-center shadow hover:scale-105 transition">
-                <p class="text-sm text-gray-600">Livraisons du jour</p>
-                <p class="text-3xl font-extrabold text-blue-700">{{ $todayOrders->count() }}</p>
+        <!-- Centre de notifications -->
+        <div class="card-nike mb-8">
+            <h2 class="nike-heading mb-6 flex items-center space-x-3">
+                <i class="fas fa-bell text-black"></i>
+                <span>Notifications</span>
+            </h2>
+            <div class="max-h-40 overflow-y-auto">
+                @forelse(Auth::user()->unreadNotifications as $notification)
+                    <div class="bg-gray-50 p-4 rounded-lg mb-3 flex justify-between items-center border border-gray-200">
+                        <div>
+                            <p class="text-sm font-medium text-gray-900">{{ $notification->data['message'] ?? 'Notification' }}</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                        </div>
+                        <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" class="inline">
+                            @csrf
+                            <button class="text-xs text-black hover:text-gray-600 font-medium">Marquer comme lue</button>
+                        </form>
+                    </div>
+                @empty
+                    <p class="text-gray-500 text-sm text-center py-4">Pas de nouvelles notifications</p>
+                @endforelse
             </div>
-            <div class="bg-yellow-100 p-6 rounded-xl text-center shadow hover:scale-105 transition">
-                <p class="text-sm text-gray-600">En attente</p>
-                <p class="text-3xl font-extrabold text-yellow-700">{{ $pendingOrders->count() }}</p>
-            </div>
-            <div class="bg-green-100 p-6 rounded-xl text-center shadow hover:scale-105 transition">
-                <p class="text-sm text-gray-600">Livraisons complétées</p>
-                <p class="text-3xl font-extrabold text-green-700">{{ $deliveredOrders->count() }}</p>
-            </div>
-            <div class="bg-purple-100 p-6 rounded-xl text-center shadow hover:scale-105 transition">
-                <p class="text-sm text-gray-600">Distance parcourue</p>
-                <p class="text-3xl font-extrabold text-purple-700">{{ $totalDistance ?? 0 }} km</p>
-            </div>
+            @if(Auth::user()->unreadNotifications->count() > 0)
+                <div class="mt-4 text-right">
+                    <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="inline">
+                        @csrf
+                        <button class="text-sm text-black hover:text-gray-600 font-medium">Marquer toutes comme lues</button>
+                    </form>
+                </div>
+            @endif
         </div>
-    </div>
 
-    <!-- Section Carte d'aperçu avec Leaflet -->
-    @if($pendingOrders->count())
-        <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-lg font-semibold text-gray-700">📍 Aperçu des livraisons</h2>
-                <button id="toggleMapBtn" class="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600">
-                    Afficher la carte
-                </button>
-            </div>
-            <div id="overview-map" class="w-full h-96 rounded-lg shadow-md hidden"></div>
-            <div id="route-preview" class="w-full hidden mt-4">
-                <h3 class="text-md font-semibold text-gray-700 mb-2">Détails du trajet</h3>
-                <div id="route-details" class="bg-gray-50 p-3 rounded">
-                    <p class="text-sm text-gray-500">Sélectionnez une commande sur la carte pour voir les détails du trajet</p>
+        <!-- Tableau de bord - Style Nike -->
+        <div class="card-nike mb-8">
+            <h2 class="nike-heading mb-6 flex items-center space-x-3">
+                <i class="fas fa-chart-bar text-black"></i>
+                <span>Tableau de bord</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-gray-50 p-6 rounded-lg text-center border border-gray-200 hover:shadow-lg transition-shadow">
+                    <p class="text-sm text-gray-600 mb-2">Livraisons du jour</p>
+                    <p class="text-3xl font-bold text-black">{{ $todayOrders->count() }}</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center border border-gray-200 hover:shadow-lg transition-shadow">
+                    <p class="text-sm text-gray-600 mb-2">En attente</p>
+                    <p class="text-3xl font-bold text-black">{{ $pendingOrders->count() }}</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center border border-gray-200 hover:shadow-lg transition-shadow">
+                    <p class="text-sm text-gray-600 mb-2">Livraisons complétées</p>
+                    <p class="text-3xl font-bold text-black">{{ $deliveredOrders->count() }}</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg text-center border border-gray-200 hover:shadow-lg transition-shadow">
+                    <p class="text-sm text-gray-600 mb-2">Distance parcourue</p>
+                    <p class="text-3xl font-bold text-black">{{ $totalDistance ?? 0 }} km</p>
+                </div>
+        </div>
+        
+            <!-- Graphique des statistiques -->
+            @if(count($statusCounts) > 0)
+            <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <h3 class="text-lg font-semibold text-black mb-4">Répartition des commandes</h3>
+                <div class="h-64">
+                    <canvas id="ordersChart"></canvas>
                 </div>
             </div>
+            @endif
         </div>
-    @endif
 
-    <!-- Accès aux outils des livreurs modernisé -->
-    <div class="bg-white rounded-xl shadow p-4 mb-8 flex flex-col md:flex-row items-center gap-4">
-        <h2 class="text-lg font-semibold text-gray-700 mb-0 flex items-center gap-2"><i class="fas fa-link"></i> Accès rapide</h2>
-        <div class="flex gap-4 ml-4">
-            <!-- <a href="{{ route('livreurs.route_liste') }}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition"><i class="fas fa-list"></i> Liste des routes</a> -->
-            <a href="{{ route('livreurs.planning') }}" class="inline-flex items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 transition"><i class="fas fa-calendar-alt"></i> Planning</a>
+        <!-- Section Carte d'aperçu avec Leaflet -->
+        @if($pendingOrders->count())
+            <div class="card-nike mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="nike-heading flex items-center space-x-3">
+                        <i class="fas fa-map-marker-alt text-black"></i>
+                        <span>Aperçu des livraisons</span>
+                    </h2>
+                    <button id="toggleMapBtn" class="btn-nike">
+                        Afficher la carte
+                    </button>
+                </div>
+                <div id="overview-map" class="w-full h-96 rounded-lg shadow-md hidden"></div>
+                <div id="route-preview" class="w-full hidden mt-4">
+                    <h3 class="text-md font-semibold text-black mb-2">Détails du trajet</h3>
+                    <div id="route-details" class="bg-gray-50 p-3 rounded border border-gray-200">
+                        <p class="text-sm text-gray-500">Sélectionnez une commande sur la carte pour voir les détails du trajet</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Accès aux outils des livreurs - Style Nike -->
+        <div class="card-nike mb-8">
+            <h2 class="nike-heading mb-6 flex items-center space-x-3">
+                <i class="fas fa-link text-black"></i>
+                <span>Accès rapide</span>
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="{{ route('livreur.planning') }}" class="btn-nike-outline text-center">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    Planning
+                </a>
+                <a href="{{ route('livreur.profile') }}" class="btn-nike-outline text-center">
+                    <i class="fas fa-user mr-2"></i>
+                    Profil
+                </a>
+                <a href="{{ route('livreur.statistics') }}" class="btn-nike-outline text-center">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    Statistiques
+                </a>
+                <a href="{{ route('livreur.settings') }}" class="btn-nike-outline text-center">
+                    <i class="fas fa-cog mr-2"></i>
+                    Paramètres
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- Commandes en attente -->
-    <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
-        <h2 class="text-lg font-semibold text-gray-700 mb-3">📦 Commandes en attente</h2>
+        <!-- Commandes en attente -->
+        <div class="card-nike mb-8">
+            <h2 class="nike-heading mb-6 flex items-center space-x-3">
+                <i class="fas fa-box text-black"></i>
+                <span>Commandes en attente</span>
+            </h2>
         @if($pendingOrders->count())
             <div class="overflow-x-auto">
                 <table class="w-full table-auto text-left">
@@ -129,14 +179,20 @@
                             </td>
                             <td class="px-4 py-2 border">
                                 <div class="flex space-x-2">
-                                    <button class="view-route-btn bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                                    <a href="{{ route('livreur.orders.show', $order->id) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                        Détails
+                                    </a>
+                                    <a href="{{ route('livreur.orders.route', $order->id) }}" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600">
+                                        Itinéraire
+                                    </a>
+                                    <button class="view-route-btn bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
                                             data-order-id="{{ $order->id }}"
                                             data-lat="{{ $order->latitude }}"
                                             data-lng="{{ $order->longitude }}"
                                             data-address="{{ $order->delivery_address }}">
-                                        Voir trajet
+                                        Carte
                                     </button>
-                                    <form action="{{ route('livreur.commande.complete', $order->id) }}" method="POST" onsubmit="return confirm('Confirmer la livraison ?')">
+                                    <form action="{{ route('livreur.orders.complete', $order->id) }}" method="POST" onsubmit="return confirm('Confirmer la livraison ?')">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
@@ -174,6 +230,7 @@
                             <th class="px-4 py-2 border">Client</th>
                             <th class="px-4 py-2 border">Adresse</th>
                             <th class="px-4 py-2 border">Heure de livraison</th>
+                            <th class="px-4 py-2 border">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,6 +240,16 @@
                                 <td class="px-4 py-2 border">{{ $order->user->name ?? 'Client inconnu' }}</td>
                                 <td class="px-4 py-2 border">{{ $order->delivery_address }}</td>
                                 <td class="px-4 py-2 border">{{ $order->updated_at->format('H:i') }}</td>
+                                <td class="px-4 py-2 border">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('livreur.orders.show', $order->id) }}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                                            Détails
+                                        </a>
+                                        <a href="{{ route('livreur.orders.route', $order->id) }}" class="bg-purple-500 text-white px-3 py-1 rounded hover:bg-purple-600 text-sm">
+                                            Itinéraire
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -194,10 +261,48 @@
     </div>
 </div>
 
+<!-- Navigation flottante pour mobile -->
+<x-livreur-floating-nav />
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     let map, routingControl;
+    
+    // Initialisation du graphique des commandes
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('ordersChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: {!! json_encode(array_keys($statusCounts)) !!},
+                    datasets: [{
+                        data: {!! json_encode(array_values($statusCounts)) !!},
+                        backgroundColor: [
+                            '#FCD34D', // Jaune pour en attente
+                            '#10B981', // Vert pour livrées
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
     
     function initMap() {
         const mapContainer = document.getElementById('overview-map');

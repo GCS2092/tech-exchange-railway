@@ -83,7 +83,7 @@
 <script>
     document.getElementById('type').addEventListener('change', function() {
         const valueSymbol = document.getElementById('value-symbol');
-        valueSymbol.textContent = this.value === 'percent' ? '%' : '€';
+                    valueSymbol.textContent = this.value === 'percent' ? '%' : 'FCFA';
     });
 </script>
 @endpush

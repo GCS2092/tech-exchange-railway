@@ -3,10 +3,14 @@
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 py-6 sm:py-12">
     <div class="container max-w-5xl mx-auto px-4 sm:px-6">
+        
+        <!-- Navigation et redirections -->
+        <x-livreur-smart-nav currentPage="order-details" :orderId="$order->id" />
+        
         <!-- En-tête avec statut -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 sm:mb-8 gap-4">
             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800">
-                Commande <span class="text-indigo-600 font-extrabold">#{{ $order->id }}</span>
+                Commande <span class="text-black font-extrabold">#{{ $order->id }}</span>
             </h1>
             <div class="flex items-center space-x-3">
                 <span class="inline-flex items-center px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium
@@ -47,15 +51,15 @@
                 <!-- Informations client -->
                 <div class="space-y-4 sm:space-y-6">
                     <div class="flex items-center">
-                        <h2 class="text-lg sm:text-xl font-semibold text-gray-800">Informations Client</h2>
-                        <div class="ml-3 bg-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-0.5 rounded-full">Client</div>
+                        <h2 class="text-lg sm:text-xl font-semibold text-black">Informations Client</h2>
+                        <div class="ml-3 bg-indigo-100 text-black text-xs font-semibold px-2 py-0.5 rounded-full">Client</div>
                     </div>
                     
                     <div class="bg-slate-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
                         <div class="space-y-3">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 bg-indigo-100 p-2 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
@@ -64,7 +68,7 @@
                             
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 bg-indigo-100 p-2 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                     </svg>
@@ -74,7 +78,7 @@
                             
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 bg-indigo-100 p-2 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                     </svg>
                                 </div>
@@ -88,12 +92,12 @@
                 <div class="space-y-3 sm:space-y-4">
                     <div class="flex justify-between items-center pb-2 sm:pb-3 border-b border-indigo-100">
                         <span class="text-sm sm:text-base text-gray-600">Date de commande</span>
-                        <span class="text-sm sm:text-base font-medium text-gray-800">{{ $order->created_at->format('d/m/Y') }}</span>
+                        <span class="text-sm sm:text-base font-medium text-black">{{ $order->created_at->format('d/m/Y') }}</span>
                     </div>
                 
                     <div class="flex justify-between items-center pb-2 sm:pb-3 border-b border-indigo-100">
                         <span class="text-sm sm:text-base text-gray-600">Nombre de produits</span>
-                        <span class="text-sm sm:text-base font-medium text-gray-800">{{ $order->products->count() }}</span>
+                        <span class="text-sm sm:text-base font-medium text-black">{{ $order->products->count() }}</span>
                     </div>
                 
                     @php
@@ -102,8 +106,8 @@
                 
                     <div class="flex justify-between items-center pb-2 sm:pb-3 border-b border-indigo-100">
                         <span class="text-sm sm:text-base text-gray-600">Montant initial</span>
-                        <span class="text-sm sm:text-base font-medium text-gray-800">
-                            {{ isset($promoUsage) ? number_format($promoUsage->original_amount, 0, ',', ' ') : number_format($order->total, 0, ',', ' ') }} FCFA
+                        <span class="text-sm sm:text-base font-medium text-black">
+                                                            {{ isset($promoUsage) ? number_format($promoUsage->original_amount, 0, ',', ' ') : number_format($order->total_price, 0, ',', ' ') }} FCFA
                         </span>
                     </div>
                 
@@ -120,66 +124,20 @@
                     @else
                         <div class="flex justify-between items-center pt-1 sm:pt-2">
                             <span class="text-sm sm:text-base text-gray-600">Total payé</span>
-                            <span class="text-sm sm:text-base font-bold text-gray-900">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
+                            <span class="text-sm sm:text-base font-bold text-gray-900">{{ number_format($order->total_price, 0, ',', ' ') }} FCFA</span>
                         </div>
                     @endif
                 </div>
                 
             </div>
 
-            <!-- Formulaire d'assignation de livreur (admin uniquement) -->
-            @if(Auth::user()->role === 'admin')
-            <div class="p-4 sm:p-6 border-b border-gray-100 bg-gray-50">
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">
-                    <span class="inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-5h2a2 2 0 110 4h-1.05a2.5 2.5 0 014.9 0H17a1 1 0 001-1v-1a1 1 0 00-.29-.71l-4-4A1 1 0 0013 6h-1a1 1 0 00-1-1H3z" />
-                        </svg>
-                        Attribuer un livreur
-                    </span>
-                </h2>
-                
-                <form method="POST" action="{{ route('livreur.orders.assign', $order->id) }}" class="space-y-3">
-                    @csrf
-                    <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-                        <select name="livreur_id" id="livreur_id" class="flex-grow rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">-- Sélectionner un livreur --</option>
-                            @foreach($livreurs as $livreur)
-                                <option value="{{ $livreur->id }}" {{ $order->livreur_id == $livreur->id ? 'selected' : '' }}>
-                                    {{ $livreur->name }} ({{ $livreur->email }})
-                                </option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M8 9a3 3 0 100-6 3 3 0 000 6z" />
-                                <path fill-rule="evenodd" d="M8 10a4 4 0 10-3.835-5.185.5.5 0 00-.871.49 5 5 0 01-1.207 5.186.5.5 0 00.034.707A4.001 4.001 0 008 10z" clip-rule="evenodd" />
-                            </svg>
-                            Assigner
-                        </button>
-                    </div>
-                    
-                    @if(session('success'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-3 rounded">
-                        <p class="font-medium">{{ session('success') }}</p>
-                    </div>
-                    @endif
-                    
-                    @if(session('error'))
-                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mt-3 rounded">
-                        <p class="font-medium">{{ session('error') }}</p>
-                    </div>
-                    @endif
-                </form>
-            </div>
-            @endif
+
             
             <!-- Section Produits -->
             <div class="p-4 sm:p-6">
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
+                <h2 class="text-lg sm:text-xl font-semibold text-black mb-4 sm:mb-6">
                     <span class="inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-black" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
                         </svg>
                         Produits Commandés
@@ -201,7 +159,7 @@
                             @foreach ($order->products as $product)
                             <tr class="hover:bg-slate-50 transition-colors duration-150">
                                 <td class="py-3 sm:py-4 px-2 sm:px-4">
-                                    <div class="font-medium text-xs sm:text-sm text-gray-800 break-words">{{ $product->name }}</div>
+                                    <div class="font-medium text-xs sm:text-sm text-black break-words">{{ $product->name }}</div>
                                     <div class="text-xs text-gray-500 mt-1">{{ Str::limit($product->description, 50) }}</div>
                                 </td>
                                 <td class="py-3 sm:py-4 px-2 sm:px-4 text-center">
@@ -211,23 +169,23 @@
                                              alt="{{ $product->name }}">
                                     </div>
                                 </td>
-                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-xs sm:text-sm text-gray-700">{{ number_format($product->price, 2) }} €</td>
+                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-xs sm:text-sm text-gray-700">{{ number_format($product->price, 2) }} FCFA</td>
                                 <td class="py-3 sm:py-4 px-2 sm:px-4 text-right">
                                     <span class="inline-flex items-center justify-center bg-indigo-100 text-indigo-800 rounded-full w-6 h-6 sm:w-8 sm:h-8 text-xs sm:text-sm font-medium">
                                         {{ $product->pivot->quantity }}
                                     </span>
                                 </td>
-                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-xs sm:text-sm font-bold text-indigo-700">
-                                    {{ number_format($product->price * $product->pivot->quantity, 2) }} €
+                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-xs sm:text-sm font-bold text-black">
+                                    {{ number_format($product->price * $product->pivot->quantity, 2) }} FCFA
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <tr class="bg-slate-50 font-semibold text-gray-800">
+                            <tr class="bg-slate-50 font-semibold text-black">
                                 <td colspan="4" class="py-3 sm:py-4 px-3 sm:px-6 text-right text-xs sm:text-sm">Total</td>
-                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-sm sm:text-lg text-indigo-700 font-bold">
-                                    {{ number_format($order->total_price, 2) }} €
+                                <td class="py-3 sm:py-4 px-2 sm:px-4 text-right text-sm sm:text-lg text-black font-bold">
+                                    {{ number_format($order->total_price, 2) }} FCFA
                                 </td>
                             </tr>
                         </tfoot>
@@ -237,9 +195,9 @@
 
             <!-- Historique de la commande -->
             <div class="p-4 sm:p-6 border-t border-gray-100 bg-gray-50">
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">
+                <h2 class="text-lg sm:text-xl font-semibold text-black mb-3 sm:mb-4">
                     <span class="inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-black" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                         </svg>
                         Historique de la commande
@@ -252,7 +210,7 @@
                         <div class="absolute -left-10 mt-1 w-5 h-5 rounded-full bg-indigo-600 border-4 border-white shadow"></div>
                         <div class="bg-white p-3 rounded-lg shadow-sm">
                             <div class="text-xs text-gray-500">{{ $order->created_at->format('d/m/Y H:i') }}</div>
-                            <div class="font-medium text-gray-800">Commande créée</div>
+                            <div class="font-medium text-black">Commande créée</div>
                             <div class="text-sm text-gray-600">Commande #{{ $order->id }} créée par {{ $order->user->name }}</div>
                         </div>
                     </div>
@@ -263,7 +221,7 @@
                         <div class="absolute -left-10 mt-1 w-5 h-5 rounded-full bg-blue-500 border-4 border-white shadow"></div>
                         <div class="bg-white p-3 rounded-lg shadow-sm">
                             <div class="text-xs text-gray-500">{{ $order->updated_at->format('d/m/Y H:i') }}</div>
-                            <div class="font-medium text-gray-800">Mise à jour du statut</div>
+                            <div class="font-medium text-black">Mise à jour du statut</div>
                             <div class="text-sm text-gray-600">Statut modifié en <span class="font-medium
                                 @switch($order->status)
                                     @case('pending') text-amber-600 @break
@@ -281,10 +239,10 @@
                         <div class="absolute -left-10 mt-1 w-5 h-5 rounded-full bg-green-500 border-4 border-white shadow"></div>
                         <div class="bg-white p-3 rounded-lg shadow-sm">
                             <div class="text-xs text-gray-500">{{ $order->updated_at->format('d/m/Y H:i') }}</div>
-                            <div class="font-medium text-gray-800">Livreur assigné</div>
+                            <div class="font-medium text-black">Livreur assigné</div>
                             <div class="text-sm text-gray-600">
                                 Livraison assignée à 
-                                <span class="font-medium text-indigo-600">{{ $livreurs->where('id', $order->livreur_id)->first()->name ?? 'Inconnu' }}</span>
+                                <span class="font-medium text-black">{{ $livreurs->where('id', $order->livreur_id)->first()->name ?? 'Inconnu' }}</span>
                             </div>
                         </div>
                     </div>
@@ -294,9 +252,9 @@
 
             <!-- Mise à jour du statut -->
             <div class="p-4 sm:p-6 bg-white border-t border-gray-100">
-                <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">
+                <h2 class="text-lg sm:text-xl font-semibold text-black mb-3 sm:mb-4">
                     <span class="inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-black" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                         </svg>
                         Modifier le statut
@@ -371,7 +329,7 @@
         <div class="mt-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-md animate-pulse">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="h-5 w-5 text-black" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                     </svg>
                 </div>
@@ -381,7 +339,7 @@
                 <div class="ml-auto pl-3">
                     <div class="-mx-1.5 -my-1.5">
                         <button type="button" onclick="this.parentElement.parentElement.parentElement.remove()" 
-                                class="inline-flex rounded-md p-1.5 text-green-500 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                class="inline-flex rounded-md p-1.5 text-black hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                             <span class="sr-only">Dismiss</span>
                             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -404,14 +362,14 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div class="space-y-2">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                             </svg>
                             <span class="text-sm font-medium text-gray-600">Nom du livreur:</span>
                             <span class="ml-2 text-sm text-gray-900">{{ $livreur->name }}</span>
                         </div>
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                             </svg>
@@ -420,7 +378,7 @@
                         </div>
                         @if(isset($livreur->phone))
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                             </svg>
                             <span class="text-sm font-medium text-gray-600">Téléphone:</span>
@@ -467,7 +425,7 @@
                 
                 @if(Auth::user()->role === 'admin' || Auth::user()->role === 'livreur')
                 <div class="mt-6 pt-6 border-t border-gray-200">
-                    <h4 class="text-base font-medium text-gray-800 mb-3">Notes de livraison</h4>
+                    <h4 class="text-base font-medium text-black mb-3">Notes de livraison</h4>
                     <form action="{{ route('admin.orders.updateDeliveryNotes', $order->id) }}" method="POST" class="space-y-3">
                         @csrf
                         @method('PUT')

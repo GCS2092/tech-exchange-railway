@@ -16,7 +16,7 @@ class LivreurMiddleware
         }
    
         // Vérifiez si l'utilisateur a le rôle delivery via Spatie Permission
-        if (!Auth::user()->hasRole('delivery')) {
+        if (!Auth::user()->hasRole('livreur')) {
             return redirect()->route('dashboard')->with('error', 'Accès refusé. Vous devez être livreur.');
         }
    

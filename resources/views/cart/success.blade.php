@@ -10,7 +10,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 mb-4">
+            <h1 class="text-2xl md:text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 mb-4">
                 Commande Validée !
             </h1>
             <p class="text-gray-600 text-lg">Votre commande a été enregistrée avec succès.</p>

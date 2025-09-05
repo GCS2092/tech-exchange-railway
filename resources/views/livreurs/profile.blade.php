@@ -1,268 +1,292 @@
-@extends('layouts.app')
+@extends('layouts.livreur')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 py-12">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <!-- En-tête -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Mon Profil</h1>
-            <p class="mt-2 text-sm text-gray-600">Gérez vos informations personnelles et consultez vos statistiques</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Colonne principale -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Informations personnelles -->
-                <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-xl font-semibold text-gray-800">Informations personnelles</h2>
-                        <button type="button" class="btn btn-secondary" onclick="toggleEdit()">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                            </svg>
-                            <span>Modifier</span>
-                        </button>
-                    </div>
-
-                    <!-- Formulaire -->
-                    <form action="{{ route('livreur.profile.update') }}" method="POST" id="profile-form" class="space-y-6">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-                                <input type="text" name="name" id="name" value="{{ auth()->user()->name }}"
-                                    class="mt-1 form-input block w-full" disabled>
-                            </div>
-
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" name="email" id="email" value="{{ auth()->user()->email }}"
-                                    class="mt-1 form-input block w-full" disabled>
-                            </div>
-
-                            <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-                                <input type="tel" name="phone" id="phone" value="{{ auth()->user()->phone }}"
-                                    class="mt-1 form-input block w-full" disabled>
-                            </div>
-
-                            <div>
-                                <label for="vehicle_type" class="block text-sm font-medium text-gray-700">Type de véhicule</label>
-                                <input type="text" name="vehicle_type" id="vehicle_type" value="{{ auth()->user()->vehicle_type }}"
-                                    class="mt-1 form-input block w-full" disabled>
-                            </div>
-                        </div>
-
-                        <div class="hidden" id="password-section">
-                            <div class="border-t border-gray-200 pt-6">
-                                <h3 class="text-lg font-medium text-gray-900">Changer le mot de passe</h3>
-                                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label for="current_password" class="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
-                                        <input type="password" name="current_password" id="current_password"
-                                            class="mt-1 form-input block w-full">
-                                    </div>
-
-                                    <div>
-                                        <label for="new_password" class="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
-                                        <input type="password" name="new_password" id="new_password"
-                                            class="mt-1 form-input block w-full">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="hidden pt-6" id="form-buttons">
-                            <div class="flex justify-end space-x-3">
-                                <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
-                                    Annuler
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    Enregistrer les modifications
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Statistiques de livraison -->
-                <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Statistiques de livraison</h2>
-                    
-                    <!-- Graphique des livraisons -->
-                    <div class="h-64 mb-6">
-                        <canvas id="deliveryChart"></canvas>
-                    </div>
-
-                    <!-- Métriques -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-blue-50 rounded-xl p-4">
-                            <p class="text-sm font-medium text-blue-600">Taux de livraison</p>
-                            <p class="mt-2 text-3xl font-bold text-blue-900">98%</p>
-                            <p class="mt-1 text-sm text-blue-500">+2.5% ce mois</p>
-                        </div>
-
-                        <div class="bg-green-50 rounded-xl p-4">
-                            <p class="text-sm font-medium text-green-600">Livraisons à l'heure</p>
-                            <p class="mt-2 text-3xl font-bold text-green-900">95%</p>
-                            <p class="mt-1 text-sm text-green-500">+1.2% ce mois</p>
-                        </div>
-
-                        <div class="bg-purple-50 rounded-xl p-4">
-                            <p class="text-sm font-medium text-purple-600">Note moyenne</p>
-                            <p class="mt-2 text-3xl font-bold text-purple-900">4.8/5</p>
-                            <p class="mt-1 text-sm text-purple-500">Basé sur 124 avis</p>
-                        </div>
-                    </div>
-                </div>
+<div class="min-h-screen bg-white">
+    <div class="container-nike py-12">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Navigation et redirections -->
+            <x-livreur-nav-buttons />
+            
+            <!-- Header - Style Nike -->
+            <div class="text-center mb-16">
+                <h1 class="nike-title mb-4">MON PROFIL LIVREUR</h1>
+                <p class="nike-text text-gray-600">Gérez vos informations personnelles et vos paramètres de livraison</p>
             </div>
 
-            <!-- Sidebar -->
-            <div class="space-y-8">
-                <!-- Carte de profil -->
-                <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <div class="text-center">
-                        <div class="relative inline-block">
-                            <img src="{{ auth()->user()->avatar_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}" 
-                                alt="Photo de profil" 
-                                class="w-32 h-32 rounded-full">
-                            <button class="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50">
-                                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <!-- Carte principale -->
+            <div class="card-nike">
+            <form method="POST" action="{{ route('profile.update') }}" class="space-y-6">
+                @csrf
+                @method('PATCH')
+
+                <!-- Messages de succès/erreur -->
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            {{ session('success') }}
+                        </div>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="font-semibold">Erreurs de validation :</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <!-- Informations personnelles -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Nom complet -->
+                    <div class="space-y-2">
+                        <label for="name" class="block text-sm font-semibold text-gray-700">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
-                            </button>
-                        </div>
-                        <h3 class="mt-4 text-xl font-semibold text-gray-900">{{ auth()->user()->name }}</h3>
-                        <p class="text-gray-500">Livreur depuis {{ auth()->user()->created_at->diffForHumans(null, true) }}</p>
+                                Nom complet
+                            </div>
+                        </label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            id="name" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                            value="{{ old('name', $user->name) }}" 
+                            required
+                            placeholder="Votre nom complet"
+                        >
                     </div>
 
-                    <div class="mt-6 border-t border-gray-100 pt-6">
-                        <dl class="space-y-4">
-                            <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-600">Status</dt>
-                                <dd class="text-sm font-medium text-green-600">En ligne</dd>
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <label for="email" class="block text-sm font-semibold text-gray-700">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 mr-2 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Adresse email
                             </div>
-                            <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-600">Zone de livraison</dt>
-                                <dd class="text-sm text-gray-900">{{ auth()->user()->delivery_zone }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="text-sm font-medium text-gray-600">Disponibilité</dt>
-                                <dd class="text-sm text-gray-900">Lun-Sam, 8h-18h</dd>
-                            </div>
-                        </dl>
+                        </label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+                            value="{{ old('email', $user->email) }}" 
+                            required
+                            placeholder="votre@email.com"
+                        >
                     </div>
                 </div>
 
-                <!-- Derniers avis -->
-                <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Derniers avis</h2>
-                    <div class="space-y-6">
-                        @foreach(range(1, 3) as $review)
-                        <div class="border-b border-gray-100 last:border-0 pb-6 last:pb-0">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-600">C</span>
-                                    </div>
-                                </div>
-                                <div class="ml-3 flex-1">
-                                    <div class="flex items-center justify-between">
-                                        <h3 class="text-sm font-medium text-gray-900">Client {{ $review }}</h3>
-                                        <div class="flex items-center">
-                                            @for($i = 0; $i < 5; $i++)
-                                            <svg class="w-4 h-4 {{ $i < 5 ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                            @endfor
-                                        </div>
-                                    </div>
-                                    <p class="mt-2 text-sm text-gray-600">Livraison rapide et service impeccable. Le livreur était très professionnel.</p>
-                                    <p class="mt-1 text-xs text-gray-500">Il y a 2 jours</p>
-                                </div>
-                            </div>
+                <!-- Numéro de téléphone -->
+                <div class="space-y-2">
+                    <label for="phone" class="block text-sm font-semibold text-gray-700">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            Numéro de téléphone
                         </div>
-                        @endforeach
+                    </label>
+                    <input 
+                        type="tel" 
+                        name="phone" 
+                        id="phone" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" 
+                        value="{{ old('phone', $user->phone) }}"
+                        placeholder="+33 6 12 34 56 78"
+                    >
+                    <p class="text-gray-500 text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Format international recommandé (ex: +33612345678)
+                    </p>
+                </div>
+
+                <!-- Type de véhicule -->
+                <div class="space-y-2">
+                    <label for="vehicle_type" class="block text-sm font-semibold text-gray-700">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            Type de véhicule
+                        </div>
+                    </label>
+                    <select 
+                        name="vehicle_type" 
+                        id="vehicle_type" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    >
+                        <option value="">Sélectionnez votre véhicule</option>
+                        <option value="moto" {{ old('vehicle_type', $user->vehicle_type) == 'moto' ? 'selected' : '' }}>Moto</option>
+                        <option value="scooter" {{ old('vehicle_type', $user->vehicle_type) == 'scooter' ? 'selected' : '' }}>Scooter</option>
+                        <option value="voiture" {{ old('vehicle_type', $user->vehicle_type) == 'voiture' ? 'selected' : '' }}>Voiture</option>
+                        <option value="camion" {{ old('vehicle_type', $user->vehicle_type) == 'camion' ? 'selected' : '' }}>Camion</option>
+                        <option value="velo" {{ old('vehicle_type', $user->vehicle_type) == 'velo' ? 'selected' : '' }}>Vélo</option>
+                    </select>
+                </div>
+
+                <!-- Adresse -->
+                <div class="space-y-2">
+                    <label for="address" class="block text-sm font-semibold text-gray-700">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Adresse de base
+                        </div>
+                    </label>
+                    <textarea 
+                        name="address" 
+                        id="address" 
+                        rows="3"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
+                        placeholder="Votre adresse de base pour les livraisons"
+                    >{{ old('address', $user->address) }}</textarea>
+                </div>
+
+                <!-- Sécurité -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Sécurité du compte
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Mot de passe actuel -->
+                        <div class="space-y-2">
+                            <label for="current_password" class="block text-sm font-semibold text-gray-700">
+                                Mot de passe actuel
+                            </label>
+                            <input 
+                                type="password" 
+                                name="current_password" 
+                                id="current_password" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" 
+                                placeholder="••••••••"
+                            >
+                            <p class="text-gray-500 text-sm">Requis pour changer le mot de passe</p>
+                        </div>
+
+                        <!-- Nouveau mot de passe -->
+                        <div class="space-y-2">
+                            <label for="password" class="block text-sm font-semibold text-gray-700">
+                                Nouveau mot de passe
+                            </label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" 
+                                placeholder="••••••••"
+                            >
+                        </div>
+
+                        <!-- Confirmation du mot de passe -->
+                        <div class="space-y-2">
+                            <label for="password_confirmation" class="block text-sm font-semibold text-gray-700">
+                                Confirmer le mot de passe
+                            </label>
+                            <input 
+                                type="password" 
+                                name="password_confirmation" 
+                                id="password_confirmation" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" 
+                                placeholder="••••••••"
+                            >
+                        </div>
                     </div>
                 </div>
+
+                <!-- Boutons d'action -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+                    <button 
+                        type="submit" 
+                        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Mettre à jour le profil
+                    </button>
+                    
+                    <a 
+                        href="{{ route('livreur.orders.index') }}" 
+                        class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Retour aux livraisons
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Informations supplémentaires -->
+        <div class="mt-8 grid md:grid-cols-3 gap-6">
+            <!-- Statut du compte -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-gray-900 font-semibold">Statut du compte</h3>
+                </div>
+                <p class="text-green-600 font-semibold">Actif</p>
+                <p class="text-gray-500 text-sm mt-1">Votre compte livreur est en bon état</p>
+            </div>
+
+            <!-- Statistiques de livraison -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-gray-900 font-semibold">Livraisons</h3>
+                </div>
+                <p class="text-2xl font-bold text-blue-600">{{ $user->orders()->where('status', 'livré')->count() }}</p>
+                <p class="text-gray-500 text-sm mt-1">Livraisons complétées</p>
+            </div>
+
+            <!-- Distance parcourue -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-gray-900 font-semibold">Distance</h3>
+                </div>
+                <p class="text-2xl font-bold text-purple-600">{{ number_format($user->total_distance ?? 0, 1) }} km</p>
+                <p class="text-gray-500 text-sm mt-1">Distance totale parcourue</p>
             </div>
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-function toggleEdit() {
-    const form = document.getElementById('profile-form');
-    const inputs = form.querySelectorAll('input:not([type="hidden"])');
-    const passwordSection = document.getElementById('password-section');
-    const formButtons = document.getElementById('form-buttons');
-
-    inputs.forEach(input => {
-        input.disabled = false;
-    });
-
-    passwordSection.classList.remove('hidden');
-    formButtons.classList.remove('hidden');
-}
-
-function cancelEdit() {
-    const form = document.getElementById('profile-form');
-    const inputs = form.querySelectorAll('input:not([type="hidden"])');
-    const passwordSection = document.getElementById('password-section');
-    const formButtons = document.getElementById('form-buttons');
-
-    inputs.forEach(input => {
-        input.disabled = true;
-        input.value = input.defaultValue;
-    });
-
-    passwordSection.classList.add('hidden');
-    formButtons.classList.add('hidden');
-}
-
-// Graphique des livraisons
-const ctx = document.getElementById('deliveryChart').getContext('2d');
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-        datasets: [{
-            label: 'Livraisons',
-            data: [12, 19, 15, 17, 14, 13, 8],
-            borderColor: 'rgb(99, 102, 241)',
-            backgroundColor: 'rgba(99, 102, 241, 0.1)',
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    display: false
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
-</script>
-@endpush
 @endsection 

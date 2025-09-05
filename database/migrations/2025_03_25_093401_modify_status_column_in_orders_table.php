@@ -8,13 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // On modifie la colonne status pour qu'elle soit un ENUM avec des valeurs précises
-        DB::statement("ALTER TABLE orders MODIFY COLUMN status ENUM('en attente', 'expédié', 'livré') DEFAULT 'en attente'");
+        // PostgreSQL compatible - on utilise un check constraint au lieu d'ENUM
+        DB::statement("ALTER TABLE orders ADD CONSTRAINT orders_status_check CHECK (status IN ('en attente', 'expédié', 'livré'))");
     }
 
     public function down(): void
     {
-        // Si on veut revenir en arrière, on remet en VARCHAR
-        DB::statement("ALTER TABLE orders MODIFY COLUMN status VARCHAR(255) DEFAULT 'en attente'");
+        // Supprimer la contrainte
+        DB::statement("ALTER TABLE orders DROP CONSTRAINT IF EXISTS orders_status_check");
     }
 };

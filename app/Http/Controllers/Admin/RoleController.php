@@ -160,6 +160,13 @@ class RoleController extends Controller
 
         $user->syncRoles([$request->role]);
 
+        // Si l'utilisateur modifié est l'utilisateur connecté, régénérer la session
+        if (auth()->id() === $user->id) {
+            auth()->logout();
+            auth()->login($user);
+            $request->session()->regenerate();
+        }
+
         return redirect()->back()
             ->with('success', 'Rôle attribué avec succès.');
     }

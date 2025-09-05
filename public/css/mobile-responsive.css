@@ -1,0 +1,331 @@
+/**
+ * Améliorations spécifiques pour l'affichage mobile
+ * Optimisé pour les pages d'accueil et de connexion
+ */
+
+/* Améliorations générales pour mobile */
+@media (max-width: 768px) {
+    /* Réduire les espacements sur mobile */
+    .mobile-spacing {
+        @apply px-4 py-2;
+    }
+    
+    /* Améliorer la lisibilité des textes */
+    .mobile-text {
+        @apply text-base leading-relaxed;
+    }
+    
+    /* Améliorer les titres sur mobile */
+    .mobile-title {
+        @apply text-2xl sm:text-3xl font-bold;
+    }
+    
+    /* Améliorer les sous-titres sur mobile */
+    .mobile-subtitle {
+        @apply text-lg sm:text-xl font-semibold;
+    }
+    
+    /* Améliorer les boutons sur mobile */
+    .mobile-button {
+        @apply py-3 px-6 text-base font-semibold;
+    }
+    
+    /* Améliorer les formulaires sur mobile */
+    .mobile-input {
+        @apply py-3 px-4 text-base;
+    }
+    
+    /* Améliorer les cartes sur mobile */
+    .mobile-card {
+        @apply p-4 sm:p-6;
+    }
+    
+    /* Améliorer la navigation mobile */
+    .mobile-nav {
+        @apply flex-col space-y-2;
+    }
+    
+    .mobile-nav-item {
+        @apply w-full text-center py-3 px-4 rounded-lg;
+    }
+}
+
+/* Améliorations pour très petits écrans */
+@media (max-width: 480px) {
+    /* Réduire encore plus les marges */
+    .mobile-container {
+        @apply px-2;
+    }
+    
+    /* Améliorer les titres sur très petits écrans */
+    .mobile-title {
+        @apply text-xl font-bold;
+    }
+    
+    /* Améliorer les sous-titres sur très petits écrans */
+    .mobile-subtitle {
+        @apply text-base font-semibold;
+    }
+    
+    /* Améliorer le texte sur très petits écrans */
+    .mobile-text {
+        @apply text-sm;
+    }
+    
+    /* Améliorer les boutons sur très petits écrans */
+    .mobile-button {
+        @apply py-2 px-4 text-sm;
+    }
+    
+    /* Améliorer les formulaires sur très petits écrans */
+    .mobile-input {
+        @apply py-2 px-3 text-sm;
+    }
+}
+
+/* Améliorer l'orientation paysage sur mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .landscape-mobile {
+        @apply flex-row space-x-4 space-y-0;
+    }
+    
+    .landscape-mobile .mobile-nav-item {
+        @apply w-auto;
+    }
+}
+
+/* Améliorer l'accessibilité mobile */
+@media (max-width: 768px) {
+    /* Améliorer le contraste */
+    .mobile-contrast {
+        @apply text-gray-900 bg-white;
+    }
+    
+    /* Améliorer la visibilité des focus */
+    .mobile-focus:focus {
+        @apply ring-2 ring-blue-500 ring-offset-2;
+    }
+    
+    /* Améliorer la visibilité des états actifs */
+    .mobile-active:active {
+        @apply bg-gray-200;
+    }
+    
+    /* Améliorer les éléments tactiles */
+    .mobile-touch {
+        @apply min-h-12 min-w-12;
+    }
+}
+
+/* Améliorations spécifiques pour la page d'accueil */
+@media (max-width: 768px) {
+    /* Hero section mobile */
+    .hero-mobile {
+        @apply pt-20 pb-8;
+    }
+    
+    .hero-mobile h1 {
+        @apply text-3xl sm:text-4xl md:text-5xl;
+    }
+    
+    .hero-mobile p {
+        @apply text-base sm:text-lg;
+    }
+    
+    /* Boutons CTA mobile */
+    .cta-mobile {
+        @apply flex-col gap-4;
+    }
+    
+    .cta-mobile a {
+        @apply w-full py-3 px-6 text-center;
+    }
+    
+    /* Sections mobile */
+    .section-mobile {
+        @apply py-12 px-4;
+    }
+    
+    /* Grilles mobile */
+    .grid-mobile {
+        @apply grid-cols-1 gap-6;
+    }
+}
+
+/* Améliorations spécifiques pour la page de connexion */
+@media (max-width: 768px) {
+    /* Container de connexion mobile */
+    .login-mobile {
+        @apply px-4 py-8;
+    }
+    
+    /* Formulaire de connexion mobile */
+    .form-mobile {
+        @apply space-y-4;
+    }
+    
+    /* Champs de formulaire mobile */
+    .input-mobile {
+        @apply py-3 px-4 text-base;
+    }
+    
+    /* Bouton de connexion mobile */
+    .btn-mobile {
+        @apply py-3 px-4 text-base;
+    }
+    
+    /* Options de connexion mobile */
+    .options-mobile {
+        @apply flex-col space-y-3;
+    }
+    
+    .options-mobile .flex {
+        @apply justify-center;
+    }
+}
+
+/* Améliorations pour les images et icônes */
+@media (max-width: 768px) {
+    /* Images responsive */
+    .img-mobile {
+        @apply w-full h-auto rounded-lg;
+    }
+    
+    /* Icônes mobile */
+    .icon-mobile {
+        @apply w-5 h-5;
+    }
+    
+    /* Icônes plus grandes pour les boutons */
+    .icon-button-mobile {
+        @apply w-6 h-6;
+    }
+}
+
+/* Améliorations pour les listes et menus */
+@media (max-width: 768px) {
+    /* Listes mobile */
+    .list-mobile {
+        @apply space-y-2;
+    }
+    
+    .list-mobile li {
+        @apply p-3 bg-white rounded-lg border border-gray-200;
+    }
+    
+    /* Menus mobile */
+    .menu-mobile {
+        @apply flex-col space-y-1;
+    }
+    
+    .menu-mobile a {
+        @apply block py-3 px-4 text-base;
+    }
+}
+
+/* Améliorations pour les modals et overlays */
+@media (max-width: 768px) {
+    /* Modals mobile */
+    .modal-mobile {
+        @apply mx-4 my-8 max-h-screen overflow-y-auto;
+    }
+    
+    /* Overlays mobile */
+    .overlay-mobile {
+        @apply fixed inset-0 bg-black bg-opacity-50 z-50;
+    }
+}
+
+/* Améliorations pour les badges et notifications */
+@media (max-width: 768px) {
+    /* Badges mobile */
+    .badge-mobile {
+        @apply text-xs px-2 py-1;
+    }
+    
+    /* Notifications mobile */
+    .notification-mobile {
+        @apply fixed top-4 left-4 right-4 z-50;
+    }
+}
+
+/* Améliorations pour les tableaux sur mobile */
+@media (max-width: 768px) {
+    /* Tableaux mobile */
+    .table-mobile {
+        @apply block overflow-x-auto;
+    }
+    
+    .table-mobile thead {
+        @apply hidden;
+    }
+    
+    .table-mobile tbody {
+        @apply block;
+    }
+    
+    .table-mobile tr {
+        @apply block border border-gray-200 rounded-lg mb-4 p-4;
+    }
+    
+    .table-mobile td {
+        @apply block text-right border-0 p-1;
+    }
+    
+    .table-mobile td:before {
+        content: attr(data-label) ": ";
+        @apply float-left font-semibold text-gray-600;
+    }
+}
+
+/* Améliorations pour les animations et transitions */
+@media (max-width: 768px) {
+    /* Transitions plus rapides sur mobile */
+    .transition-mobile {
+        @apply transition-all duration-200;
+    }
+    
+    /* Animations simplifiées sur mobile */
+    .animate-mobile {
+        @apply transform transition-transform duration-200;
+    }
+    
+    .animate-mobile:hover {
+        @apply scale-105;
+    }
+}
+
+/* Améliorations pour la performance mobile */
+@media (max-width: 768px) {
+    /* Optimiser les rendus */
+    .optimize-mobile {
+        @apply will-change-transform;
+    }
+    
+    /* Réduire les effets coûteux */
+    .simple-mobile {
+        @apply shadow-sm;
+    }
+}
+
+/* Améliorations pour l'accessibilité mobile */
+@media (max-width: 768px) {
+    /* Améliorer la navigation au clavier */
+    .keyboard-mobile:focus {
+        @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    }
+    
+    /* Améliorer la navigation tactile */
+    .touch-mobile {
+        @apply touch-manipulation;
+    }
+    
+    /* Améliorer la visibilité des liens */
+    .link-mobile {
+        @apply underline;
+    }
+    
+    .link-mobile:hover {
+        @apply no-underline;
+    }
+}

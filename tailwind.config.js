@@ -9,6 +9,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js',    // Pour capturer les classes dans les fichiers JS/Vue/React si utilisés
+        './public/css/**/*.css',     // Pour capturer les styles custom
     ],
     theme: {
         extend: {

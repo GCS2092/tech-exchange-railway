@@ -5,7 +5,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">
                 🛍️ Guide d'utilisation - Espace Client
             </h1>
             <p class="text-xl text-gray-600">
@@ -17,7 +17,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <a href="#navigation" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">🧭</div>
+                    <div class="text-xl mb-3">🧭</div>
                     <h3 class="text-lg font-semibold text-gray-900">Navigation</h3>
                     <p class="text-gray-600 text-sm">Apprenez à naviguer dans l'application</p>
                 </div>
@@ -25,7 +25,7 @@
             
             <a href="#achats" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">🛒</div>
+                    <div class="text-xl mb-3">🛒</div>
                     <h3 class="text-lg font-semibold text-gray-900">Achats</h3>
                     <p class="text-gray-600 text-sm">Comment acheter vos produits</p>
                 </div>
@@ -33,7 +33,7 @@
             
             <a href="#profil" class="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                 <div class="text-center">
-                    <div class="text-3xl mb-3">👤</div>
+                    <div class="text-xl mb-3">👤</div>
                     <h3 class="text-lg font-semibold text-gray-900">Profil</h3>
                     <p class="text-gray-600 text-sm">Gérez votre compte</p>
                 </div>
@@ -44,8 +44,8 @@
         <div class="space-y-12">
             <!-- Section Navigation -->
             <section id="navigation" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">🧭</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">🧭</span>
                     Navigation dans l'application
                 </h2>
                 
@@ -94,8 +94,8 @@
 
             <!-- Section Achats -->
             <section id="achats" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">🛒</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">🛒</span>
                     Comment acheter vos produits
                 </h2>
                 
@@ -140,8 +140,8 @@
 
             <!-- Section Profil -->
             <section id="profil" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">👤</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">👤</span>
                     Gérer votre profil
                 </h2>
                 
@@ -186,8 +186,8 @@
 
             <!-- Section FAQ -->
             <section class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                    <span class="text-3xl mr-3">❓</span>
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="text-xl mr-3">❓</span>
                     Questions fréquentes
                 </h2>
                 

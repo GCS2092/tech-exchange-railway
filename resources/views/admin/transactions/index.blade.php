@@ -152,7 +152,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 sm:px-6 py-4 text-gray-900">{{ $transaction->id }}</td>
                         <td class="px-4 sm:px-6 py-4 text-gray-900">
-                            <a href="{{ route('admin.orders.show', $transaction->order_id) }}" class="text-blue-600 hover:text-blue-900">
+                                                            <a href="{{ route('admin.orders.manage', $transaction->order_id) }}" class="text-blue-600 hover:text-blue-900">
                                 #{{ $transaction->order_id }}
                             </a>
                         </td>

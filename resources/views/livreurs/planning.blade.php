@@ -1,24 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.livreur')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 py-12">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <!-- En-tête modernisé -->
-        <div class="mb-8 flex items-center justify-between">
-            <div>
-                <h1 class="text-4xl font-extrabold text-indigo-700 flex items-center gap-2">
-                    <span class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full px-3 py-1 mr-2">📅</span> Planning des livraisons
-                </h1>
-                <p class="mt-2 text-lg text-gray-600">Gérez votre emploi du temps et vos livraisons à venir</p>
-            </div>
-            <a href="{{ route('livreurs.orders.index') }}" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2 rounded-lg shadow hover:bg-indigo-700 transition"><i class="fas fa-arrow-left"></i> Retour au dashboard</a>
+<div class="min-h-screen bg-white">
+    <div class="container-nike py-12">
+        
+        <!-- Navigation et redirections -->
+        <x-livreur-nav-buttons />
+        
+        <!-- Header - Style Nike -->
+        <div class="text-center mb-16">
+            <h1 class="nike-title mb-4">PLANNING DES LIVRAISONS</h1>
+            <p class="nike-text text-gray-600">Gérez votre emploi du temps et vos livraisons à venir</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Calendrier et livraisons -->
             <div class="lg:col-span-2 space-y-8">
                 <!-- Navigation du calendrier -->
-                <div class="bg-white rounded-2xl shadow-xl p-6">
+                <div class="card-nike">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center space-x-4">
                             <button class="btn btn-icon">
@@ -26,7 +25,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                                 </svg>
                             </button>
-                            <h2 class="text-xl font-semibold text-gray-800">Novembre 2023</h2>
+                            <h2 class="text-xl font-semibold text-black">{{ now()->format('F Y') }}</h2>
                             <button class="btn btn-icon">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -57,26 +56,41 @@
 
                         <!-- Dates -->
                         <div class="grid grid-cols-7 border-t border-gray-200">
-                            @for($i = 1; $i <= 35; $i++)
-                            <div class="min-h-[120px] p-2 border-b border-r border-gray-200 {{ $i == 15 ? 'bg-blue-50' : '' }}">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm {{ $i == 15 ? 'font-bold text-blue-600' : 'text-gray-700' }}">{{ $i }}</span>
-                                    @if($i == 15)
-                                    <span class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                            @php
+                                $startOfMonth = now()->startOfMonth();
+                                $endOfMonth = now()->endOfMonth();
+                                $startDate = $startOfMonth->copy()->startOfWeek();
+                                $endDate = $endOfMonth->copy()->endOfWeek();
+                                $currentDate = $startDate->copy();
+                            @endphp
+                            
+                            @while($currentDate <= $endDate)
+                                @php
+                                    $isToday = $currentDate->isToday();
+                                    $isCurrentMonth = $currentDate->month === now()->month;
+                                    $dayDeliveries = $todayDeliveries->where('created_at', '>=', $currentDate->startOfDay())
+                                                                     ->where('created_at', '<=', $currentDate->endOfDay());
+                                @endphp
+                                <div class="min-h-[120px] p-2 border-b border-r border-gray-200 {{ $isToday ? 'bg-blue-50' : '' }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm {{ $isToday ? 'font-bold text-blue-600' : ($isCurrentMonth ? 'text-gray-700' : 'text-gray-400') }}">{{ $currentDate->day }}</span>
+                                        @if($isToday)
+                                        <span class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                                        @endif
+                                    </div>
+                                    @if($dayDeliveries->count() > 0)
+                                    <div class="text-xs bg-blue-100 text-blue-800 rounded p-1 mb-1">{{ $dayDeliveries->count() }} livraison{{ $dayDeliveries->count() > 1 ? 's' : '' }}</div>
                                     @endif
                                 </div>
-                                @if($i == 15)
-                                <div class="text-xs bg-blue-100 text-blue-800 rounded p-1 mb-1">3 livraisons</div>
-                                @endif
-                            </div>
-                            @endfor
+                                @php $currentDate->addDay(); @endphp
+                            @endwhile
                         </div>
                     </div>
                 </div>
 
                 <!-- Liste des livraisons du jour -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Livraisons du jour</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Livraisons du jour</h2>
                     <div class="space-y-4">
                         @forelse($todayDeliveries as $order)
                         <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
@@ -90,9 +104,9 @@
                                 <p class="text-sm text-gray-600">{{ $order->products->count() }} produits • {{ $order->distance_km ?? '?' }} km</p>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <a href="{{ route('livreur.view-route', $order->id) }}" class="btn btn-secondary btn-sm">Voir détails</a>
+                                <a href="{{ route('livreur.orders.route', $order->id) }}" class="btn btn-secondary btn-sm">Voir détails</a>
                                 @if($order->status !== 'livré')
-                                    <form action="{{ route('livreur.commande.complete', $order->id) }}" method="POST">
+                                    <form action="{{ route('livreur.orders.complete', $order->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button class="btn btn-primary btn-sm">Commencer</button>
@@ -111,7 +125,7 @@
             <div class="space-y-8">
                 <!-- Disponibilité -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Disponibilité</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Disponibilité</h2>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
                             <span class="text-sm font-medium text-gray-700">Status actuel</span>
@@ -152,7 +166,7 @@
 
                 <!-- Zones de livraison -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Zones de livraison</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Zones de livraison</h2>
                     <div class="space-y-4">
                         @foreach(['Dakar Plateau', 'Médina', 'Almadies'] as $zone)
                         <label class="flex items-center space-x-3">
@@ -168,7 +182,7 @@
 
                 <!-- Statistiques rapides -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Aujourd'hui</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Aujourd'hui</h2>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-blue-50 rounded-xl p-4">
                             <p class="text-sm font-medium text-blue-600">À livrer</p>

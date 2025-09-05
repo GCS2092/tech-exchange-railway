@@ -81,6 +81,11 @@ class Order extends Model
             ->withTimestamps();
     }
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function livreur()
     {
         return $this->belongsTo(User::class, 'livreur_id');

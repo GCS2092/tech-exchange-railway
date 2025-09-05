@@ -3,9 +3,13 @@
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 py-12">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        
+        <!-- Navigation et redirections -->
+        <x-livreur-nav-buttons />
+        
         <!-- En-tête -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Statistiques et Performance</h1>
+            <h1 class="nike-title">Statistiques et Performance</h1>
             <p class="mt-2 text-sm text-gray-600">Analysez vos performances et suivez vos objectifs</p>
         </div>
 
@@ -38,9 +42,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
-                    <span class="text-sm font-medium text-green-600">+12.5%</span>
+                    <span class="text-sm font-medium {{ $totalDeliveries > 0 ? 'text-green-600' : 'text-gray-400' }}">{{ $totalDeliveries > 0 ? '+12.5%' : 'N/A' }}</span>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900">156</h3>
+                <h3 class="text-2xl font-bold text-gray-900">{{ $totalDeliveries }}</h3>
                 <p class="text-sm text-gray-600">Livraisons complétées</p>
                 <div class="mt-4">
                     <div class="w-full bg-gray-100 rounded-full h-2">
@@ -58,15 +62,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <span class="text-sm font-medium text-green-600">-5.2%</span>
+                    <span class="text-sm font-medium {{ $onTimeRate > 0 ? 'text-green-600' : 'text-gray-400' }}">{{ $onTimeRate > 0 ? '-5.2%' : 'N/A' }}</span>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900">28 min</h3>
-                <p class="text-sm text-gray-600">Temps moyen de livraison</p>
+                <h3 class="text-2xl font-bold text-gray-900">{{ $onTimeRate }}%</h3>
+                <p class="text-sm text-gray-600">Taux de ponctualité</p>
                 <div class="mt-4">
                     <div class="w-full bg-gray-100 rounded-full h-2">
-                        <div class="bg-purple-600 rounded-full h-2" style="width: 92%"></div>
+                        <div class="bg-purple-600 rounded-full h-2" style="width: {{ $onTimeRate }}%"></div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">92% dans les délais prévus</p>
+                    <p class="text-xs text-gray-500 mt-2">{{ $onTimeRate }}% dans les délais prévus</p>
                 </div>
             </div>
 
@@ -78,19 +82,19 @@
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                     </div>
-                    <span class="text-sm font-medium text-green-600">+0.3</span>
+                    <span class="text-sm font-medium {{ $totalDeliveries > 0 ? 'text-green-600' : 'text-gray-400' }}">{{ $totalDeliveries > 0 ? '+0.3' : 'N/A' }}</span>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900">4.8/5</h3>
+                <h3 class="text-2xl font-bold text-gray-900">{{ $totalDeliveries > 0 ? '4.8/5' : 'N/A' }}</h3>
                 <p class="text-sm text-gray-600">Note moyenne</p>
                 <div class="mt-4">
                     <div class="flex items-center">
                         @for($i = 0; $i < 5; $i++)
-                        <svg class="w-5 h-5 {{ $i < 4 ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 {{ $i < 4 ? 'text-black' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                         @endfor
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">Basé sur 124 avis</p>
+                    <p class="text-xs text-gray-500 mt-2">{{ $totalDeliveries > 0 ? 'Basé sur ' . $totalDeliveries . ' livraisons' : 'Aucune livraison effectuée' }}</p>
                 </div>
             </div>
 
@@ -118,7 +122,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Graphique des livraisons -->
             <div class="bg-white rounded-2xl shadow-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6">Évolution des livraisons</h2>
+                <h2 class="text-xl font-semibold text-black mb-6">Évolution des livraisons</h2>
                 <div class="h-80">
                     <canvas id="deliveriesChart"></canvas>
                 </div>
@@ -126,7 +130,7 @@
 
             <!-- Graphique des revenus -->
             <div class="bg-white rounded-2xl shadow-xl p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6">Évolution des revenus</h2>
+                <h2 class="text-xl font-semibold text-black mb-6">Évolution des revenus</h2>
                 <div class="h-80">
                     <canvas id="revenueChart"></canvas>
                 </div>
@@ -134,7 +138,7 @@
 
             <!-- Carte des livraisons -->
             <div class="bg-white rounded-2xl shadow-xl p-6 lg:col-span-2">
-                <h2 class="text-xl font-semibold text-gray-800 mb-6">Carte des livraisons</h2>
+                <h2 class="text-xl font-semibold text-black mb-6">Carte des livraisons</h2>
                 <div class="h-96 rounded-xl overflow-hidden">
                     <div id="deliveryMap" class="w-full h-full"></div>
                 </div>
@@ -152,10 +156,10 @@ const deliveriesCtx = document.getElementById('deliveriesChart').getContext('2d'
 new Chart(deliveriesCtx, {
     type: 'line',
     data: {
-        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+        labels: {!! json_encode(collect($monthlyStats)->pluck('month')) !!},
         datasets: [{
             label: 'Livraisons',
-            data: [25, 32, 28, 35, 30, 28, 22],
+            data: {!! json_encode(collect($monthlyStats)->pluck('deliveries')) !!},
             borderColor: 'rgb(99, 102, 241)',
             backgroundColor: 'rgba(99, 102, 241, 0.1)',
             tension: 0.4,
@@ -328,4 +332,8 @@ function initMap() {
 }
 </script>
 @endpush
+
+<!-- Navigation flottante pour mobile -->
+<x-livreur-floating-nav />
+
 @endsection 

@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
             <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900">Créer un mot de passe</h2>
+                <h2 class="text-xl font-extrabold text-gray-900">Créer un mot de passe</h2>
                 <p class="mt-2 text-sm text-gray-600">
                     Choisissez un mot de passe sécurisé pour votre compte.
                 </p>

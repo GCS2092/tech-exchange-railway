@@ -5,7 +5,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <!-- En-tête avec animation -->
         <div class="text-center mb-12 transform transition duration-700 hover:scale-105">
-            <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
+            <h1 class="text-2xl md:text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
                 Modifier le Code Promo
             </h1>
             <div class="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
@@ -62,7 +62,7 @@
                                 class="block w-full pr-10 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                                 <span id="value-symbol" class="text-gray-500 sm:text-sm">
-                                    {{ old('type', $promo->type) === 'percent' ? '%' : '€' }}
+                                    {{ old('type', $promo->type) === 'percent' ? '%' : 'FCFA' }}
                                 </span>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
         const typeSelect = document.getElementById('type');
         if (typeSelect) {
             const updateSymbol = () => {
-                const symbol = typeSelect.value === 'percent' ? '%' : '€';
+                const symbol = typeSelect.value === 'percent' ? '%' : 'FCFA';
                 document.getElementById('value-symbol').textContent = symbol;
             };
             

@@ -41,10 +41,42 @@ class RoleSeeder extends Seeder
 
         // Create roles if not exists
         $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $vendeur = Role::firstOrCreate(['name' => 'vendeur', 'guard_name' => 'web']);
+        $livreur = Role::firstOrCreate(['name' => 'livreur', 'guard_name' => 'web']);
+        $client = Role::firstOrCreate(['name' => 'client', 'guard_name' => 'web']);
+        
+        // Anciens rôles pour compatibilité
         $user = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
         $delivery = Role::firstOrCreate(['name' => 'delivery', 'guard_name' => 'web']);
 
-        // Assign permissions to roles
+        // Assign permissions to admin (all permissions)
+        $admin->givePermissionTo(Permission::all());
+
+        // Assign permissions to vendeur
+        $vendeur->givePermissionTo([
+            'view products',
+            'create products',
+            'edit products',
+            'delete products',
+            'manage inventory',
+            'view orders',
+        ]);
+
+        // Assign permissions to livreur
+        $livreur->givePermissionTo([
+            'view orders',
+            'manage deliveries',
+            'view delivery routes',
+            'update delivery status',
+        ]);
+
+        // Assign permissions to client
+        $client->givePermissionTo([
+            'view products',
+            'view orders',
+        ]);
+
+        // Assign permissions to legacy roles
         $user->givePermissionTo([
             'view products',
             'view orders',

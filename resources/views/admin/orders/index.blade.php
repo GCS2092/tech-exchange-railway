@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="py-8">
@@ -11,30 +11,30 @@
 
         <!-- Notifications -->
         @if (session('success'))
-            <div class="mb-6 p-4 bg-gradient-to-r from-green-50 to-green-100 border-l-4 border-green-400 rounded-r-lg shadow-sm">
+            <div class="mb-6 p-4 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg shadow-sm">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-green-800 font-medium">{{ session('success') }}</p>
+                        <p class="text-gray-800 font-medium">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="mb-6 p-4 bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-400 rounded-r-lg shadow-sm">
+            <div class="mb-6 p-4 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg shadow-sm">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-red-800 font-medium">{{ session('error') }}</p>
+                        <p class="text-gray-800 font-medium">{{ session('error') }}</p>
                     </div>
                 </div>
             </div>
@@ -204,17 +204,17 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-semibold text-gray-900">
-                                        {{ number_format($order->total, 2, ',', ' ') }}
+                                        {{ number_format($order->total_price, 0, ',', ' ') }}
                                         <span class="text-xs text-gray-500">
-                                            @if(($order->currency ?? 'XOF') === 'XOF') FCFA @else {{ $order->currency ?? '€' }} @endif
+                                            FCFA
                                         </span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                        @if($order->status === 'en attente') bg-yellow-100 text-yellow-800 ring-1 ring-yellow-600/20
-                                        @elseif($order->status === 'expédié') bg-blue-100 text-blue-800 ring-1 ring-blue-600/20
-                                        @elseif($order->status === 'livré') bg-green-100 text-green-800 ring-1 ring-green-600/20
+                                        @if($order->status === 'en attente') bg-gray-100 text-gray-800 ring-1 ring-yellow-600/20
+                                        @elseif($order->status === 'expédié') bg-gray-100 text-gray-800 ring-1 ring-blue-600/20
+                                        @elseif($order->status === 'livré') bg-gray-100 text-gray-800 ring-1 ring-green-600/20
                                         @else bg-gray-100 text-gray-800 ring-1 ring-gray-600/20
                                         @endif">
                                         <div class="w-1.5 h-1.5 mr-1.5 rounded-full
@@ -227,8 +227,8 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('admin.orders.show', $order) }}" 
-                                       class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105">
+                                                                         <a href="{{ route('admin.orders.manage', $order->id) }}" 
+                                        class="inline-flex items-center px-4 py-2 bg-black hover:bg-gray-800 text-white text-sm font-medium rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                                             <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>

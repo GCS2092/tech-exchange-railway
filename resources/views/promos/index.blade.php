@@ -5,7 +5,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <!-- En-tête avec animation -->
         <div class="text-center mb-12 transform transition duration-700 hover:scale-105">
-            <h1 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
+            <h1 class="text-2xl md:text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-4">
                 Codes Promos
             </h1>
             <div class="h-1 w-24 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
@@ -82,7 +82,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Valeur</span>
                                 <span class="font-bold text-lg {{ $promo->type === 'percent' ? 'text-blue-600' : 'text-green-600' }}">
-                                    {{ number_format($promo->value, 2, ',', ' ') }}{{ $promo->type === 'percent' ? '%' : '€' }}
+                                    {{ $promo->type === 'percent' ? number_format($promo->value, 2, ',', ' ') . '%' : \App\Helpers\CurrencyHelper::formatXOF($promo->value) }}
                                 </span>
                             </div>
 
@@ -132,7 +132,7 @@
             </div>
         @else
             <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
-                <div class="text-purple-500 text-6xl mb-4">
+                <div class="text-purple-500 text-2xl mb-4">
                     <i class="fas fa-ticket-alt"></i>
                 </div>
                 <h3 class="text-2xl font-semibold text-gray-800 mb-2">Aucun code promo disponible</h3>
@@ -160,7 +160,7 @@
         </div>
         <div class="p-6">
             <div class="loading text-center py-8">
-                <i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i>
+                <i class="fas fa-spinner fa-spin text-2xl text-purple-600"></i>
                 <p class="mt-4 text-gray-600">Chargement de l'historique...</p>
             </div>
             <div id="usageHistoryContent" class="space-y-4"></div>

@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 max-w-6xl">
         <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-extrabold text-indigo-700">Tableau de bord Vendeur</h1>
+                <h1 class="text-xl font-extrabold text-indigo-700">Tableau de bord Vendeur</h1>
                 <p class="text-gray-600 mt-1">Bienvenue, {{ auth()->user()->name }} !</p>
             </div>
             <div class="flex gap-2">
@@ -36,19 +36,19 @@
         <!-- Statistiques -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-                <div class="text-3xl font-bold text-indigo-700">{{ $stats['products_count'] ?? 0 }}</div>
+                <div class="text-xl font-bold text-indigo-700">{{ $stats['products_count'] ?? 0 }}</div>
                 <div class="text-gray-500 mt-2">Produits</div>
             </div>
             <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-                <div class="text-3xl font-bold text-indigo-700">{{ $stats['orders_count'] ?? 0 }}</div>
+                <div class="text-xl font-bold text-indigo-700">{{ $stats['orders_count'] ?? 0 }}</div>
                 <div class="text-gray-500 mt-2">Commandes</div>
             </div>
             <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-                <div class="text-3xl font-bold text-green-600">{{ number_format($stats['total_sales'] ?? 0, 0, ',', ' ') }} FCFA</div>
+                <div class="text-xl font-bold text-green-600">{{ number_format($stats['total_sales'] ?? 0, 0, ',', ' ') }} FCFA</div>
                 <div class="text-gray-500 mt-2">Ventes totales</div>
             </div>
             <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-                <div class="text-3xl font-bold text-pink-600">{{ number_format($totalProductsValue ?? 0, 0, ',', ' ') }} FCFA</div>
+                <div class="text-xl font-bold text-pink-600">{{ number_format($totalProductsValue ?? 0, 0, ',', ' ') }} FCFA</div>
                 <div class="text-gray-500 mt-2">Valeur totale stock</div>
             </div>
         </div>

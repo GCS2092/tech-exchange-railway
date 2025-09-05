@@ -12,65 +12,59 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $cacheKey = 'products.index.' . md5(json_encode($request->all()));
+        $query = Product::with(['category'])
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc');
+
+        // Filtres
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->category . '%');
+            });
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%')
+                  ->orWhere('brand', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        if ($request->filled('condition')) {
+            $query->where('condition', $request->condition);
+        }
+
+        // Tri
+        $sortBy = $request->get('sort', 'created_at');
+        $sortOrder = $request->get('order', 'desc');
         
-        $products = Cache::remember($cacheKey, 3600, function () use ($request) {
-            $query = Product::query();
+        if (in_array($sortBy, ['name', 'price', 'created_at', 'stock'])) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
-            // 🔍 Recherche par nom
-            if ($request->filled('search')) {
-                $query->where('name', 'like', '%' . $request->search . '%');
-            }
+        $products = $query->paginate(12)->withQueryString();
 
-            // 📁 Filtre par catégorie
-            if ($request->filled('category_id')) {
-                $query->where('category_id', $request->category_id);
-            }
+        // Statistiques pour les filtres
+        $categories = Category::withCount(['products' => function ($query) {
+            $query->where('is_active', true);
+        }])->get();
 
-            // ✅ Filtre par statut
-            if ($request->filled('filter')) {
-                if ($request->filter === 'active') {
-                    $query->where('is_active', true);
-                } elseif ($request->filter === 'inactive') {
-                    $query->where('is_active', false);
-                }
-            }
+        $priceRange = [
+            'min' => Product::where('is_active', true)->min('price'),
+            'max' => Product::where('is_active', true)->max('price')
+        ];
 
-            // 💶 Filtres prix minimum et maximum
-            if ($request->filled('min_price')) {
-                $query->where('price', '>=', $request->min_price);
-            }
-            if ($request->filled('max_price')) {
-                $query->where('price', '<=', $request->max_price);
-            }
-
-            // 🔃 Tri dynamique
-            switch ($request->sort) {
-                case 'price_asc':
-                    $query->orderBy('price', 'asc');
-                    break;
-                case 'price_desc':
-                    $query->orderBy('price', 'desc');
-                    break;
-                case 'name_asc':
-                    $query->orderBy('name', 'asc');
-                    break;
-                case 'name_desc':
-                    $query->orderBy('name', 'desc');
-                    break;
-                default:
-                    $query->latest();
-                    break;
-            }
-
-            return $query->with(['category'])
-                ->latest()
-                ->paginate(20);
-        });
-
-        $categories = Category::all();
-
-        return view('products.index', compact('products', 'categories'));
+        return view('products.index', compact('products', 'categories', 'priceRange'));
     }
 
     public function create()
@@ -92,9 +86,9 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'currency' => 'required|string|max:3',
-            'quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0|max:999999999.99',
+            'currency' => 'required|string|max:5',
+            'quantity' => 'required|integer|min:0|max:999999',
             'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'image_url' => 'nullable|url',
@@ -131,12 +125,12 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Produit ajouté avec succès.');
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        $cacheKey = 'product.' . $id;
+        $cacheKey = 'product.' . $product->id;
         
-        $product = Cache::remember($cacheKey, 3600, function () use ($id) {
-            return Product::findOrFail($id)->load(['category', 'brand', 'reviews.user']);
+        $product = Cache::remember($cacheKey, 3600, function () use ($product) {
+            return $product->load(['category', 'brand', 'reviews.user']);
         });
         
         // Récupérer les produits similaires de la même catégorie
@@ -171,9 +165,9 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'currency' => 'required|string|max:3',
-            'quantity' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0|max:999999999.99',
+            'currency' => 'required|string|max:5',
+            'quantity' => 'required|integer|min:0|max:999999',
             'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'image_url' => 'nullable|url',
@@ -202,7 +196,7 @@ class ProductController extends Controller
         Cache::forget('product.' . $product->id);
         Cache::forget('products.index');
     
-        if (auth()->check() && auth()->user()->isAdmin()) {
+        if (auth()->check() && auth()->user()->hasRole('admin')) {
             return redirect()->route('admin.dashboard')->with('success', 'Produit mis à jour avec succès.');
         }
         return redirect()->route('products.index')->with('success', 'Produit mis à jour avec succès.');
@@ -219,17 +213,47 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         
+        // CORRECTION: Vérifier les dépendances avant suppression
+        $cartItemsCount = $product->cartItems()->count();
+        $orderItemsCount = $product->orderItems()->count();
+        $activeOrdersCount = $product->orders()->whereIn('status', ['pending', 'processing', 'shipped'])->count();
+        
+        if ($cartItemsCount > 0 || $orderItemsCount > 0 || $activeOrdersCount > 0) {
+            return redirect()->back()->with('error', 
+                "Impossible de supprimer ce produit car il est référencé dans :\n" .
+                "- {$cartItemsCount} panier(s)\n" .
+                "- {$orderItemsCount} commande(s)\n" .
+                "- {$activeOrdersCount} commande(s) active(s)\n\n" .
+                "Désactivez le produit au lieu de le supprimer."
+            );
+        }
+        
         // Supprimer l'image associée si elle existe
         if ($product->image && file_exists(storage_path('app/public/' . $product->image))) {
             unlink(storage_path('app/public/' . $product->image));
         }
         
-        $product->delete();
+        // CORRECTION: Suppression sécurisée avec transaction
+        DB::transaction(function () use ($product) {
+            // Supprimer les relations d'abord
+            $product->favorites()->delete();
+            $product->reviews()->delete();
+            $product->tradeOffers()->delete();
+            
+            // Puis supprimer le produit
+            $product->delete();
+        });
         
         // Invalider le cache des produits
         Cache::forget('products.index');
         
-        return redirect()->route('admin.products.index')->with('success', 'Produit supprimé avec succès !');
+        \Log::info('Produit supprimé', [
+            'product_id' => $id,
+            'product_name' => $product->name,
+            'deleted_by' => auth()->id()
+        ]);
+        
+        return redirect()->route('admin.dashboard')->with('success', 'Produit supprimé avec succès !');
     }
 
     public function filterByCategory($category_id)
@@ -272,6 +296,25 @@ class ProductController extends Controller
 
         if ($request->filled('max_price')) {
             $query->where('price', '<=', $request->max_price);
+        }
+        
+        // 🔍 Filtre par plage de prix (pour les filtres prédéfinis)
+        if ($request->filled('price_range')) {
+            $priceRange = $request->price_range;
+            switch ($priceRange) {
+                case '0-20000':
+                    $query->where('price', '<=', 20000);
+                    break;
+                case '20000-50000':
+                    $query->whereBetween('price', [20000, 50000]);
+                    break;
+                case '50000-100000':
+                    $query->whereBetween('price', [50000, 100000]);
+                    break;
+                case '100000+':
+                    $query->where('price', '>=', 100000);
+                    break;
+            }
         }
 
         if ($request->filter === 'active') {
@@ -340,10 +383,17 @@ class ProductController extends Controller
             $products = Product::with('seller', 'category')
                 ->orderByDesc('created_at')
                 ->paginate(15);
+            
+            // Calculer les statistiques
+            $totalProducts = Product::count();
+            $activeProducts = Product::where('is_active', true)->count();
+            $activeVendors = Product::whereNotNull('seller_id')->distinct('seller_id')->count();
+            $lowStockProducts = Product::where('quantity', '<', 5)->count();
+            
         } else {
             abort(403, 'Accès réservé aux administrateurs.');
         }
         
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', compact('products', 'totalProducts', 'activeProducts', 'activeVendors', 'lowStockProducts'));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 class CurrencyHelper
@@ -21,13 +22,89 @@ class CurrencyHelper
         'USD' => ['locale' => 'en-US', 'decimals' => 2],
     ];
 
-    public static function format($amount, $currency = 'XOF')
+    /**
+     * Formate un montant en francs CFA avec le format français
+     */
+    public static function formatXOF($amount, $decimals = 0)
     {
-        $converted = self::convert($amount, $currency);
-        $format = self::$formats[$currency] ?? self::$formats['XOF'];
-        $symbol = self::$symbols[$currency] ?? '';
+        return number_format($amount, $decimals, ',', ' ') . ' FCFA';
+    }
 
-        return number_format($converted, $format['decimals'], ',', ' ') . ' ' . $symbol;
+    /**
+     * Formate un montant avec le symbole de la devise
+     */
+    public static function format($amount, $currency = 'XOF', $decimals = 0)
+    {
+        $symbols = [
+            'XOF' => 'FCFA',
+            'EUR' => '€',
+            'USD' => '$',
+            'GBP' => '£',
+            'JPY' => '¥'
+        ];
+
+        $symbol = $symbols[$currency] ?? $currency;
+        
+        if ($currency === 'XOF') {
+            return number_format($amount, $decimals, ',', ' ') . ' ' . $symbol;
+        }
+        
+        return $symbol . number_format($amount, $decimals, '.', ',');
+    }
+
+    /**
+     * Formate un pourcentage
+     */
+    public static function formatPercent($value, $decimals = 1)
+    {
+        return number_format($value, $decimals, ',', ' ') . '%';
+    }
+
+    /**
+     * Formate une réduction (montant économisé)
+     */
+    public static function formatDiscount($originalPrice, $discountedPrice)
+    {
+        $saved = $originalPrice - $discountedPrice;
+        return self::formatXOF($saved);
+    }
+
+    /**
+     * Formate un pourcentage de réduction
+     */
+    public static function formatDiscountPercent($originalPrice, $discountedPrice)
+    {
+        if ($originalPrice <= 0) return '0%';
+        
+        $percent = (($originalPrice - $discountedPrice) / $originalPrice) * 100;
+        return self::formatPercent($percent);
+    }
+
+    /**
+     * Formate un montant pour l'affichage dans les listes
+     */
+    public static function formatCompact($amount, $currency = 'XOF')
+    {
+        if ($amount >= 1000000) {
+            return self::format($amount / 1000000, $currency, 1) . 'M';
+        } elseif ($amount >= 1000) {
+            return self::format($amount / 1000, $currency, 1) . 'k';
+        }
+        
+        return self::format($amount, $currency);
+    }
+
+    /**
+     * Formate un montant pour les tableaux de bord
+     */
+    public static function formatDashboard($amount, $currency = 'XOF')
+    {
+        return [
+            'formatted' => self::format($amount, $currency),
+            'compact' => self::formatCompact($amount, $currency),
+            'raw' => $amount,
+            'currency' => $currency
+        ];
     }
 
     public static function convert($amount, $toCurrency)

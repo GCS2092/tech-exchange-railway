@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-white text-center mb-8">EDIT PRODUCT</h1>
+    <h1 class="text-xl font-bold text-white text-center mb-8">EDIT PRODUCT</h1>
 
     <div class="max-w-2xl mx-auto bg-gray-900 bg-opacity-80 rounded-lg p-8 shadow-lg backdrop-blur-sm">
         <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data" id="productForm">
@@ -51,7 +51,7 @@
                 <div class="relative border border-gray-700 rounded-md focus-within:border-gray-500 transition-all duration-300">
                     <select name="currency" id="currency"
                             class="w-full bg-gray-800 bg-opacity-50 text-white p-3 rounded-md focus:outline-none appearance-none">
-                        <option value="€" {{ $product->currency == '€' ? 'selected' : '' }}>€ - Euro</option>
+                        <option value="FCFA" {{ $product->currency == 'FCFA' ? 'selected' : '' }}>FCFA - Franc CFA</option>
                         <option value="$" {{ $product->currency == '$' ? 'selected' : '' }}>$ - Dollar</option>
                         <option value="CFA" {{ $product->currency == 'CFA' ? 'selected' : '' }}>CFA</option>
                     </select>

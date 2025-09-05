@@ -1,313 +1,277 @@
-<?php $__env->startSection('content'); ?>
-<!-- Hero Section avec design moderne -->
-<div class="relative min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute inset-0">
-        <div class="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-pink-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute top-1/2 right-0 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-indigo-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div class="absolute bottom-0 left-1/2 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechExchange - Appareils Électroniques</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-white text-black">
+
+<?php if(session('success')): ?>
+    <div class="fixed top-4 right-4 bg-black text-white px-6 py-3 z-50">
+        <?php echo e(session('success')); ?>
+
     </div>
+<?php endif; ?>
 
-    <!-- Hero Content -->
-    <div class="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-4xl mx-auto">
-            <!-- Badge -->
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-200/50 text-pink-700 text-sm font-medium mb-8 animate-fade-in">
-                <span class="w-2 h-2 bg-pink-500 rounded-full mr-2 animate-pulse"></span>
-                Nouveaux produits disponibles
-            </div>
-
-            <!-- Main Title -->
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                <span class="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-gradient">
-                    Découvrez
-                </span>
-                <br>
-                <span class="text-gray-800">la beauté naturelle</span>
-            </h1>
-
-            <!-- Subtitle -->
-            <p class="text-xl sm:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Une collection exclusive de produits cosmétiques naturels et bio, 
-                sélectionnés avec soin pour prendre soin de votre peau et de votre bien-être.
-            </p>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-                <a href="<?php echo e(route('products.index')); ?>" 
-                   class="group relative px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                    <span class="relative z-10 flex items-center">
-                        Explorer nos produits
-                        <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </a>
-                
-                <a href="<?php echo e(route('register')); ?>" 
-                   class="group px-8 py-4 border-2 border-purple-300 text-purple-700 font-semibold rounded-2xl hover:bg-purple-50 hover:border-purple-400 transition-all duration-300">
-                    Créer un compte
-                </a>
-            </div>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-purple-600 mb-2">500+</div>
-                    <div class="text-gray-600">Produits naturels</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-pink-600 mb-2">10k+</div>
-                    <div class="text-gray-600">Clients satisfaits</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-indigo-600 mb-2">24h</div>
-                    <div class="text-gray-600">Livraison express</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-        </svg>
-    </div>
-</div>
-
-<!-- Features Section -->
-<section class="py-20 bg-white relative">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full bg-white border-b border-gray-200 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Pourquoi nous choisir ?</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Nous nous engageons à vous offrir les meilleurs produits cosmétiques naturels 
-                avec un service client exceptionnel.
-            </p>
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">T</span>
+                </div>
+                <span class="text-xl font-bold text-black">TechExchange</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="<?php echo e(route('products.index')); ?>" class="text-black hover:text-gray-600 transition-colors">Produits</a>
+                <a href="<?php echo e(route('trades.search')); ?>" class="text-black hover:text-gray-600 transition-colors">Échanges</a>
+                <a href="<?php echo e(route('help.client')); ?>" class="text-black hover:text-gray-600 transition-colors">Support</a>
+                <?php if(auth()->guard()->check()): ?>
+                    <a href="<?php echo e(route('dashboard')); ?>" class="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-all">
+                        Dashboard
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo e(route('login')); ?>" class="bg-black text-white px-4 py-2 hover:bg-gray-800 transition-all">
+                        Se connecter
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section - Style Nike "Just Do It" -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Side - Text -->
+            <div class="text-left">
+                <h1 class="text-6xl md:text-8xl font-black mb-6 leading-tight text-black">
+                    JUST DO IT.
+        </h1>
+                <p class="text-2xl md:text-3xl text-gray-600 mb-8 font-light">
+            L'avenir de l'électronique à portée de main
+                </p>
+                <p class="text-xl text-gray-500 mb-12 max-w-2xl leading-relaxed">
+            Smartphones dernière génération, ordinateurs ultra-performants, accessoires gaming... 
+            Découvrez notre sélection d'appareils électroniques avec possibilité d'échange et garantie premium.
+        </p>
+
+                <!-- CTA Buttons - Style Nike -->
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <a href="<?php echo e(route('products.index')); ?>" class="bg-black text-white px-8 py-4 font-semibold text-center hover:bg-gray-800 transition-all duration-300">
+                        SHOP MEN
+                    </a>
+                    <a href="<?php echo e(route('products.index')); ?>" class="bg-black text-white px-8 py-4 font-semibold text-center hover:bg-gray-800 transition-all duration-300">
+                        SHOP WOMEN
+            </a>
+        </div>
+            </div>
+            
+            <!-- Right Side - Product Image -->
+            <div class="flex justify-center lg:justify-end">
+                <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-mobile-alt text-2xl text-gray-400"></i>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New Collection Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Side - Text -->
+            <div class="text-left">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-black">
+                    NEW COLLECTION
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Découvrez nos dernières nouveautés en matière de technologie
+                </p>
+                <a href="<?php echo e(route('products.index')); ?>" class="bg-black text-white px-8 py-4 font-semibold inline-block hover:bg-gray-800 transition-all duration-300">
+                    SHOP NOW
+                </a>
         </div>
 
-        <!-- Features Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
-            <div class="group relative p-8 bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-purple-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative z-10">
-                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Qualité Premium</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Tous nos produits sont rigoureusement sélectionnés et testés pour garantir 
-                        une qualité exceptionnelle et des résultats visibles.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Feature 2 -->
-            <div class="group relative p-8 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-3xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-indigo-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative z-10">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Livraison Express</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Recevez vos commandes en 24h avec notre service de livraison express. 
-                        Suivez votre colis en temps réel.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Feature 3 -->
-            <div class="group relative p-8 bg-gradient-to-br from-indigo-50 to-pink-50 rounded-3xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-pink-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="relative z-10">
-                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Paiement Sécurisé</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Vos données sont protégées par un cryptage SSL de niveau bancaire. 
-                        Paiement 100% sécurisé et confidentiel.
-                    </p>
+            <!-- Right Side - Product Image -->
+            <div class="flex justify-center lg:justify-start">
+                <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-laptop text-2xl text-gray-500"></i>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Products Section -->
-<section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100 relative">
+<!-- Featured Product Section -->
+<section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Section Header -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Side - Product Image -->
+            <div class="flex justify-center lg:justify-end">
+                <div class="w-80 h-80 lg:w-96 lg:h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-headphones text-2xl text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Right Side - Text -->
+            <div class="text-left">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-black">
+                    FEATURED PRODUCT
+                </h2>
+                <p class="text-xl text-gray-600 mb-8">
+                    Nos produits vedettes sélectionnés avec soin
+                </p>
+                <a href="<?php echo e(route('products.index')); ?>" class="bg-black text-white px-8 py-4 font-semibold inline-block hover:bg-gray-800 transition-all duration-300">
+                    SHOP NOW
+                        </a>
+                    </div>
+                </div>
+            </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl md:text-5xl font-bold text-black mb-2">1000+</div>
+                <div class="text-gray-600">Produits disponibles</div>
+                    </div>
+            <div>
+                <div class="text-4xl md:text-5xl font-bold text-black mb-2">500+</div>
+                <div class="text-gray-600">Clients satisfaits</div>
+                </div>
+                        <div>
+                <div class="text-4xl md:text-5xl font-bold text-black mb-2">24/7</div>
+                <div class="text-gray-600">Support client</div>
+            </div>
+            <div>
+                <div class="text-4xl md:text-5xl font-bold text-black mb-2">100%</div>
+                <div class="text-gray-600">Garantie qualité</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Produits en Vedette</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Découvrez nos produits les plus populaires, sélectionnés spécialement pour vous.
+            <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">
+                POURQUOI NOUS CHOISIR
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez ce qui fait de TechExchange la référence en matière d'électronique
             </p>
         </div>
 
-        <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <?php $__currentLoopData = $featuredProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
-                <!-- Product Image -->
-                <div class="relative overflow-hidden">
-                    <img src="<?php echo e($product->image_url); ?>" alt="<?php echo e($product->name); ?>" 
-                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <!-- Quick Add Button -->
-                    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <button class="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors duration-200">
-                            <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                            </svg>
-                        </button>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
                 </div>
-
-                <!-- Product Info -->
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-200">
-                        <?php echo e($product->name); ?>
-
-                    </h3>
-                    <p class="text-2xl font-bold text-purple-600 mb-4"><?php echo e($product->price); ?> €</p>
-                    
-                    <!-- Add to Cart Button -->
-                    <button class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold py-3 px-4 rounded-xl hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
-                        Ajouter au panier
-                    </button>
-                </div>
+                <h3 class="text-2xl font-bold text-black mb-4">Qualité Garantie</h3>
+                <p class="text-gray-600">Tous nos produits sont testés et garantis pour votre satisfaction</p>
             </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
 
-        <!-- View All Products Button -->
-        <div class="text-center mt-12">
-            <a href="<?php echo e(route('products.index')); ?>" 
-               class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
-                Voir tous les produits
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-exchange-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-black mb-4">Système d'Échange</h3>
+                <p class="text-gray-600">Échangez vos anciens appareils contre de nouveaux modèles</p>
+            </div>
+
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-truck text-white text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-black mb-4">Livraison Rapide</h3>
+                <p class="text-gray-600">Livraison gratuite et rapide dans toute la France</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-black text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            PRÊT À COMMENCER ?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Rejoignez des milliers de clients satisfaits et découvrez la technologie de demain
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="<?php echo e(route('products.index')); ?>" class="bg-white text-black px-8 py-4 font-semibold hover:bg-gray-100 transition-all duration-300">
+                EXPLORER LES PRODUITS
+            </a>
+            <a href="<?php echo e(route('register')); ?>" class="border-2 border-white text-white px-8 py-4 font-semibold hover:bg-white hover:text-black transition-all duration-300">
+                CRÉER UN COMPTE
             </a>
         </div>
     </div>
 </section>
 
-<!-- Newsletter Section -->
-<section class="py-20 bg-gradient-to-r from-pink-500 to-purple-600 relative overflow-hidden">
-    <div class="absolute inset-0">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-    </div>
-    
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-4xl font-bold text-white mb-4">Restez informé</h2>
-        <p class="text-xl text-pink-100 mb-8">
-            Recevez en avant-première nos nouveautés et offres exclusives.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input type="email" placeholder="Votre adresse email" 
-                   class="flex-1 px-6 py-4 rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:outline-none text-gray-900">
-            <button class="px-8 py-4 bg-white text-purple-600 font-semibold rounded-2xl hover:bg-gray-100 transition-colors duration-300">
-                S'abonner
-            </button>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center space-x-2 mb-6">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <span class="text-black font-bold text-sm">T</span>
+                    </div>
+                    <span class="text-2xl font-bold">TechExchange</span>
+                </div>
+                <p class="text-gray-400 mb-6 max-w-md">
+                    La plateforme innovante pour acheter, vendre et échanger vos appareils électroniques.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Liens rapides</h3>
+                <ul class="space-y-2">
+                    <li><a href="<?php echo e(route('products.index')); ?>" class="text-gray-400 hover:text-white transition-colors">Produits</a></li>
+                    <li><a href="<?php echo e(route('trades.search')); ?>" class="text-gray-400 hover:text-white transition-colors">Échanges</a></li>
+                    <li><a href="<?php echo e(route('help.client')); ?>" class="text-gray-400 hover:text-white transition-colors">Aide</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">À propos</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                <ul class="space-y-2">
+                    <li class="text-gray-400">contact@techexchange.com</li>
+                    <li class="text-gray-400">+33 1 23 45 67 89</li>
+                    <li class="text-gray-400">Paris, France</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+            <p class="text-gray-400">&copy; <?php echo e(date('Y')); ?> TechExchange. Tous droits réservés.</p>
         </div>
     </div>
-</section>
+</footer>
 
-<!-- Custom CSS for animations -->
-<style>
-@keyframes gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
-
-.animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-}
-
-@keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-    animation: fade-in 1s ease-out;
-}
-
-@keyframes slide-in {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-.animate-slide-in {
-    animation: slide-in 1s ease-out 0.5s both;
-}
-</style>
-
-<?php if (isset($component)) { $__componentOriginal8d5f9f712ad68735ee0009ff5065f869 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal8d5f9f712ad68735ee0009ff5065f869 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.onboarding-button','data' => ['tourId' => 'welcome','position' => 'fixed']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('onboarding-button'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['tourId' => 'welcome','position' => 'fixed']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal8d5f9f712ad68735ee0009ff5065f869)): ?>
-<?php $attributes = $__attributesOriginal8d5f9f712ad68735ee0009ff5065f869; ?>
-<?php unset($__attributesOriginal8d5f9f712ad68735ee0009ff5065f869); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal8d5f9f712ad68735ee0009ff5065f869)): ?>
-<?php $component = $__componentOriginal8d5f9f712ad68735ee0009ff5065f869; ?>
-<?php unset($__componentOriginal8d5f9f712ad68735ee0009ff5065f869); ?>
-<?php endif; ?>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('scripts'); ?>
-<script>
-window.tourSteps_ = [
-  {
-    id: 'step-1',
-    title: 'Bienvenue sur Mon Site Cosmétique',
-    text: 'Découvrez nos <b>produits de beauté premium</b> et profitez de nos offres exclusives.',
-    attachTo: { element: 'h1, .brand', on: 'bottom' },
-    buttons: [ { text: 'Suivant', action: function() { tour.next(); } } ]
-  },
-  {
-    id: 'step-2',
-    title: 'Navigation intuitive',
-    text: 'Utilisez le <b>menu principal</b> pour explorer les différentes sections du site.',
-    attachTo: { element: 'nav, .nav-link', on: 'bottom' },
-    buttons: [ { text: 'Terminer', action: function() { tour.complete(); } } ]
-  }
-];
-window.showOnboardingTour = function(tourId, steps) {
-  const tour = window.createCustomTour(steps);
-  window.tour = tour;
-  tour.start();
-};
-</script>
-<?php $__env->stopPush(); ?>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js/dist/css/shepherd.css">
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js/dist/js/shepherd.min.js"></script>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Projets\mon-site-cosmetique\mon-site-cosmetique\resources\views/welcome.blade.php ENDPATH**/ ?>
+</body>
+</html><?php /**PATH C:\Projets\mon-site-cosmetique\mon-site-cosmetique\resources\views/welcome.blade.php ENDPATH**/ ?>

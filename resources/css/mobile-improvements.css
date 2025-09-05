@@ -1,0 +1,172 @@
+/**
+ * Améliorations pour mobile
+ */
+
+/* Améliorer la navigation mobile */
+@media (max-width: 768px) {
+    /* Navigation principale */
+    .nav-mobile {
+        @apply flex-col space-y-2;
+    }
+    
+    .nav-mobile .nav-item {
+        @apply w-full text-center py-3 px-4 rounded-lg;
+    }
+    
+    /* Améliorer les cartes sur mobile */
+    .card-mobile {
+        @apply mx-2 mb-4;
+    }
+    
+    /* Améliorer les boutons sur mobile */
+    .btn-mobile {
+        @apply w-full py-3 text-base;
+    }
+    
+    /* Améliorer les formulaires sur mobile */
+    .form-mobile input,
+    .form-mobile select,
+    .form-mobile textarea {
+        @apply text-base py-3 px-4;
+    }
+    
+    /* Améliorer les tableaux sur mobile */
+    .table-mobile {
+        @apply block overflow-x-auto;
+    }
+    
+    .table-mobile thead {
+        @apply hidden;
+    }
+    
+    .table-mobile tbody {
+        @apply block;
+    }
+    
+    .table-mobile tr {
+        @apply block border border-gray-200 rounded-lg mb-4 p-4;
+    }
+    
+    .table-mobile td {
+        @apply block text-right border-0 p-1;
+    }
+    
+    .table-mobile td:before {
+        content: attr(data-label) ": ";
+        @apply float-left font-semibold text-gray-600;
+    }
+    
+    /* Améliorer les modals sur mobile */
+    .modal-mobile {
+        @apply mx-4 my-8 max-h-screen overflow-y-auto;
+    }
+    
+    /* Améliorer les badges sur mobile */
+    .badge-mobile {
+        @apply text-xs px-2 py-1;
+    }
+    
+    /* Améliorer les icônes sur mobile */
+    .icon-mobile {
+        @apply w-5 h-5;
+    }
+    
+    /* Améliorer les espacements sur mobile */
+    .spacing-mobile {
+        @apply px-4 py-2;
+    }
+    
+    /* Améliorer la lisibilité sur mobile */
+    .text-mobile {
+        @apply text-base leading-relaxed;
+    }
+    
+    /* Améliorer les images sur mobile */
+    .img-mobile {
+        @apply w-full h-auto rounded-lg;
+    }
+    
+    /* Améliorer les listes sur mobile */
+    .list-mobile {
+        @apply space-y-2;
+    }
+    
+    .list-mobile li {
+        @apply p-3 bg-white rounded-lg border border-gray-200;
+    }
+}
+
+/* Améliorer la navigation tactile */
+@media (hover: none) and (pointer: coarse) {
+    /* Augmenter la taille des éléments tactiles */
+    .touch-target {
+        @apply min-h-12 min-w-12;
+    }
+    
+    /* Améliorer les boutons tactiles */
+    .btn-touch {
+        @apply py-4 px-6 text-lg;
+    }
+    
+    /* Améliorer les liens tactiles */
+    .link-touch {
+        @apply py-3 px-4 block;
+    }
+}
+
+/* Améliorer l'affichage sur petits écrans */
+@media (max-width: 480px) {
+    /* Réduire les marges */
+    .container-mobile {
+        @apply px-2;
+    }
+    
+    /* Améliorer les titres */
+    .title-mobile {
+        @apply text-xl font-bold;
+    }
+    
+    /* Améliorer les sous-titres */
+    .subtitle-mobile {
+        @apply text-lg font-semibold;
+    }
+    
+    /* Améliorer le texte */
+    .text-mobile {
+        @apply text-sm;
+    }
+    
+    /* Améliorer les boutons */
+    .btn-mobile {
+        @apply py-2 px-4 text-sm;
+    }
+}
+
+/* Améliorer l'orientation paysage sur mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .landscape-mobile {
+        @apply flex-row space-x-4 space-y-0;
+    }
+    
+    .landscape-mobile .nav-item {
+        @apply w-auto;
+    }
+}
+
+/* Améliorer l'accessibilité mobile */
+@media (max-width: 768px) {
+    /* Améliorer le contraste */
+    .contrast-mobile {
+        @apply text-gray-900 bg-white;
+    }
+    
+    /* Améliorer la visibilité des focus */
+    .focus-mobile:focus {
+        @apply ring-2 ring-blue-500 ring-offset-2;
+    }
+    
+    /* Améliorer la visibilité des états actifs */
+    .active-mobile:active {
+        @apply bg-gray-200;
+    }
+}

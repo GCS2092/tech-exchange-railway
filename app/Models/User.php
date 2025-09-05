@@ -24,6 +24,8 @@ class User extends Authenticatable
         'profile_photo',
         'is_blocked',
         'eligible_for_reward',
+        'google_id',
+        'avatar',
     ];
 
     protected $hidden = [

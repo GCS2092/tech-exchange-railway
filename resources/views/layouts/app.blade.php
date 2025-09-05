@@ -13,7 +13,7 @@
     
     <!-- PWA -->
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#6366f1">
+    <meta name="theme-color" content="#000000">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
 
     <!-- Font Awesome -->
@@ -36,11 +36,16 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/soften-elements.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mobile-improvements.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mobile-responsive.css') }}">
     
-    <!-- Advanced Custom Styles -->
+    <!-- Nike-Inspired Minimalist Design -->
     <style>
-        /* Modern CSS Reset and Base Styles */
+        /* Modern CSS Reset */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
         
@@ -51,274 +56,344 @@
         
         body {
             font-family: 'Inter', 'Figtree', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
-        /* Advanced Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
+        /* Nike-Inspired Typography */
+        .nike-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
         }
         
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+        .nike-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #666666;
         }
         
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #6366f1, #8b5cf6, #ec4899);
-            border-radius: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+        .nike-heading {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #4f46e5, #7c3aed, #db2777);
+        .nike-text {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: #333333;
         }
         
-        /* Glass Morphism 2.0 */
-        .glass-modern {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        /* Nike-Inspired Buttons */
+        .btn-nike {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
         }
         
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        .btn-nike:hover {
+            background: #333333;
+            transform: translateY(-2px);
         }
         
-        /* Advanced Gradient Animations */
-        .gradient-animate {
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
+        .btn-nike-outline {
+            background: transparent;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 14px 30px;
         }
         
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .btn-nike-outline:hover {
+            background: #000000;
+            color: #ffffff;
         }
         
-        /* Floating Elements */
-        .float-slow {
-            animation: floatSlow 8s ease-in-out infinite;
+        /* Nike-Inspired Cards */
+        .card-nike {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            padding: 2rem;
+            transition: all 0.3s ease;
         }
         
-        .float-medium {
-            animation: floatMedium 6s ease-in-out infinite;
+        .card-nike:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         
-        .float-fast {
-            animation: floatFast 4s ease-in-out infinite;
+        /* Nike-Inspired Navigation */
+        .nav-nike {
+            background: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+            backdrop-filter: blur(20px);
         }
         
-        @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(2deg); }
+        .nav-link-nike {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 1rem;
+            transition: color 0.3s ease;
         }
         
-        @keyframes floatMedium {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(-1deg); }
+        .nav-link-nike:hover {
+            color: #666666;
         }
         
-        @keyframes floatFast {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+        /* Nike-Inspired Layout */
+        .container-nike {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
         
-        /* Advanced Hover Effects */
-        .hover-3d {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
+        .section-nike {
+            padding: 4rem 0;
         }
         
-        .hover-3d:hover {
-            transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+        .grid-nike {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .grid-nike-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-nike-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        .grid-nike-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        
+        /* Nike-Inspired Product Cards */
+        .product-card-nike {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card-nike:hover {
+            transform: translateY(-8px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
         
-        .hover-glow {
-            transition: all 0.3s ease;
+        .product-image-nike {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #f8f8f8;
         }
         
-        .hover-glow:hover {
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-            transform: scale(1.05);
+        .product-info-nike {
+            padding: 1.5rem;
         }
         
-        /* Text Animations */
-        .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .product-title-nike {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #000000;
         }
         
-        .text-shimmer {
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s ease-in-out infinite;
+        .product-price-nike {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #000000;
         }
         
-        @keyframes shimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .product-price-old-nike {
+            text-decoration: line-through;
+            color: #999999;
+            margin-right: 0.5rem;
         }
         
-        /* Loading Animations */
-        .spinner-modern {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #6366f1;
-            border-radius: 50%;
-            animation: spinModern 1s linear infinite;
+        /* Nike-Inspired Forms */
+        .form-nike {
+            background: #ffffff;
+            border: 1px solid #f0f0f0;
+            padding: 2rem;
+            border-radius: 0;
         }
         
-        @keyframes spinModern {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .input-nike {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: #ffffff;
+            color: #000000;
         }
         
-        /* Pulse Effects */
-        .pulse-modern {
-            animation: pulseModern 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        .input-nike:focus {
+            outline: none;
+            border-color: #000000;
         }
         
-        @keyframes pulseModern {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        /* Morphing Shapes */
-        .morph-shape {
-            animation: morphShape 6s ease-in-out infinite;
-        }
-        
-        @keyframes morphShape {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-        }
-        
-        /* Advanced Button Styles */
-        .btn-modern {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50px;
-            padding: 12px 30px;
-            color: white;
+        .label-nike {
+            display: block;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 0.5rem;
+            color: #000000;
         }
         
-        .btn-modern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+        /* Nike-Inspired Footer */
+        .footer-nike {
+            background: #000000;
+            color: #ffffff;
+            padding: 4rem 0 2rem;
         }
         
-        .btn-modern:hover::before {
-            left: 100%;
+        .footer-section-nike h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
         }
         
-        .btn-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        .footer-section-nike a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
         
-        /* Card Hover Effects */
-        .card-modern {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .card-modern:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Navigation Enhancements */
-        .nav-glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .nav-link-modern {
-            position: relative;
-            color: white;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link-modern::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link-modern:hover::after {
-            width: 100%;
-        }
-        
-        /* Footer Modern */
-        .footer-modern {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .footer-modern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+        .footer-section-nike a:hover {
+            color: #ffffff;
         }
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .glass-modern {
-                backdrop-filter: blur(10px);
+            .nike-title {
+                font-size: 2.5rem;
             }
             
-            .card-modern:hover {
-                transform: translateY(-5px) scale(1.01);
+            .nike-heading {
+                font-size: 2rem;
+            }
+            
+            .container-nike {
+                padding: 0 1rem;
+            }
+            
+            .section-nike {
+                padding: 2rem 0;
             }
         }
         
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        /* Nike-Inspired Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.6s ease forwards;
+        }
+        
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.6s ease forwards;
+        }
+        
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Nike-Inspired Spacing */
+        .space-y-nike > * + * {
+            margin-top: 2rem;
+        }
+        
+        .space-y-nike-sm > * + * {
+            margin-top: 1rem;
+        }
+        
+        .space-y-nike-lg > * + * {
+            margin-top: 3rem;
+        }
+        
+        /* Nike-Inspired Utilities */
+        .text-center-nike {
+            text-align: center;
+        }
+        
+        .text-left-nike {
+            text-align: left;
+        }
+        
+        .text-right-nike {
+            text-align: right;
+        }
+        
+        .flex-nike {
+            display: flex;
+        }
+        
+        .flex-col-nike {
+            flex-direction: column;
+        }
+        
+        .items-center-nike {
+            align-items: center;
+        }
+        
+        .justify-center-nike {
+            justify-content: center;
+        }
+        
+        .justify-between-nike {
+            justify-content: space-between;
+        }
+        
+        .gap-nike {
+            gap: 1rem;
+        }
+        
+        .gap-nike-lg {
+            gap: 2rem;
+        }
+        
+        .gap-nike-xl {
+            gap: 3rem;
         }
     </style>
     
@@ -333,60 +408,63 @@
     <!-- Shepherd.js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js/dist/css/shepherd.css">
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js/dist/js/shepherd.min.js"></script>
+    
     <style>
-    /* Enhanced Shepherd.js Styling */
-    .shepherd-theme-custom .shepherd-content {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
-        backdrop-filter: blur(20px);
-        border-radius: 24px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        font-size: 1.1rem;
-        color: #1e293b;
-        padding: 2.5rem 2rem 2rem 2rem;
-        max-width: 450px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Nike-Inspired Shepherd.js Styling */
+    .shepherd-theme-nike .shepherd-content {
+        background: #ffffff;
+        border: 1px solid #f0f0f0;
+        border-radius: 0;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        font-size: 1rem;
+        color: #000000;
+        padding: 2rem;
+        max-width: 400px;
     }
-    .shepherd-theme-custom .shepherd-header {
+    
+    .shepherd-theme-nike .shepherd-header {
         background: transparent;
-        border-bottom: none;
-        font-size: 1.4rem;
-        color: #6366f1;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 1.25rem;
+        color: #000000;
         font-weight: 700;
         padding-bottom: 1rem;
     }
-    .shepherd-theme-custom .shepherd-button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 0.75rem 2rem;
-        margin: 0 0.5rem;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    
+    .shepherd-theme-nike .shepherd-button {
+        background: #000000;
+        color: #ffffff;
         border: none;
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: 0.75rem 1.5rem;
+        margin: 0 0.5rem;
         transition: all 0.3s ease;
     }
-    .shepherd-theme-custom .shepherd-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    
+    .shepherd-theme-nike .shepherd-button:hover {
+        background: #333333;
     }
-    .shepherd-theme-custom .shepherd-footer {
+    
+    .shepherd-theme-nike .shepherd-footer {
         text-align: right;
-        margin-top: 2rem;
+        margin-top: 1.5rem;
     }
-    .shepherd-theme-custom .shepherd-cancel-icon {
-        color: #6366f1;
-        font-size: 1.5rem;
+    
+    .shepherd-theme-nike .shepherd-cancel-icon {
+        color: #000000;
+        font-size: 1.25rem;
         top: 1.5rem;
         right: 1.5rem;
     }
     </style>
+    
     <script>
-    // Enhanced Shepherd Tour Creation
-    window.createCustomTour = function(steps) {
+    // Nike-Inspired Shepherd Tour Creation
+    window.createNikeTour = function(steps) {
         const tour = new Shepherd.Tour({
             defaultStepOptions: {
-                classes: 'shepherd-theme-custom',
+                classes: 'shepherd-theme-nike',
                 scrollTo: true,
                 cancelIcon: { enabled: true }
             }
@@ -397,7 +475,8 @@
     </script>
 </head>
 <body class="font-sans antialiased">
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration - TEMPORAIREMENT DÉSACTIVÉ -->
+    <!--
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -411,6 +490,7 @@
             });
         }
     </script>
+    -->
       
     <!-- Auth ID for Echo -->
     <script>
@@ -452,27 +532,18 @@
     @endif
 
     <div class="min-h-screen flex flex-col relative">
-        <!-- Background Decorative Elements -->
-        <div class="fixed inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl float-slow"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-tr from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl float-medium"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-indigo-400/15 to-purple-400/15 rounded-full blur-2xl float-fast"></div>
-        </div>
-
         {{-- Navbar minimaliste pour la page d'accueil --}}
         @php $currentRoute = request()->route()->getName(); @endphp
         @if($currentRoute === 'home')
-            <nav class="nav-glass sticky top-0 z-50 w-full">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-end md:justify-end h-16 items-center w-full">
+            <nav class="nav-nike sticky top-0 z-50 w-full">
+                <div class="container-nike">
+                    <div class="flex-nike justify-between items-center h-16">
                         @if(!auth()->check())
-                            <a href="{{ route('login') }}" class="btn-modern hover-glow w-full md:w-auto text-center md:ml-auto">
-                                <i class="fas fa-sign-in-alt mr-2"></i>
+                            <a href="{{ route('login') }}" class="btn-nike">
                                 {{ __('Connexion') }}
                             </a>
                         @else
-                            <a href="{{ route('dashboard') }}" class="btn-modern hover-glow w-full md:w-auto text-center md:ml-auto">
-                                <i class="fas fa-user mr-2"></i>
+                            <a href="{{ route('dashboard') }}" class="btn-nike">
                                 {{ __('Mon espace') }}
                             </a>
                         @endif
@@ -480,15 +551,14 @@
                 </div>
             </nav>
         @else
-            @if(auth()->check() && auth()->user()->hasRole('delivery'))
+            @if(auth()->check() && auth()->user()->hasRole('livreur'))
             <!-- Navbar ultra-simplifiée pour livreur -->
-                <nav class="nav-glass sticky top-0 z-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-end h-16">
+                <nav class="nav-nike sticky top-0 z-50">
+                <div class="container-nike">
+                    <div class="flex-nike justify-end h-16">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                                <button type="submit" class="btn-modern hover-glow">
-                                <i class="fas fa-sign-out-alt mr-2"></i>
+                                <button type="submit" class="btn-nike">
                                 {{ __('Déconnexion') }}
                             </button>
                         </form>
@@ -497,11 +567,10 @@
             </nav>
         @elseif(!auth()->check())
             <!-- Si non connecté, bouton connexion -->
-                <nav class="nav-glass sticky top-0 z-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-end h-16">
-                            <a href="{{ route('login') }}" class="btn-modern hover-glow">
-                            <i class="fas fa-sign-in-alt mr-2"></i>
+                <nav class="nav-nike sticky top-0 z-50">
+                <div class="container-nike">
+                    <div class="flex-nike justify-end h-16">
+                            <a href="{{ route('login') }}" class="btn-nike">
                             {{ __('Connexion') }}
                         </a>
                     </div>
@@ -515,9 +584,9 @@
 
         <!-- Page heading -->
         @isset($header)
-            <header class="glass-modern shadow-lg">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between">
+            <header class="bg-white border-b border-gray-200">
+                <div class="container-nike py-6">
+                    <div class="flex-nike items-center justify-between">
                         {{ $header }}
                     </div>
                 </div>
@@ -526,38 +595,38 @@
 
         <!-- Content -->
         <main class="flex-grow relative z-10">
-            <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="container-nike py-8">
                 @yield('content')
                 <x-onboarding-button tourId="main" position="fixed" />
             </div>
         </main>
 
-        <!-- Enhanced Footer -->
-        <footer class="footer-modern mt-auto relative z-10">
-            <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 relative">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <!-- Nike-Inspired Footer -->
+        <footer class="footer-nike mt-auto relative z-10">
+            <div class="container-nike">
+                <div class="grid-nike grid-nike-4 gap-nike-xl">
                     <!-- Brand Section -->
                     <div class="col-span-1 md:col-span-2">
-                        <div class="flex items-center space-x-4 mb-6">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg hover-glow">
+                        <div class="flex-nike items-center space-x-4 mb-6">
+                            <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                                 </svg>
                             </div>
-                            <span class="text-3xl font-bold text-white text-shimmer">Mon Site Cosmetique</span>
+                            <span class="text-xl font-bold text-white">TechExchange</span>
                         </div>
                         <p class="text-gray-300 mb-8 max-w-lg text-lg leading-relaxed">
-                            Découvrez notre collection exclusive de produits cosmétiques naturels et bio, 
-                            sélectionnés avec soin pour prendre soin de votre peau et de votre bien-être.
+                            La plateforme innovante pour acheter, vendre et échanger vos appareils électroniques. 
+                            Smartphones, tablettes, ordinateurs et plus encore avec un système de troc unique.
                         </p>
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white hover-glow transition-all duration-300 hover:scale-110">
+                        <div class="flex-nike space-x-4">
+                            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black hover:bg-gray-200 transition-all duration-300">
                                 <i class="fab fa-facebook-f text-lg"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white hover-glow transition-all duration-300 hover:scale-110">
+                            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black hover:bg-gray-200 transition-all duration-300">
                                 <i class="fab fa-instagram text-lg"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white hover-glow transition-all duration-300 hover:scale-110">
+                            <a href="#" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black hover:bg-gray-200 transition-all duration-300">
                                 <i class="fab fa-twitter text-lg"></i>
                             </a>
                         </div>
@@ -565,46 +634,34 @@
 
                     <!-- Quick Links -->
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-6 text-gradient">Liens rapides</h3>
-                        <ul class="space-y-3">
-                            <li><a href="{{ route('products.index') }}" class="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 flex items-center group">
-                                <i class="fas fa-chevron-right mr-2 text-purple-400 group-hover:translate-x-1 transition-transform duration-300"></i>
-                                Nos produits
-                            </a></li>
-                            <li><a href="{{ route('promos.index') }}" class="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 flex items-center group">
-                                <i class="fas fa-chevron-right mr-2 text-purple-400 group-hover:translate-x-1 transition-transform duration-300"></i>
-                                Codes promo
-                            </a></li>
-                            <li><a href="{{ route('help.index') }}" class="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 flex items-center group">
-                                <i class="fas fa-chevron-right mr-2 text-purple-400 group-hover:translate-x-1 transition-transform duration-300"></i>
-                                Aide
-                            </a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-2 flex items-center group">
-                                <i class="fas fa-chevron-right mr-2 text-purple-400 group-hover:translate-x-1 transition-transform duration-300"></i>
-                                À propos
-                            </a></li>
+                        <h3 class="footer-section-nike h3">Liens rapides</h3>
+                        <ul class="space-y-nike-sm">
+                            <li><a href="{{ route('products.index') }}" class="footer-section-nike a">Nos produits</a></li>
+                            <li><a href="{{ route('promos.index') }}" class="footer-section-nike a">Codes promo</a></li>
+                            <li><a href="{{ route('help.index') }}" class="footer-section-nike a">Aide</a></li>
+                            <li><a href="#" class="footer-section-nike a">À propos</a></li>
                         </ul>
                     </div>
 
                     <!-- Contact -->
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-6 text-gradient">Contact</h3>
-                        <ul class="space-y-4">
-                            <li class="flex items-center text-gray-300 hover:text-white transition-colors duration-300 group">
-                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                                    <i class="fas fa-envelope text-white"></i>
+                        <h3 class="footer-section-nike h3">Contact</h3>
+                        <ul class="space-y-nike-sm">
+                            <li class="flex-nike items-center text-gray-300 hover:text-white transition-colors duration-300 group">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-envelope text-black"></i>
                                 </div>
                                 <span>contact@cosmetique.com</span>
                             </li>
-                            <li class="flex items-center text-gray-300 hover:text-white transition-colors duration-300 group">
-                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                                    <i class="fas fa-phone text-white"></i>
+                            <li class="flex-nike items-center text-gray-300 hover:text-white transition-colors duration-300 group">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-phone text-black"></i>
                                 </div>
                                 <span>+33 1 23 45 67 89</span>
                             </li>
-                            <li class="flex items-center text-gray-300 hover:text-white transition-colors duration-300 group">
-                                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                                    <i class="fas fa-map-marker-alt text-white"></i>
+                            <li class="flex-nike items-center text-gray-300 hover:text-white transition-colors duration-300 group">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-map-marker-alt text-black"></i>
                                 </div>
                                 <span>Paris, France</span>
                             </li>
@@ -614,12 +671,12 @@
 
                 <!-- Bottom Section -->
                 <div class="border-t border-gray-700 mt-12 pt-8">
-                    <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex-nike flex-col md:flex-row justify-between items-center">
                         <p class="text-gray-300 text-sm">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. Tous droits réservés.</p>
-                        <div class="flex space-x-8 mt-4 md:mt-0">
-                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300 hover:translate-y-[-2px]">Mentions légales</a>
-                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300 hover:translate-y-[-2px]">Politique de confidentialité</a>
-                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300 hover:translate-y-[-2px]">CGV</a>
+                        <div class="flex-nike space-x-8 mt-4 md:mt-0">
+                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300">Mentions légales</a>
+                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300">Politique de confidentialité</a>
+                            <a href="#" class="text-gray-300 hover:text-white text-sm transition-all duration-300">CGV</a>
                         </div>
                     </div>
                 </div>
@@ -708,7 +765,7 @@
             const typeSelect = document.getElementById('type');
             if (typeSelect) {
                 const updateSymbol = () => {
-                    const symbol = typeSelect.value === 'percent' ? '%' : '€';
+                    const symbol = typeSelect.value === 'percent' ? '%' : 'FCFA';
                     const symbolElement = document.getElementById('value-symbol');
                     if (symbolElement) {
                         symbolElement.textContent = symbol;

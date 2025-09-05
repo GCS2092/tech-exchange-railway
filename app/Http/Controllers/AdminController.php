@@ -76,6 +76,6 @@ class AdminController extends Controller
     public function listUsers()
     {
         $users = User::latest()->paginate(10);
-        return view('admin.users.list', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 }

@@ -10,7 +10,9 @@ use App\Models\PromoUsage;
 use App\Constants\MessageText;
 use App\Models\Order;
 use App\Notifications\OrderPlacedNotification;
+use App\Services\StockService;
 use Illuminate\Support\Facades\Cache;
+use App\Http\Controllers\NavigationController;
 
 class CartController extends Controller
 {
@@ -87,151 +89,250 @@ class CartController extends Controller
                 ->take(4)
                 ->get();
         }
+
+        // Calculer le sous-total et les frais de livraison
+        $subtotal = $total;
+        $shipping = 0;
+        
+        // Frais de livraison gratuits au-dessus de 50 000 FCFA
+        if ($subtotal < 50000) {
+            $shipping = 2000; // 2000 FCFA de frais de livraison
+        }
+        
+        // Produits recommandés (produits populaires)
+        $recommendedProducts = Product::where('is_active', true)
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
     
         return view('cart.index', [
-            'cart' => $cart,
-            'total' => $total,
+            'cartItems' => $cart,
+            'total' => $total + $shipping,
+            'subtotal' => $subtotal,
+            'shipping' => $shipping,
             'originalTotal' => $originalTotal,
             'discount' => $discount,
             'promo' => $promo,
             'isMinimumAmountReached' => $isMinimumAmountReached,
             'minimumAmount' => self::MINIMUM_AMOUNT,
             'complementaryProducts' => $complementaryProducts,
-            'popularProducts' => $popularProducts
+            'popularProducts' => $popularProducts,
+            'recommendedProducts' => $recommendedProducts
         ]);
     }
     
     // ➕ Ajouter un produit au panier
-    public function add(Request $request, Product $product)
-{
-    $cartKey = 'cart.' . auth()->id();
-
-    if (!auth()->check()) {
-        return redirect()->route('login')->with('error', 'Connectez-vous pour ajouter des produits au panier.');
-    }
-
-    if (!$product->is_active) {
-        return redirect()->route('products.index')->with('error', 'Rupture de stock ! Ce produit est actuellement indisponible.');
-    }
-
-    $quantity = $request->input('quantity', 1);
-
-    if (!is_numeric($quantity) || $quantity < 1) {
-        $quantity = 1;
-    }
-
-    if (isset($product->stock)) {
-        $currentCartItem = auth()->user()->cartItems()->where('product_id', $product->id)->first();
-        $currentQuantity = $currentCartItem ? $currentCartItem->quantity : 0;
-        $newQuantity = $currentQuantity + $quantity;
-
-        if ($product->stock <= 0 || $newQuantity > $product->stock) {
-            return redirect()->back()->with('error', 'Stock insuffisant. Il reste seulement ' . $product->stock . ' unités disponibles.');
-        }
-    }
-
-    $productPrice = $product->price ?? 0;
-    if ($productPrice <= 0) {
-        \Log::warning('Tentative d\'ajout d\'un produit avec un prix invalide', [
-            'product_id' => $product->id,
-            'product_name' => $product->name,
-            'price' => $productPrice
-        ]);
-        return redirect()->back()->with('error', 'Le prix du produit n\'est pas valide.');
-    }
-
-    // Forcer la mise à jour du prix et de la quantité
-    $cartItem = auth()->user()->cartItems()->updateOrCreate(
-        ['product_id' => $product->id],
-        ['price' => $productPrice, 'quantity' => $quantity] // Mettre à jour la quantité directement
-    );
-
-    // Invalider le cache
-    Cache::forget($cartKey);
-
-    // Recalculer les totaux si un code promo est appliqué
-    $this->recalculateCartWithPromo();
-
-    \Log::debug('Ajout d\'un produit au panier', [
-        'product_id' => $product->id,
-        'product_name' => $product->name,
-        'price' => $productPrice,
-        'quantity' => $quantity,
-        'cart_item_id' => $cartItem->id
-    ]);
-
-    return redirect()->route('cart.index')->with('success', $product->name . ' ajouté au panier !');
-}
-    
-    // 📝 Mettre à jour la quantité d'un produit
-    public function update(Request $request, $cartItemId)
+    public function add(Request $request, Product $product = null)
     {
-        if (!$cartItemId) {
-            return redirect()->route('cart.index')->with('error', 'ID de l\'élément du panier manquant.');
-        }
-    
-        $item = auth()->user()->cartItems()->where('id', $cartItemId)->first();
-        if (!$item) {
-            return redirect()->route('cart.index')->with('error', 'Élément introuvable.');
-        }
-    
-        $quantity = $item->quantity;
-        if ($request->action === 'increase') {
-            $quantity++;
-            
-            // Vérifier le stock disponible
-            if (isset($item->product->stock) && $quantity > $item->product->stock) {
-                return redirect()->route('cart.index')->with('error', 'Stock insuffisant. Il reste seulement ' . $item->product->stock . ' unités disponibles.');
+        $cartKey = 'cart.' . auth()->id();
+
+        if (!auth()->check()) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Connectez-vous pour ajouter des produits au panier.'], 401);
             }
-        } elseif ($request->action === 'decrease' && $quantity > 1) {
-            $quantity--;
+            return redirect()->route('login')->with('error', 'Connectez-vous pour ajouter des produits au panier.');
         }
-    
-        // CORRECTION: Assurez-vous que le prix est correct lors de la mise à jour
-        if (!$item->price || $item->price <= 0) {
-            // Si le prix dans le cart item est nul ou invalide, récupérer le prix du produit
-            $productPrice = $item->product->price ?? 0;
-            if ($productPrice <= 0) {
-                return redirect()->route('cart.index')->with('error', 'Le prix du produit n\'est pas valide.');
+
+        // Si le produit n'est pas passé en paramètre, le récupérer depuis la requête
+        if (!$product) {
+            $productId = $request->input('product_id');
+            if (!$productId) {
+                if ($request->expectsJson()) {
+                    return response()->json(['success' => false, 'message' => 'ID du produit manquant.'], 400);
+                }
+                return redirect()->back()->with('error', 'ID du produit manquant.');
             }
             
-            $item->update([
-                'quantity' => $quantity,
+            $product = Product::find($productId);
+            if (!$product) {
+                if ($request->expectsJson()) {
+                    return response()->json(['success' => false, 'message' => 'Produit non trouvé.'], 404);
+                }
+                return redirect()->back()->with('error', 'Produit non trouvé.');
+            }
+        }
+
+        if (!$product->is_active) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Rupture de stock ! Ce produit est actuellement indisponible.'], 400);
+            }
+            return redirect()->route('products.index')->with('error', 'Rupture de stock ! Ce produit est actuellement indisponible.');
+        }
+
+        $quantity = $request->input('quantity', 1);
+
+        if (!is_numeric($quantity) || $quantity < 1) {
+            $quantity = 1;
+        }
+
+        if (isset($product->stock)) {
+            $currentCartItem = auth()->user()->cartItems()->where('product_id', $product->id)->first();
+            $currentQuantity = $currentCartItem ? $currentCartItem->quantity : 0;
+            $newQuantity = $currentQuantity + $quantity;
+
+            if ($product->stock <= 0 || $newQuantity > $product->stock) {
+                $message = 'Stock insuffisant. Il reste seulement ' . $product->stock . ' unités disponibles.';
+                if ($request->expectsJson()) {
+                    return response()->json(['success' => false, 'message' => $message], 400);
+                }
+                return redirect()->back()->with('error', $message);
+            }
+        }
+
+        $productPrice = $product->price ?? 0;
+        if ($productPrice <= 0) {
+            \Log::warning('Tentative d\'ajout d\'un produit avec un prix invalide', [
+                'product_id' => $product->id,
+                'product_name' => $product->name,
                 'price' => $productPrice
             ]);
-        } else {
-            $item->update(['quantity' => $quantity]);
+            $message = 'Le prix du produit n\'est pas valide.';
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 400);
+            }
+            return redirect()->back()->with('error', $message);
         }
+
+        // CORRECTION: Gérer correctement l'ajout/incrémentation
+        $existingCartItem = auth()->user()->cartItems()->where('product_id', $product->id)->first();
+        
+        if ($existingCartItem) {
+            // Si l'article existe déjà, incrémenter la quantité
+            $newQuantity = $existingCartItem->quantity + $quantity;
+            $existingCartItem->update([
+                'quantity' => $newQuantity,
+                'price' => $productPrice
+            ]);
+            $cartItem = $existingCartItem;
+        } else {
+            // Si c'est un nouvel article, le créer
+            $cartItem = auth()->user()->cartItems()->create([
+                'product_id' => $product->id,
+                'price' => $productPrice,
+                'quantity' => $quantity
+            ]);
+        }
+
+        // Invalider le cache
+        Cache::forget($cartKey);
+
+        // Recalculer les totaux si un code promo est appliqué
+        $this->recalculateCartWithPromo();
+
+        \Log::debug('Ajout d\'un produit au panier', [
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'price' => $productPrice,
+            'quantity' => $quantity,
+            'cart_item_id' => $cartItem->id
+        ]);
+
+        // Retourner la réponse appropriée selon le type de requête
+        if ($request->expectsJson()) {
+            $cartCount = auth()->user()->cartItems()->sum('quantity');
+            return response()->json([
+                'success' => true, 
+                'message' => $product->name . ' ajouté au panier !',
+                'cart_count' => $cartCount
+            ]);
+        }
+
+        return redirect()->route('cart.index')->with('success', $product->name . ' ajouté au panier !');
+    }
+    
+    // 📝 Mettre à jour la quantité d'un produit
+    public function update(Request $request, $cartItem)
+    {
+        // Vérifier que l'utilisateur possède cet élément du panier
+        if ($cartItem->user_id !== auth()->id()) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Accès non autorisé.'], 403);
+            }
+            return redirect()->route('cart.index')->with('error', 'Accès non autorisé.');
+        }
+    
+        $quantity = $request->input('quantity');
+        
+        // Valider la quantité
+        if (!is_numeric($quantity) || $quantity < 1) {
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Quantité invalide.'], 400);
+            }
+            return redirect()->route('cart.index')->with('error', 'Quantité invalide.');
+        }
+        
+        // Vérifier le stock disponible
+        if (isset($cartItem->product->stock) && $quantity > $cartItem->product->stock) {
+            $message = 'Stock insuffisant. Il reste seulement ' . $cartItem->product->stock . ' unités disponibles.';
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 400);
+            }
+            return redirect()->route('cart.index')->with('error', $message);
+        }
+    
+        // CORRECTION AMÉLIORÉE: Toujours mettre à jour le prix pour s'assurer qu'il est correct
+        $productPrice = $cartItem->product->price ?? 0;
+        if ($productPrice <= 0) {
+            $message = 'Le prix du produit n\'est pas valide.';
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 400);
+            }
+            return redirect()->route('cart.index')->with('error', $message);
+        }
+        
+        // Mettre à jour à la fois la quantité ET le prix
+        $cartItem->update([
+            'quantity' => $quantity,
+            'price' => $productPrice
+        ]);
     
         Cache::forget('cart.' . auth()->id());
         
         // Recalculer les totaux avec le code promo si nécessaire
         $this->recalculateCartWithPromo();
+        
+        \Log::debug('Mise à jour du panier', [
+            'cart_item_id' => $cartItem->id,
+            'product_id' => $cartItem->product_id,
+            'new_quantity' => $quantity,
+            'new_price' => $productPrice,
+            'total_price' => $productPrice * $quantity
+        ]);
     
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true, 
+                'message' => 'Quantité mise à jour avec succès.',
+                'cart_item' => [
+                    'id' => $cartItem->id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->price,
+                    'total_price' => $cartItem->price * $cartItem->quantity
+                ]
+            ]);
+        }
+        
         return redirect()->route('cart.index')->with('success', 'Quantité mise à jour avec succès.');
     }
 
     
     // 🗑️ Supprimer un produit du panier
-    public function remove(Request $request)
+    public function remove(Request $request, $cartItem)
     {
-        $cartKey = 'cart.' . auth()->id();
-        
-        $cartItemId = $request->input('id');
-        
-        if (!$cartItemId) {
-            return redirect()->route('cart.index')->with('error', 'ID de l\'élément du panier manquant.');
+        // Vérifier que l'utilisateur possède cet élément du panier
+        if ($cartItem->user_id !== auth()->id()) {
+            return redirect()->route('cart.index')->with('error', 'Accès non autorisé.');
         }
         
         // Supprimer l'élément du panier
-        $deleted = auth()->user()->cartItems()->where('id', $cartItemId)->delete();
+        $deleted = $cartItem->delete();
         
         if (!$deleted) {
             return redirect()->route('cart.index')->with('error', 'Impossible de supprimer l\'élément du panier.');
         }
         
         // Invalider le cache du panier
-        Cache::forget($cartKey);
+        Cache::forget('cart.' . auth()->id());
         
         // Recalculer les totaux avec le code promo si nécessaire
         $this->recalculateCartWithPromo();
@@ -290,7 +391,8 @@ class CartController extends Controller
             Session::flash('promo_checkout_info', MessageText::PROMO_LABEL . ' "' . $promo['code'] . '" appliqué! Vous économisez ' . number_format($discount, 2) . '€ (' . $promo['value'] . '%)');
         }
         
-        return view('cart.checkout', compact('cart', 'total', 'promo', 'originalTotal', 'discount'));
+        $navData = NavigationController::getNavigationData();
+        return view('cart.checkout', compact('cart', 'total', 'promo', 'originalTotal', 'discount', 'navData'));
     }
 
     // 🚀 Traitement du paiement
@@ -353,7 +455,10 @@ class CartController extends Controller
             'discount_amount' => $discount
         ]);
 
-        // Ajouter les produits à la commande
+        // Utiliser le service de stock pour gérer les stocks
+        $stockService = new StockService();
+        
+        // Ajouter les produits à la commande et gérer les stocks
         foreach ($cart as $item) {
             // CORRECTION: Utiliser une méthode unifiée pour récupérer le prix
             $itemPrice = $item->price ?? ($item->product->price ?? 0);
@@ -361,6 +466,13 @@ class CartController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $itemPrice
             ]);
+            
+            // Diminuer le stock du produit
+            if (!$stockService->decreaseStock($item->product, $item->quantity)) {
+                // Si la diminution du stock échoue, annuler la commande
+                $order->delete();
+                return redirect()->route('cart.index')->with('error', 'Stock insuffisant pour le produit ' . $item->product->name);
+            }
         }
 
         // Enregistrer l'utilisation du code promo

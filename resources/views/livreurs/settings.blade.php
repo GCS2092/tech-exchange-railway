@@ -3,9 +3,13 @@
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 py-12">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        
+        <!-- Navigation et redirections -->
+        <x-livreur-nav-buttons />
+        
         <!-- En-tête -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Paramètres</h1>
+            <h1 class="nike-title">Paramètres</h1>
             <p class="mt-2 text-sm text-gray-600">Gérez vos préférences et configurations</p>
         </div>
 
@@ -35,7 +39,7 @@
             <div class="lg:col-span-2 space-y-8">
                 <!-- Section Général -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Paramètres généraux</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Paramètres généraux</h2>
                     <div class="space-y-6">
                         <!-- Langue -->
                         <div>
@@ -71,7 +75,7 @@
                             <label for="currency" class="block text-sm font-medium text-gray-700">Devise</label>
                             <select id="currency" name="currency" class="mt-1 form-select block w-full">
                                 <option value="XOF">Franc CFA (XOF)</option>
-                                <option value="EUR">Euro (EUR)</option>
+                                <option value="XOF">Franc CFA (FCFA)</option>
                                 <option value="USD">Dollar US (USD)</option>
                             </select>
                         </div>
@@ -86,7 +90,7 @@
 
                 <!-- Section Notifications -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Préférences de notification</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Préférences de notification</h2>
                     <div class="space-y-4">
                         <label class="flex items-center justify-between">
                             <span class="text-sm text-gray-700">Notifications par email</span>
@@ -141,7 +145,7 @@
             <div class="space-y-8">
                 <!-- Aide et support -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Aide et support</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">Aide et support</h2>
                     <div class="space-y-4">
                         <a href="#" class="flex items-center space-x-3 text-gray-700 hover:text-blue-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +170,7 @@
 
                 <!-- Version de l'application -->
                 <div class="bg-white rounded-2xl shadow-xl p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-6">À propos</h2>
+                    <h2 class="text-xl font-semibold text-black mb-6">À propos</h2>
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-600">Version de l'application</p>

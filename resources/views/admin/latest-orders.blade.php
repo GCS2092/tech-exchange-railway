@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center">
+        <h1 class="text-2xl sm:text-xl font-bold text-gray-900 flex items-center">
             <span class="bg-blue-100 text-blue-700 p-2 rounded-lg shadow-sm mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7m16 0l-8 4m-8-4l8 4" />
@@ -19,7 +19,7 @@
                 <div class="relative inline-flex">
                     <select id="currency-selector" class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm">
                         <option value="XOF">FCFA</option>
-                        <option value="EUR">EUR (€)</option>
+                        <option value="XOF">XOF (FCFA)</option>
                         <option value="USD">USD ($)</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -223,13 +223,13 @@
 
         const rates = {
             XOF: 1,
-            EUR: 0.0015,
+            XOF: 1,
             USD: 0.0017
         };
 
         const symbols = {
             XOF: 'FCFA',
-            EUR: '€',
+            XOF: 'FCFA',
             USD: '$'
         };
 

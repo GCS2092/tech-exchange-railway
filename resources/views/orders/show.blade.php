@@ -14,12 +14,12 @@
                 @elseif($order->status === 'livré') bg-green-100 text-green-800
                 @else bg-gray-100 text-gray-800
                 @endif">{{ ucfirst($order->status) }}</span></div>
-            <div class="mb-3"><strong>Total :</strong> {{ number_format($order->total, 2, ',', ' ') }} @if(($order->currency ?? 'XOF') === 'XOF') FCFA @else {{ $order->currency ?? '€' }} @endif</div>
+                                    <div class="mb-3"><strong>Total :</strong> {{ number_format($order->total_price, 0, ',', ' ') }} FCFA</div>
             <div class="mb-3"><strong>Adresse de livraison :</strong> {{ $order->delivery_address }}</div>
             <div class="mb-3"><strong>Produits :</strong>
                 <ul class="list-disc ml-6">
                     @foreach($order->products as $product)
-                        <li>{{ $product->name }} x {{ $product->pivot->quantity }} ({{ number_format($product->pivot->price, 2, ',', ' ') }} @if(($order->currency ?? 'XOF') === 'XOF') FCFA @else {{ $order->currency ?? '€' }} @endif)</li>
+                        <li>{{ $product->name }} x {{ $product->pivot->quantity }} ({{ number_format($product->pivot->price, 2, ',', ' ') }} FCFA)</li>
                     @endforeach
                 </ul>
             </div>

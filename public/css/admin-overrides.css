@@ -1,0 +1,228 @@
+/* ===== ADMIN OVERRIDE STYLES ===== */
+
+/* Fix pour les problèmes de mise en page */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Empêcher l'affichage en mode fenêtre */
+body {
+    -webkit-app-region: no-drag;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Empêcher l'affichage en mode fenêtre */
+    -webkit-appearance: none;
+    appearance: none;
+    /* Forcer l'affichage en plein écran */
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Correction pour la navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    width: 100%;
+}
+
+/* Correction pour le contenu principal */
+main {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Correction pour les conteneurs */
+.container, .max-w-7xl {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container, .max-w-7xl {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container, .max-w-7xl {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Admin navigation background */
+.admin-nav-bg {
+    background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.95) 0%, 
+        rgba(30, 41, 59, 0.95) 50%, 
+        rgba(30, 58, 138, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Admin button gradients */
+.btn-admin-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.btn-admin-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+.btn-admin-success {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.btn-admin-success:hover {
+    background: linear-gradient(135deg, #15803d, #166534);
+}
+
+.btn-admin-danger {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.btn-admin-danger:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+}
+
+/* Admin card gradients */
+.admin-card-header {
+    background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+}
+
+/* Admin progress bar gradient */
+.admin-progress-bar {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+/* Admin sidebar gradient */
+.admin-sidebar {
+    background: linear-gradient(180deg, #0f172a, #1e293b, #1e3a8a);
+}
+
+/* Navigation indicator gradient */
+.nav-indicator {
+    background: linear-gradient(135deg, #60a5fa, #06b6d4);
+}
+
+/* Stats card hover effects */
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Button hover effects */
+.btn-admin-primary:hover,
+.btn-admin-secondary:hover,
+.btn-admin-success:hover,
+.btn-admin-danger:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation link hover effects */
+.nav-link:hover {
+    transform: translateY(-1px);
+}
+
+.nav-icon-wrapper {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover .nav-icon-wrapper {
+    transform: scale(1.1);
+}
+
+/* Table row hover effects */
+.admin-table tbody tr:hover {
+    background-color: #f8fafc;
+    transform: scale(1.01);
+}
+
+/* Badge animations */
+.badge-admin {
+    transition: all 0.3s ease;
+}
+
+.badge-admin:hover {
+    transform: scale(1.1);
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Slide in animation */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .admin-sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .admin-main {
+        margin-left: 0;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 1rem;
+    }
+    
+    .nav-icon-wrapper {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}

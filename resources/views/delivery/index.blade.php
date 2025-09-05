@@ -33,7 +33,7 @@
                             </div>
                             
                             <div class="mb-3">
-                                <h5>Coût de livraison : <span id="deliveryCost">0.00</span> €</h5>
+                                <h5>Coût de livraison : <span id="deliveryCost">0</span> FCFA</h5>
                             </div>
                         </form>
                     </div>

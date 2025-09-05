@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto px-4">
 
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-serif text-gray-800 mb-4 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 class="text-xl font-serif text-gray-800 mb-4 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
                 PRODUITS DE BEAUTÉ
             </h1>
             <p class="text-gray-600 text-lg">Découvrez nos collections exclusives</p>
@@ -69,7 +69,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                 </div>
-                <h2 class="text-3xl font-serif text-gray-800">Ajouter une nouvelle catégorie</h2>
+                <h2 class="text-xl font-serif text-gray-800">Ajouter une nouvelle catégorie</h2>
             </div>
             
             <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
@@ -220,7 +220,7 @@
                                     </div>
                                     <div>
                                         <select name="currency" class="w-full px-3 py-2 rounded border border-gray-300" required>
-                                            <option value="EUR">Euro (€)</option>
+                                            <option value="XOF">Franc CFA (FCFA)</option>
                                             <option value="USD">Dollar ($)</option>
                                             <option value="XOF">Franc CFA (XOF)</option>
                                             <option value="GBP">Livre (£)</option>
