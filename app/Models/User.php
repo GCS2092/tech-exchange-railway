@@ -26,6 +26,7 @@ class User extends Authenticatable
         'eligible_for_reward',
         'google_id',
         'avatar',
+        'vehicle_type',
     ];
 
     protected $hidden = [

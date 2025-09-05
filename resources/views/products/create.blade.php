@@ -36,7 +36,7 @@
 <!-- Quantité -->
 <div class="mb-6">
     <label for="quantity" class="block text-gray-300 text-sm font-semibold mb-2">QUANTITÉ EN STOCK</label>
-    <input type="number" name="quantity" id="quantity" value="{{ old('quantity', $product->quantity ?? 0) }}" min="0"
+    <input type="number" name="quantity" id="quantity" value="{{ old('quantity', 0) }}" min="0"
            class="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
 </div>
 

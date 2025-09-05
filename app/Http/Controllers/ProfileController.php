@@ -55,9 +55,9 @@ class ProfileController extends Controller
 
             // Gestion du téléphone (support des deux noms de champs)
             if (isset($validated['phone'])) {
-                $user->phone = $validated['phone'];
+                $user->phone_number = $validated['phone'];
             } elseif (isset($validated['phone_number'])) {
-                $user->phone = $validated['phone_number'];
+                $user->phone_number = $validated['phone_number'];
             }
 
             // Gestion des champs spécifiques aux livreurs

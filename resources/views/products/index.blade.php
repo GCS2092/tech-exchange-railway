@@ -131,15 +131,27 @@
                     <div class="product-card-nike group">
                         <!-- Image du produit -->
                         <div class="relative overflow-hidden">
-                            @if($product->images && count($product->images) > 0)
-                                <img src="{{ asset('storage/' . $product->images->first()->path) }}" 
-                                     alt="{{ $product->name }}" 
-                                     class="product-image-nike group-hover:scale-105 transition-transform duration-300">
+                            @if($product->image)
+                                @if(filter_var($product->image, FILTER_VALIDATE_URL))
+                                    <!-- Image externe (URL) -->
+                                    <img src="{{ $product->image }}" 
+                                         alt="{{ $product->name }}" 
+                                         class="product-image-nike group-hover:scale-105 transition-transform duration-300"
+                                         onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                                @else
+                                    <!-- Image locale -->
+                                    <img src="{{ asset('storage/' . $product->image) }}" 
+                                         alt="{{ $product->name }}" 
+                                         class="product-image-nike group-hover:scale-105 transition-transform duration-300"
+                                         onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                                @endif
                             @else
                                 <div class="product-image-nike bg-gray-100 flex items-center justify-center">
-                                    <i class="fas fa-image text-lg text-gray-400"></i>
-                            </div>
-                        @endif
+                                    <img src="{{ asset('images/default-device.svg') }}" 
+                                         alt="{{ $product->name }}" 
+                                         class="w-full h-full object-cover">
+                                </div>
+                            @endif
 
                             <!-- Badge de promotion -->
                             @if($product->promo_price)

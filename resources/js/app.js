@@ -22,9 +22,6 @@ if (typeof window !== 'undefined') {
     }
 }
 
-// Notification native autorisation
-askNotificationPermission();
-
 // 🔔 Notification son
 function playNotificationSound() {
     const audio = new Audio('/sounds/notification.mp3');
@@ -52,34 +49,38 @@ function askNotificationPermission() {
     }
 }
 
+// Appeler la fonction après sa définition
+askNotificationPermission();
+
 // ✅ Canal commandes (seulement si Echo est configuré)
 if (window.Echo && typeof window.Echo.private === 'function') {
-window.Echo.private('orders')
-    .listen('.OrderPlaced', (event) => {
-        console.log('📦 Nouvelle commande placée:', event.order);
-        playNotificationSound();
-        showSystemNotification("Nouvelle commande", `Commande #${event.order.id}`);
-    })
-    .listen('.OrderStatusUpdated', (event) => {
-        console.log('🔄 Statut modifié:', event.order);
-        playNotificationSound();
-        showSystemNotification("Statut mis à jour", `Commande #${event.order.id} → ${event.order.status}`);
-    });
-
-// ✅ Canal utilisateur
-if (window.userId) {
-    window.Echo.private(`App.Models.User.${window.userId}`)
-        .notification((notif) => {
-            console.log("🔔 Notification utilisateur :", notif);
+    window.Echo.private('orders')
+        .listen('.OrderPlaced', (event) => {
+            console.log('📦 Nouvelle commande placée:', event.order);
             playNotificationSound();
-            showSystemNotification("Notification", notif.message);
+            showSystemNotification("Nouvelle commande", `Commande #${event.order.id}`);
+        })
+        .listen('.OrderStatusUpdated', (event) => {
+            console.log('🔄 Statut modifié:', event.order);
+            playNotificationSound();
+            showSystemNotification("Statut mis à jour", `Commande #${event.order.id} → ${event.order.status}`);
         });
-}
 
-window.Echo.channel('products')
-    .listen('.ProductUpdated', (e) => {
-        console.log('🛠 Produit mis à jour :', e.product);
-        // tu peux ici actualiser la liste de produits sans recharger toute la page
-        showSystemNotification("Produit mis à jour", e.product.name + " a été modifié.");
-    });
+    // ✅ Canal utilisateur
+    if (window.userId) {
+        window.Echo.private(`App.Models.User.${window.userId}`)
+            .listen('.notification', (notif) => {
+                console.log("🔔 Notification utilisateur :", notif);
+                playNotificationSound();
+                showSystemNotification("Notification", notif.message);
+            });
+    }
+
+    // ✅ Canal produits
+    window.Echo.channel('products')
+        .listen('.ProductUpdated', (e) => {
+            console.log('🛠 Produit mis à jour :', e.product);
+            // tu peux ici actualiser la liste de produits sans recharger toute la page
+            showSystemNotification("Produit mis à jour", e.product.name + " a été modifié.");
+        });
 }

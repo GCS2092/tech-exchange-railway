@@ -20,31 +20,30 @@
             
             <!-- Images du produit -->
             <div class="space-y-4">
-                @if($product->images && count($product->images) > 0)
+                @if($product->image)
                     <!-- Image principale -->
                     <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                        <img src="{{ asset('storage/' . $product->images->first()->path) }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-full object-cover">
-        </div>
-
-                    <!-- Galerie d'images -->
-                    @if(count($product->images) > 1)
-                        <div class="grid grid-cols-4 gap-4">
-                            @foreach($product->images->take(4) as $image)
-                                <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
-                                    <img src="{{ asset('storage/' . $image->path) }}" 
-                                         alt="{{ $product->name }}" 
-                                         class="w-full h-full object-cover">
-            </div>
-                            @endforeach
-                </div>
-                    @endif
+                        @if(filter_var($product->image, FILTER_VALIDATE_URL))
+                            <!-- Image externe (URL) -->
+                            <img src="{{ $product->image }}" 
+                                 alt="{{ $product->name }}" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                        @else
+                            <!-- Image locale -->
+                            <img src="{{ asset('storage/' . $product->image) }}" 
+                                 alt="{{ $product->name }}" 
+                                 class="w-full h-full object-cover"
+                                 onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                        @endif
+                    </div>
                 @else
                     <!-- Placeholder si pas d'image -->
                     <div class="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-image text-lg text-gray-400"></i>
-            </div>
+                        <img src="{{ asset('images/default-device.svg') }}" 
+                             alt="{{ $product->name }}" 
+                             class="w-full h-full object-cover">
+                    </div>
                 @endif
             </div>
 
@@ -60,16 +59,22 @@
                 <div class="space-y-2">
                     @if($product->promo_price)
                         <div class="flex items-center space-x-4">
-                            <span class="text-xl font-bold text-black">{{ number_format($product->promo_price) }} FCFA</span>
+                            <span class="text-xl font-bold text-black" id="unit-price" data-price="{{ $product->promo_price }}">{{ number_format($product->promo_price) }} FCFA</span>
                             <span class="text-xl text-gray-500 line-through">{{ number_format($product->price) }} FCFA</span>
                             <span class="bg-black text-white px-3 py-1 text-sm font-semibold">
                                 PROMO
-                    </span>
+                            </span>
                         </div>
-                @else
-                        <span class="text-xl font-bold text-black">{{ number_format($product->price) }} FCFA</span>
-                @endif
-            </div>
+                        <div class="text-2xl font-bold text-black" id="total-price">
+                            Total : {{ number_format($product->promo_price) }} FCFA
+                        </div>
+                    @else
+                        <span class="text-xl font-bold text-black" id="unit-price" data-price="{{ $product->price }}">{{ number_format($product->price) }} FCFA</span>
+                        <div class="text-2xl font-bold text-black" id="total-price">
+                            Total : {{ number_format($product->price) }} FCFA
+                        </div>
+                    @endif
+                </div>
 
                 <!-- Description -->
                 <div>
@@ -94,45 +99,72 @@
 
                 <!-- Actions -->
                 <div class="space-y-4">
-                    <!-- Quantité -->
-                    <div>
-                        <label class="label-nike mb-2">Quantité</label>
-                        <div class="flex items-center space-x-4">
-                            <button type="button" class="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="decreaseQuantity()">
-                                <i class="fas fa-minus text-gray-600"></i>
-                            </button>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $product->stock ?? 99 }}" class="w-20 text-center border border-gray-300 rounded-lg py-2">
-                            <button type="button" class="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="increaseQuantity()">
-                                <i class="fas fa-plus text-gray-600"></i>
-                            </button>
+                    @if($product->isInStock())
+                        <!-- Quantité -->
+                        <div>
+                            <label class="label-nike mb-2">Quantité</label>
+                            <div class="flex items-center space-x-4">
+                                <button type="button" class="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="decreaseQuantity()">
+                                    <i class="fas fa-minus text-gray-600"></i>
+                                </button>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ $product->quantity }}" class="w-20 text-center border border-gray-300 rounded-lg py-2">
+                                <button type="button" class="w-10 h-10 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="increaseQuantity()">
+                                    <i class="fas fa-plus text-gray-600"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Boutons d'action -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <form action="{{ route('cart.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" id="quantity-input" value="1">
-                            <button type="submit" class="btn-nike w-full">
-                                <i class="fas fa-shopping-cart mr-2"></i>
-                                AJOUTER AU PANIER
-                            </button>
-                        </form>
                         
-                        <a href="{{ route('favorites.toggle', $product->id) }}" 
-                           class="btn-nike-outline w-full text-center">
-                            <i class="fas fa-heart mr-2 {{ $product->isFavoritedBy(auth()->id()) ? 'text-red-500' : '' }}"></i>
-                            {{ $product->isFavoritedBy(auth()->id()) ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
-                        </a>
-                    </div>
-                    
-                    <!-- Stock -->
-                    @if(isset($product->stock))
+                        <!-- Boutons d'action -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="quantity" id="quantity-input" value="1">
+                                <button type="submit" class="btn-nike w-full">
+                                    <i class="fas fa-shopping-cart mr-2"></i>
+                                    AJOUTER AU PANIER
+                                </button>
+                            </form>
+                            
+                            <a href="{{ route('favorites.toggle', $product->id) }}" 
+                               class="btn-nike-outline w-full text-center">
+                                <i class="fas fa-heart mr-2 {{ $product->isFavoritedBy(auth()->id()) ? 'text-red-500' : '' }}"></i>
+                                {{ $product->isFavoritedBy(auth()->id()) ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
+                            </a>
+                        </div>
+                        
+                        <!-- Stock disponible -->
                         <div class="text-center">
                             <p class="text-sm text-gray-600">
-                                Stock disponible : <span class="font-semibold text-black">{{ $product->stock }}</span> unité(s)
+                                Stock disponible : <span class="font-semibold text-black">{{ $product->quantity }}</span> unité(s)
                             </p>
+                        </div>
+                    @else
+                        <!-- Produit en rupture de stock -->
+                        <div class="text-center space-y-4">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <div class="flex items-center justify-center mb-2">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-2"></i>
+                                    <span class="text-red-700 font-semibold">Rupture de stock</span>
+                                </div>
+                                <p class="text-red-600 text-sm">
+                                    Ce produit n'est temporairement plus disponible. 
+                                    Contactez-nous pour être informé de sa disponibilité.
+                                </p>
+                            </div>
+                            
+                            <!-- Bouton de contact -->
+                            <a href="tel:+221776543210" class="btn-nike-outline w-full text-center">
+                                <i class="fas fa-phone mr-2"></i>
+                                NOUS CONTACTER
+                            </a>
+                            
+                            <!-- Bouton favoris toujours disponible -->
+                            <a href="{{ route('favorites.toggle', $product->id) }}" 
+                               class="btn-nike-outline w-full text-center">
+                                <i class="fas fa-heart mr-2 {{ $product->isFavoritedBy(auth()->id()) ? 'text-red-500' : '' }}"></i>
+                                {{ $product->isFavoritedBy(auth()->id()) ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
+                            </a>
                         </div>
                     @endif
             </div>
@@ -148,13 +180,25 @@
                         <div class="product-card-nike group">
                             <!-- Image du produit -->
                             <div class="relative overflow-hidden">
-                                @if($relatedProduct->images && count($relatedProduct->images) > 0)
-                                    <img src="{{ asset('storage/' . $relatedProduct->images->first()->path) }}" 
-                                         alt="{{ $relatedProduct->name }}" 
-                                         class="product-image-nike group-hover:scale-105 transition-transform duration-300">
+                                @if($relatedProduct->image)
+                                    @if(filter_var($relatedProduct->image, FILTER_VALIDATE_URL))
+                                        <!-- Image externe (URL) -->
+                                        <img src="{{ $relatedProduct->image }}" 
+                                             alt="{{ $relatedProduct->name }}" 
+                                             class="product-image-nike group-hover:scale-105 transition-transform duration-300"
+                                             onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                                    @else
+                                        <!-- Image locale -->
+                                        <img src="{{ asset('storage/' . $relatedProduct->image) }}" 
+                                             alt="{{ $relatedProduct->name }}" 
+                                             class="product-image-nike group-hover:scale-105 transition-transform duration-300"
+                                             onerror="this.src='{{ asset('images/default-device.svg') }}'">
+                                    @endif
                                 @else
                                     <div class="product-image-nike bg-gray-100 flex items-center justify-center">
-                                        <i class="fas fa-image text-2xl text-gray-400"></i>
+                                        <img src="{{ asset('images/default-device.svg') }}" 
+                                             alt="{{ $relatedProduct->name }}" 
+                                             class="w-full h-full object-cover">
                                     </div>
                                 @endif
                                 
@@ -198,12 +242,21 @@
 </div>
 
 <script>
+function updateTotalPrice() {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const unitPrice = parseFloat(document.getElementById('unit-price').getAttribute('data-price'));
+    const totalPrice = quantity * unitPrice;
+    
+    document.getElementById('total-price').textContent = 'Total : ' + new Intl.NumberFormat('fr-FR').format(totalPrice) + ' FCFA';
+}
+
 function decreaseQuantity() {
     const input = document.getElementById('quantity');
     const quantityInput = document.getElementById('quantity-input');
     if (input.value > 1) {
         input.value = parseInt(input.value) - 1;
         quantityInput.value = input.value;
+        updateTotalPrice();
     }
 }
 
@@ -214,12 +267,19 @@ function increaseQuantity() {
     if (input.value < max) {
         input.value = parseInt(input.value) + 1;
         quantityInput.value = input.value;
+        updateTotalPrice();
     }
 }
 
-// Synchroniser les inputs de quantité
+// Synchroniser les inputs de quantité et mettre à jour le prix
 document.getElementById('quantity').addEventListener('change', function() {
     document.getElementById('quantity-input').value = this.value;
+    updateTotalPrice();
+});
+
+// Initialiser le prix total au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    updateTotalPrice();
 });
 </script>
 @endsection

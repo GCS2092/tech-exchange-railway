@@ -56,6 +56,16 @@ Route::middleware(['web', 'track.pageviews'])->group(function () {
 
     // Routes des produits
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', function () {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('message', 'Veuillez vous connecter pour créer un produit.');
+        }
+        if (!auth()->user()->hasRole('admin')) {
+            abort(403, 'Accès réservé aux administrateurs.');
+        }
+        $controller = new ProductController();
+        return $controller->create();
+    })->name('products.create');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
     
@@ -71,8 +81,8 @@ Route::get('/welcome', function () {
 
 // Produits publics
 Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::get('/products/featured', [ProductController::class, 'featured'])->name('products.featured');
+
 Route::get('/products/filter/ajax', [ProductController::class, 'ajaxFilter'])->name('products.ajax.filter');
 Route::get('/products/category/{category}', [ProductController::class, 'filterByCategory'])->name('products.filter');
 Route::post('/products/{product}/favorite', [ProductController::class, 'addToFavorites'])->name('products.favorite');
@@ -213,8 +223,6 @@ Route::get('/promos/search', [PromoController::class, 'search'])->name('promos.s
     Route::get('/help/livreur', [HelpController::class, 'livreur'])->name('help.livreur');
 
     // Gestion des produits (pour utilisateurs authentifiés)
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::put('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggleActive');
 
     // Routes pour le système de troc (accessibles sans connexion)
@@ -255,6 +263,7 @@ Route::middleware(['auth', 'role:livreur'])->prefix('livreur')->name('livreur.')
     Route::put('/profile/update', [LivreurController::class, 'updateProfile'])->name('profile.update');
     Route::get('/settings', [LivreurController::class, 'settings'])->name('settings');
     Route::get('/statistics', [LivreurController::class, 'statistics'])->name('statistics');
+    Route::get('/profile', [LivreurController::class, 'profile'])->name('profile');
     Route::post('/update-location', [LivreurController::class, 'updateLocation'])->name('update-location');
 });
 
@@ -326,6 +335,7 @@ Route::get('/test-admin', function () {
     return 'Admin reconnu !';
 })->middleware('admin');
 
+
 // Routes admin principales
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
@@ -391,6 +401,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Analytics et statistiques de visites
     Route::get('/analytics', [\App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
+    
+    // Gestion des notifications
+    Route::get('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/mark-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+    Route::get('/notifications/count', [\App\Http\Controllers\Admin\NotificationController::class, 'count'])->name('notifications.count');
+    Route::delete('/notifications/{id}', [\App\Http\Controllers\Admin\NotificationController::class, 'destroy'])->name('notifications.destroy');
     Route::get('/analytics/top-pages', [\App\Http\Controllers\Admin\AnalyticsController::class, 'topPages'])->name('analytics.top-pages');
     Route::get('/analytics/period-stats', [\App\Http\Controllers\Admin\AnalyticsController::class, 'periodStats'])->name('analytics.period-stats');
     Route::get('/analytics/real-time', [\App\Http\Controllers\Admin\AnalyticsController::class, 'realTime'])->name('analytics.real-time');
@@ -475,7 +492,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 // CRUD Produits
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');

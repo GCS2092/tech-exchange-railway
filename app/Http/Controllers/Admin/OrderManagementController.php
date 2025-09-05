@@ -66,8 +66,13 @@ class OrderManagementController extends Controller
             'notes' => $request->notes,
         ]);
 
-        // Envoyer des notifications selon le nouveau statut
-        $this->sendStatusNotification($order, $oldStatus, $newStatus);
+        // Envoyer des notifications selon le nouveau statut (avec gestion d'erreur)
+        try {
+            $this->sendStatusNotification($order, $oldStatus, $newStatus);
+        } catch (\Exception $e) {
+            \Log::warning("Erreur lors de l'envoi de notification email: " . $e->getMessage());
+            // Continuer sans faire échouer la mise à jour du statut
+        }
 
         return redirect()->back()->with('success', 'Statut de la commande mis à jour avec succès !');
     }
@@ -98,9 +103,13 @@ class OrderManagementController extends Controller
             'assigned_by' => auth()->id(),
         ]);
 
-        // Notifier le livreur
+        // Notifier le livreur (avec gestion d'erreur)
         try {
-            Mail::to($livreur->email)->send(new \App\Mail\CommandAssignedToLivreur($order, $livreur));
+            if (config('mail.default') === 'log') {
+                \Log::info("Notification d'assignation (mode log): Commande #{$order->id} assignée à {$livreur->name}");
+            } else {
+                Mail::to($livreur->email)->send(new \App\Mail\CommandAssignedToLivreur($order, $livreur));
+            }
         } catch (\Exception $e) {
             \Log::error("Erreur lors de l'envoi de la notification au livreur: " . $e->getMessage());
         }
@@ -144,48 +153,55 @@ class OrderManagementController extends Controller
      */
     private function sendStatusNotification(Order $order, $oldStatus, $newStatus)
     {
+        // Vérifier si l'envoi d'emails est configuré
+        if (config('mail.default') === 'log') {
+            \Log::info("Notification de statut (mode log): Commande #{$order->id} - {$oldStatus} → {$newStatus}");
+            return;
+        }
+
         try {
             switch ($newStatus) {
                 case 'payé':
                     // Notifier le vendeur
-                    if ($order->user) {
+                    if ($order->user && $order->user->email) {
                         Mail::to($order->user->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
                     break;
                     
                 case 'en préparation':
                     // Notifier le client
-                    if ($order->user) {
+                    if ($order->user && $order->user->email) {
                         Mail::to($order->user->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
                     break;
                     
                 case 'expédié':
                     // Notifier le client et le livreur
-                    if ($order->user) {
+                    if ($order->user && $order->user->email) {
                         Mail::to($order->user->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
-                    if ($order->livreur) {
+                    if ($order->livreur && $order->livreur->email) {
                         Mail::to($order->livreur->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
                     break;
                     
                 case 'livré':
                     // Notifier le client et l'admin
-                    if ($order->user) {
+                    if ($order->user && $order->user->email) {
                         Mail::to($order->user->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
                     break;
                     
                 case 'annulé':
                     // Notifier le client et rembourser si nécessaire
-                    if ($order->user) {
+                    if ($order->user && $order->user->email) {
                         Mail::to($order->user->email)->send(new \App\Mail\OrderStatusUpdateMail($order, $newStatus));
                     }
                     break;
             }
         } catch (\Exception $e) {
             \Log::error("Erreur lors de l'envoi de la notification de statut: " . $e->getMessage());
+            throw $e; // Re-lancer l'exception pour qu'elle soit gérée par l'appelant
         }
     }
 }

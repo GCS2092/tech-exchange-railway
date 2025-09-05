@@ -54,20 +54,22 @@
                                         <!-- Quantité et actions -->
                                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
-                                                <form action="{{ route('cart.update', $item->id) }}" method="POST" class="flex items-center space-x-2">
-                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="decreaseQuantity({{ $item->id }})">
+                                                <div class="flex items-center space-x-2">
+                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="updateQuantity({{ $item->id }}, -1)">
                                                         <i class="fas fa-minus text-gray-600 text-sm"></i>
                                                     </button>
-                                                    <input type="number" name="quantity" id="quantity-{{ $item->id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock ?? 99 }}" class="w-16 text-center border border-gray-300 rounded-lg py-1 text-sm">
-                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="increaseQuantity({{ $item->id }})">
+                                                    <input type="number" id="quantity-{{ $item->id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->quantity }}" class="w-16 text-center border border-gray-300 rounded-lg py-1 text-sm" onchange="updateQuantity({{ $item->id }}, 0)">
+                                                    <button type="button" class="w-8 h-8 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors" onclick="updateQuantity({{ $item->id }}, 1)">
                                                         <i class="fas fa-plus text-gray-600 text-sm"></i>
-                                    </button>
-                                                    <button type="submit" class="ml-2 text-sm text-gray-600 hover:text-black transition-colors">
-                                                        <i class="fas fa-save"></i>
-                                    </button>
-                                </form>
+                                                    </button>
+                                                </div>
+                            </div>
+                            
+                            <!-- Total de l'article -->
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-black" id="item-total-{{ $item->id }}">
+                                    {{ number_format(($item->price ?? $item->product->price) * $item->quantity, 0, ',', ' ') }} FCFA
+                                </div>
                             </div>
                             
                             <!-- Supprimer -->
@@ -240,19 +242,104 @@
 </div>
 
 <script>
-function decreaseQuantity(itemId) {
+function updateQuantity(itemId, change) {
     const input = document.getElementById('quantity-' + itemId);
-    if (input.value > 1) {
-        input.value = parseInt(input.value) - 1;
+    let newQuantity;
+    
+    if (change === 0) {
+        // Changement direct dans l'input
+        newQuantity = parseInt(input.value);
+    } else {
+        // Incrément/décrément
+        newQuantity = parseInt(input.value) + change;
     }
+    
+    // Validation
+    const min = parseInt(input.getAttribute('min'));
+    const max = parseInt(input.getAttribute('max'));
+    
+    if (newQuantity < min) newQuantity = min;
+    if (newQuantity > max) newQuantity = max;
+    
+    // Mettre à jour l'input
+    input.value = newQuantity;
+    
+    // Envoyer la requête AJAX
+    updateCartItem(itemId, newQuantity);
 }
 
-function increaseQuantity(itemId) {
+function updateCartItem(itemId, quantity) {
+    // Afficher un indicateur de chargement
     const input = document.getElementById('quantity-' + itemId);
-    const max = parseInt(input.getAttribute('max'));
-    if (input.value < max) {
-        input.value = parseInt(input.value) + 1;
-    }
+    const originalValue = input.value;
+    input.disabled = true;
+    input.style.opacity = '0.5';
+    
+    // Envoyer la requête
+    fetch(`/cart/update/${itemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+        },
+        body: `quantity=${quantity}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Mettre à jour le total de l'article
+            const itemTotalElement = document.getElementById('item-total-' + itemId);
+            if (itemTotalElement) {
+                itemTotalElement.textContent = data.formatted_item_total;
+            }
+            
+            // Mettre à jour le total du panier
+            const cartTotalElement = document.querySelector('.text-2xl.font-bold.text-black');
+            if (cartTotalElement) {
+                cartTotalElement.textContent = data.formatted_cart_total;
+            }
+            
+            // Mettre à jour le sous-total
+            const subtotalElement = document.querySelector('.font-semibold');
+            if (subtotalElement && !subtotalElement.textContent.includes('Total')) {
+                subtotalElement.textContent = data.formatted_cart_total;
+            }
+            
+            // Afficher un message de succès temporaire
+            showMessage('Quantité mise à jour', 'success');
+        } else {
+            // Restaurer la valeur précédente en cas d'erreur
+            input.value = originalValue;
+            showMessage(data.message || 'Erreur lors de la mise à jour', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        input.value = originalValue;
+        showMessage('Erreur de connexion', 'error');
+    })
+    .finally(() => {
+        // Réactiver l'input
+        input.disabled = false;
+        input.style.opacity = '1';
+    });
+}
+
+function showMessage(message, type) {
+    // Créer un élément de message temporaire
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+    }`;
+    messageDiv.textContent = message;
+    
+    document.body.appendChild(messageDiv);
+    
+    // Supprimer le message après 3 secondes
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 3000);
 }
 </script>
 @endsection

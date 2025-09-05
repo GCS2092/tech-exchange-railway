@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         $query = Product::with(['category'])
             ->where('is_active', true)
+            ->where('quantity', '>', 0) // Ne montrer que les produits en stock
             ->orderBy('created_at', 'desc');
 
         // Filtres
@@ -133,13 +134,14 @@ class ProductController extends Controller
             return $product->load(['category', 'brand', 'reviews.user']);
         });
         
-        // Récupérer les produits similaires de la même catégorie
+        // Récupérer les produits similaires de la même catégorie (en stock uniquement)
         $relatedProducts = collect();
         
         if ($product->category_id) {
             $relatedProducts = Product::where('category_id', $product->category_id)
                 ->where('id', '!=', $product->id)
                 ->where('is_active', true)
+                ->where('quantity', '>', 0) // Seulement les produits en stock
                 ->take(4)
                 ->get();
         }
@@ -259,7 +261,10 @@ class ProductController extends Controller
     public function filterByCategory($category_id)
     {
         $categories = Category::all();
-        $products = Product::where('category_id', $category_id)->get();
+        $products = Product::where('category_id', $category_id)
+            ->where('is_active', true)
+            ->where('quantity', '>', 0) // Seulement les produits en stock
+            ->get();
 
         return view('products.index', compact('products', 'categories'));
     }
@@ -280,7 +285,8 @@ class ProductController extends Controller
 
     public function ajaxFilter(Request $request)
     {
-        $query = Product::query();
+        $query = Product::where('is_active', true)
+            ->where('quantity', '>', 0); // Seulement les produits en stock
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -332,7 +338,10 @@ class ProductController extends Controller
 
     public function featured()
     {
-        $products = \App\Models\Product::where('is_featured', 1)->get();
+        $products = \App\Models\Product::where('is_featured', 1)
+            ->where('is_active', true)
+            ->where('quantity', '>', 0) // Seulement les produits en stock
+            ->get();
         return view('products.featured', compact('products'));
     }
 

@@ -71,6 +71,7 @@ class CartController extends Controller
         $popularProducts = [];
         if ($cart->isEmpty()) {
             $popularProducts = Product::where('is_active', true)
+                                    ->where('quantity', '>', 0) // Seulement les produits en stock
                                     ->inRandomOrder()
                                     ->take(4)
                                     ->get();
@@ -84,6 +85,7 @@ class CartController extends Controller
             
             // Récupérer les produits complémentaires (produits actifs mais pas dans le panier)
             $complementaryProducts = Product::where('is_active', true)
+                ->where('quantity', '>', 0) // Seulement les produits en stock
                 ->whereNotIn('id', $cartProductIds)
                 ->inRandomOrder()
                 ->take(4)
@@ -101,6 +103,7 @@ class CartController extends Controller
         
         // Produits recommandés (produits populaires)
         $recommendedProducts = Product::where('is_active', true)
+            ->where('quantity', '>', 0) // Seulement les produits en stock
             ->inRandomOrder()
             ->take(6)
             ->get();
@@ -165,18 +168,17 @@ class CartController extends Controller
             $quantity = 1;
         }
 
-        if (isset($product->stock)) {
-            $currentCartItem = auth()->user()->cartItems()->where('product_id', $product->id)->first();
-            $currentQuantity = $currentCartItem ? $currentCartItem->quantity : 0;
-            $newQuantity = $currentQuantity + $quantity;
+        // Vérification du stock disponible
+        $currentCartItem = auth()->user()->cartItems()->where('product_id', $product->id)->first();
+        $currentQuantity = $currentCartItem ? $currentCartItem->quantity : 0;
+        $newQuantity = $currentQuantity + $quantity;
 
-            if ($product->stock <= 0 || $newQuantity > $product->stock) {
-                $message = 'Stock insuffisant. Il reste seulement ' . $product->stock . ' unités disponibles.';
-                if ($request->expectsJson()) {
-                    return response()->json(['success' => false, 'message' => $message], 400);
-                }
-                return redirect()->back()->with('error', $message);
+        if ($product->quantity <= 0 || $newQuantity > $product->quantity) {
+            $message = 'Stock insuffisant. Il reste seulement ' . $product->quantity . ' unités disponibles.';
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => $message], 400);
             }
+            return redirect()->back()->with('error', $message);
         }
 
         $productPrice = $product->price ?? 0;
@@ -241,14 +243,16 @@ class CartController extends Controller
     }
     
     // 📝 Mettre à jour la quantité d'un produit
-    public function update(Request $request, $cartItem)
+    public function update(Request $request, $cartItemId)
     {
-        // Vérifier que l'utilisateur possède cet élément du panier
-        if ($cartItem->user_id !== auth()->id()) {
+        // Récupérer l'élément du panier
+        $cartItem = auth()->user()->cartItems()->with('product')->find($cartItemId);
+        
+        if (!$cartItem) {
             if ($request->expectsJson()) {
-                return response()->json(['success' => false, 'message' => 'Accès non autorisé.'], 403);
+                return response()->json(['success' => false, 'message' => 'Élément du panier non trouvé.'], 404);
             }
-            return redirect()->route('cart.index')->with('error', 'Accès non autorisé.');
+            return redirect()->route('cart.index')->with('error', 'Élément du panier non trouvé.');
         }
     
         $quantity = $request->input('quantity');
@@ -262,8 +266,8 @@ class CartController extends Controller
         }
         
         // Vérifier le stock disponible
-        if (isset($cartItem->product->stock) && $quantity > $cartItem->product->stock) {
-            $message = 'Stock insuffisant. Il reste seulement ' . $cartItem->product->stock . ' unités disponibles.';
+        if ($quantity > $cartItem->product->quantity) {
+            $message = 'Stock insuffisant. Il reste seulement ' . $cartItem->product->quantity . ' unités disponibles.';
             if ($request->expectsJson()) {
                 return response()->json(['success' => false, 'message' => $message], 400);
             }
@@ -300,6 +304,14 @@ class CartController extends Controller
         ]);
     
         if ($request->expectsJson()) {
+            // Recalculer le total du panier
+            $cart = auth()->user()->cartItems()->with('product')->get();
+            $total = 0;
+            foreach ($cart as $item) {
+                $itemPrice = $item->price ?? $item->product->price;
+                $total += $itemPrice * $item->quantity;
+            }
+            
             return response()->json([
                 'success' => true, 
                 'message' => 'Quantité mise à jour avec succès.',
@@ -308,7 +320,10 @@ class CartController extends Controller
                     'quantity' => $cartItem->quantity,
                     'price' => $cartItem->price,
                     'total_price' => $cartItem->price * $cartItem->quantity
-                ]
+                ],
+                'cart_total' => $total,
+                'formatted_item_total' => number_format($cartItem->price * $cartItem->quantity, 0, ',', ' ') . ' FCFA',
+                'formatted_cart_total' => number_format($total, 0, ',', ' ') . ' FCFA'
             ]);
         }
         

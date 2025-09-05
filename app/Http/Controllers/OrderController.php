@@ -102,34 +102,10 @@ class OrderController extends Controller
         return redirect()->route('checkout.index')->with('error', 'Le montant minimum pour passer une commande est de 100 FCFA.');
     }
 
-    // Créer la commande
+    // CORRECTION: Validation des stocks AVANT création de la commande
     try {
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'total_price' => $total,
-            'original_price' => $originalTotal,
-            'discount_amount' => $discountAmount,
-            'promo_code' => $promo['code'] ?? null,
-            'status' => 'en attente',
-            'payment_method' => $request->payment_method,
-            'phone_number' => $request->phone_number,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'delivery_address' => $request->delivery_address,
-            'shipping_address' => $request->shipping_address ?? $request->delivery_address,
-            'billing_address' => $request->billing_address ?? $request->delivery_address,
-        ]);
-
-        Log::info('Commande créée avec succès', [
-            'order_id' => $order->id,
-            'user_id' => Auth::id(),
-            'total_price' => $total,
-            'products' => $cart->pluck('product_id')->toArray()
-        ]);
-
-        // CORRECTION: Gestion atomique des stocks avec transaction
-        try {
-            DB::transaction(function () use ($cart, $order) {
+        $order = DB::transaction(function () use ($cart, $total, $originalTotal, $discountAmount, $promo, $request) {
+            // 1. Vérifier tous les stocks d'abord
             foreach ($cart as $item) {
                 $product = $item->product;
                 
@@ -143,6 +119,35 @@ class OrderController extends Controller
                 if (!$currentStock) {
                     throw new \Exception('Stock insuffisant pour ' . $product->name . '. Il reste seulement ' . $product->quantity . ' unités disponibles.');
                 }
+            }
+            
+            // 2. Créer la commande seulement si tous les stocks sont disponibles
+            $order = Order::create([
+                'user_id' => Auth::id(),
+                'total_price' => $total,
+                'original_price' => $originalTotal,
+                'discount_amount' => $discountAmount,
+                'promo_code' => $promo['code'] ?? null,
+                'status' => 'en attente',
+                'payment_method' => $request->payment_method,
+                'phone_number' => $request->phone_number,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'delivery_address' => $request->delivery_address,
+                'shipping_address' => $request->shipping_address ?? $request->delivery_address,
+                'billing_address' => $request->billing_address ?? $request->delivery_address,
+            ]);
+
+            Log::info('Commande créée avec succès', [
+                'order_id' => $order->id,
+                'user_id' => Auth::id(),
+                'total_price' => $total,
+                'products' => $cart->pluck('product_id')->toArray()
+            ]);
+
+            // 3. Maintenant décrémenter les stocks et attacher les produits
+            foreach ($cart as $item) {
+                $product = $item->product;
                 
                 // Attacher le produit à la commande
                 $order->products()->attach($item->product_id, [
@@ -177,7 +182,27 @@ class OrderController extends Controller
                     'new_stock' => $product->quantity
                 ]);
             }
+            
+            // 4. Enregistrer l'utilisation de la promo dans la transaction
+            if ($promo) {
+                PromoUsage::create([
+                    'user_id' => auth()->id(),
+                    'promotion_id' => $promo['id'],
+                    'order_id' => $order->id,
+                    'original_amount' => $originalTotal,
+                    'discount_amount' => $discountAmount,
+                ]);
+            }
+            
+            // 5. Nettoyer le panier dans la transaction
+            auth()->user()->cartItems()->delete();
+            Cache::forget('cart.' . auth()->id());
+            Cache::forget('orders.user.' . auth()->id());
+            Cache::forget('dashboard.stats');
+            
+            return $order; // Retourner la commande créée
         });
+        
         } catch (\Exception $e) {
             Log::error('Erreur lors de la création de la commande', [
                 'user_id' => auth()->id(),
@@ -187,23 +212,6 @@ class OrderController extends Controller
             
             return redirect()->route('cart.index')->with('error', $e->getMessage());
         }
-
-        // Enregistrer l'utilisation de la promo
-        if ($promo) {
-            PromoUsage::create([
-                'user_id' => auth()->id(),
-                'promotion_id' => $promo['id'],
-                'order_id' => $order->id,
-                'original_amount' => $originalTotal,
-                'discount_amount' => $discountAmount,
-            ]);
-        }
-
-        // Nettoyer le panier et le cache
-        auth()->user()->cartItems()->delete();
-        Cache::forget($cartKey);
-        Cache::forget('orders.user.' . auth()->id());
-        Cache::forget('dashboard.stats');
 
         // Envoyer les notifications
         $order->load('user', 'products');
@@ -227,14 +235,6 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->with('success', 'Votre commande a été validée avec succès' . 
             ($promo ? ' avec une réduction de ' . number_format($discountAmount, 2) . ' ' . $request->currency : '') . '.');
-    } catch (\Exception $e) {
-        Log::error('Erreur lors de la création de la commande', [
-            'user_id' => auth()->id(),
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString()
-        ]);
-        return redirect()->route('checkout.index')->with('error', 'Une erreur est survenue lors de la création de la commande.');
-    }
 }
 
     protected function calculateCartTotal($cart)

@@ -115,7 +115,7 @@
                                 
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-black mb-2">
-                                        Total : {{ number_format($order->total) }} FCFA
+                                        Total : {{ number_format($order->total_price) }} FCFA
                     </div>
                                     
                                     <!-- Actions -->

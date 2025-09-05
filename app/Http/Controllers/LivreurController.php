@@ -49,7 +49,7 @@ class LivreurController extends Controller
         $order->delivered_at = now();
         $order->save();
 
-        return redirect()->route('livreur.orders')->with('success', 'Commande marquée comme livrée.');
+        return redirect()->route('livreur.orders.index')->with('success', 'Commande marquée comme livrée.');
     }
 
     public function viewRoute(Order $order)
@@ -72,6 +72,9 @@ class LivreurController extends Controller
             abort(403, 'Accès non autorisé.');
         }
 
+        // Charger les relations nécessaires
+        $order->load(['user', 'products']);
+
         return view('livreurs.orders.show', compact('order'));
     }
    public function planning()
@@ -79,15 +82,20 @@ class LivreurController extends Controller
     $userId = auth()->id();
     $today = now()->toDateString();
 
-    // Livraisons du jour
+    // Livraisons du jour - commandes assignées au livreur qui ne sont pas encore livrées
     $todayDeliveries = \App\Models\Order::where('livreur_id', $userId)
-        ->whereDate('created_at', $today)
+        ->where('status', '!=', 'livré')
+        ->where('status', '!=', 'annulé')
+        ->where('status', '!=', 'remboursé')
+        ->orderBy('created_at', 'asc')
         ->get();
 
-    // Livraisons à venir (prochaines 7 jours)
+    // Livraisons à venir - toutes les commandes assignées (pour les prochains jours)
     $upcomingDeliveries = \App\Models\Order::where('livreur_id', $userId)
-        ->whereDate('created_at', '>=', $today)
-        ->orderBy('created_at')
+        ->where('status', '!=', 'livré')
+        ->where('status', '!=', 'annulé')
+        ->where('status', '!=', 'remboursé')
+        ->orderBy('created_at', 'asc')
         ->get();
 
     return view('livreurs.planning', compact('todayDeliveries', 'upcomingDeliveries'));
@@ -141,7 +149,7 @@ class LivreurController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
+            'phone_number' => 'nullable|string|max:20',
             'vehicle_type' => 'nullable|string|max:100',
             'current_password' => 'nullable|required_with:new_password',
             'new_password' => 'nullable|min:8|confirmed',
@@ -149,7 +157,7 @@ class LivreurController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->phone_number = $request->phone_number;
         $user->vehicle_type = $request->vehicle_type;
 
         // Mise à jour du mot de passe si fourni
